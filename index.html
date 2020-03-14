@@ -152,28 +152,114 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-tang-的第一篇bl篇blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-行框的判断和基线的对齐方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/13/tang-%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87bl%E7%AF%87blog/">tang 的第一篇bl篇blog</a>
+      <a class="article-title" href="/2020/03/14/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/">行框的判断和基线的对齐方式</a>
     </h1>
   
 
         
-        <a href="/2020/03/13/tang-%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87bl%E7%AF%87blog/" class="archive-article-date">
-  	<time datetime="2020-03-13T14:00:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
+        <a href="/2020/03/14/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-03-14T03:15:38.388Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>内容</p>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>内容</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​    这篇博客主要要解决的是行框，行内框，行高，行间距等之间的关系，另一部分是关于基线的判断与vertical-align的使用方式</p>
+<h2 id="行内框与行框"><a href="#行内框与行框" class="headerlink" title="行内框与行框"></a>行内框与行框</h2><p>先说几个基本的定义： </p>
+<ul>
+<li><p>em框</p>
+<p>em框在字体中定义，也称为字符框（character box）。实际的字形可能比em框更稿或更矮。由font-size决定。</p>
+</li>
+<li><p>内容区</p>
+<p>非替换元素中：各字符的em框串在一起构成的框</p>
+<p>替换元素中：元素的固有高度加上可能有的外边距、边框或内边距</p>
+</li>
+<li><p>行间距</p>
+<p>行间距（leading）是font-size值和line-height值之间的差，这个差分为两半，分别在顶部和底部，行间距只运用于非替换元素</p>
+</li>
+<li><p>行内框</p>
+<p>这个框通过内容区增加行间距来描述。对于非替换元素，元素的行内框高度正好等于line-height的值对于替换元素，元素行内框高度则恰好等于内容区的高度</p>
+</li>
+<li><p>行框</p>
+<p>这是包含该行内中出现的行内框的最高点和最低点的最小框。</p>
+</li>
+</ul>
+<h3 id="行内框高度的计算"><a href="#行内框高度的计算" class="headerlink" title="行内框高度的计算"></a>行内框高度的计算</h3><ul>
+<li><p>对于非替换元素：</p>
+<p>行内框高度 = line-height值</p>
+</li>
+<li><p>对于替换元素：</p>
+<p>先求出行间距 = line-height - font-size</p>
+<p>在将替换元素的height，margin，border，padding在垂直方向上的值相加得高</p>
+</li>
+</ul>
+<h3 id="行高与字号的关系"><a href="#行高与字号的关系" class="headerlink" title="行高与字号的关系"></a>行高与字号的关系</h3><p>对于非替换元素 行高 = 字号 + 行间距 = 文本基线间的距离</p>
+<p>那么行高可能比字号小吗？ 即行间距可能为负吗？</p>
+<p><img src="C:%5CUsers%5C15190%5CDesktop%5Cblog%5Csource_posts%5C%E8%A1%8C%E9%97%B4%E8%B7%9D%E4%B8%BA%E8%B4%9F.png" alt=""></p>
+<p>答案是可以的</p>
+<h2 id="基线与vertical-align"><a href="#基线与vertical-align" class="headerlink" title="基线与vertical-align"></a>基线与vertical-align</h2><p><img src="C:%5CUsers%5C15190%5CDesktop%5Cblog%5Csource_posts%5C%E5%9F%BA%E7%BA%BF%E4%B8%8E%E8%A1%8C%E6%A1%86.png" alt=""></p>
+<p>基线是字母x 的下边沿线。行内元素的垂直排放方式都与这条线有关</p>
+<p>而行内元素的垂直对齐方式直接受vertical-align的值的控制</p>
+<ul>
+<li><p>非替换元素</p>
+<p>基线为x的下边沿</p>
+</li>
+<li><p>图片</p>
+<p>图片底部</p>
+</li>
+<li><p>替换元素</p>
+<p>同内部最后一行的基线</p>
+</li>
+</ul>
+<p><img src="C:%5CUsers%5C15190%5CDesktop%5Cblog%5Csource_posts%5C%E5%9B%BE%E7%89%87%E8%A1%8C%E5%86%85%E5%9D%97%E7%9A%84%E5%9F%BA%E7%BA%BF.png" alt=""></p>
+<p>由上图可以看出默认情况下行内块与图片的基线位置</p>
+<h3 id="vertical-align"><a href="#vertical-align" class="headerlink" title="vertical-align"></a>vertical-align</h3><p>相对于其父元素垂直对齐</p>
+<p>注意 <code>vertical-align</code> 只对行内元素、表格单元格元素生效：不能用它垂直对齐块级元素对块级元素使用时默认继承到其内部的子元素身上</p>
+<p>默认值为baseline。</p>
+<ul>
+<li><p><code>sub</code></p>
+<p>使元素的基线与父元素的下标基线对齐。</p>
+</li>
+<li><p><code>super</code></p>
+<p>使元素的基线与父元素的上标基线对齐。</p>
+</li>
+<li><p><code>text-top</code></p>
+<p>使元素的顶部与父元素的字体顶部对齐。</p>
+</li>
+<li><p><code>text-bottom</code></p>
+<p>使元素的底部与父元素的字体底部对齐。</p>
+</li>
+<li><p><code>middle</code></p>
+<p>使元素的中部与父元素的基线加上父元素x-height的一半对齐。</p>
+</li>
+<li><p>length</p>
+<p>使元素的基线对齐到父元素的基线之上的给定长度。可以是负数。</p>
+</li>
+<li><p>percentage</p>
+<p>使元素的基线对齐到父元素的基线之上的给定百分比，该百分比是line-height属性的百分比。可以是负数。</p>
+</li>
+</ul>
+<h4 id="相对行的值"><a href="#相对行的值" class="headerlink" title="相对行的值"></a>相对行的值</h4><p>下列值使元素相对整行垂直对齐：</p>
+<ul>
+<li><p><code>top</code></p>
+<p>使元素及其后代元素的顶部与整行的顶部对齐。</p>
+</li>
+<li><p><code>bottom</code></p>
+<p>使元素及其后代元素的底部与整行的底部对齐。</p>
+</li>
+</ul>
+<p>没有基线的元素，使用外边距的下边缘替代</p>
+<p>参考来源：</p>
+<p>《css权威指南第三版》</p>
+<p>MDN</p>
 
       
 
@@ -182,97 +268,11 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">我的第一篇博客</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/13/tang-%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87bl%E7%AF%87blog/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/13/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/13/hello-world/" class="archive-article-date">
-  	<time datetime="2020-03-13T13:54:20.885Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/13/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/03/14/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/">展开全文 >></a>
         </p>
       
 
@@ -393,10 +393,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">我的第一篇博客</a>
-              </li>
             
             <div class="clearfix"></div>
           </ul>
