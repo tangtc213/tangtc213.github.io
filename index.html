@@ -152,6 +152,104 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-级联菜单" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/">级联菜单</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/" class="archive-article-date">
+  	<time datetime="2020-03-15T01:46:09.246Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要完成级联菜单的设计思路和具体实现</p>
+<h2 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h2><p>级联菜单的结构为树状结构/层级结构<br>除第一层以外，内部的每一层都是定位的，摆放到正确的位置即可</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><ul>
+<li><p>采用ul &gt; li 包ul &gt; li 的嵌套结构</p>
+<p>先套三层</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">html代码<span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span>消息<span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"frist"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复<span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"second"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复人1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复人2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复人3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>系统通知<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>我的消息<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span>&gt;</span>动态<span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span>&gt;</span>收藏<span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p>  <img src="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95%5C%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84.png" alt></p>
+<ul>
+<li>将最外层排成横排</li>
+</ul>
+<p><img src="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95%5C%E6%8E%92%E6%88%90%E6%A8%AA%E6%8E%92.png" alt></p>
+<ul>
+<li>定位各子菜单</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">nav &#123;</span><br><span class="line">  width: 25%;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  position: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ul &#123;</span><br><span class="line">  margin: 0;</span><br><span class="line">  padding: 0;</span><br><span class="line">  position: absolute;</span><br><span class="line">  xdisplay: none;</span><br><span class="line">  list-style: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">li &#123;</span><br><span class="line">  white-space: nowrap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.second &#123;</span><br><span class="line">  left: 100%</span><br><span class="line">  top: 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/C:%5CUsers%5C15190%5CDesktop%5Cblog%5Csource_posts%5C%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95%5C%E5%AE%9A%E4%BD%8D%E5%90%84%E5%AD%90%E8%8F%9C%E5%8D%95.png" alt></p>
+<ul>
+<li>隐藏子菜单</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对ul</span><br><span class="line">overflow: hidden;</span><br><span class="line">max-height: 0;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/C:%5CUsers%5C15190%5CDesktop%5Cblog%5Csource_posts%5C%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95%5C%E9%9A%90%E8%97%8F%E5%AD%90%E8%8F%9C%E5%8D%95.png" alt></p>
+<ul>
+<li>在hover时显示菜单</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.a:hover&gt;ul  &#123;</span><br><span class="line">  max-height: 100px;</span><br><span class="line">  overflow: visible;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">nav&gt;ul&gt;li:hover ul  &#123;</span><br><span class="line">  max-height: 80px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95%5C%E6%98%BE%E7%A4%BA%E8%8F%9C%E5%8D%95.png" alt></p>
+<h3 id="css整体代码"><a href="#css整体代码" class="headerlink" title="css整体代码"></a>css整体代码</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">25%</span>;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">xdisplay</span>: none;</span><br><span class="line">  <span class="attribute">list-style</span>: none;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">max-height</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.second</span> &#123;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.a</span><span class="selector-pseudo">:hover</span>&gt;<span class="selector-tag">ul</span>  &#123;</span><br><span class="line">  <span class="attribute">max-height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: visible;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">nav</span>&gt;<span class="selector-tag">ul</span>&gt;<span class="selector-tag">li</span><span class="selector-pseudo">:hover</span> <span class="selector-tag">ul</span>  &#123;</span><br><span class="line">  <span class="attribute">max-height</span>: <span class="number">80px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-行框的判断和基线的对齐方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
