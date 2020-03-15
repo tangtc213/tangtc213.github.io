@@ -152,6 +152,93 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-多栏等高自适应布局的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/">多栏等高自适应布局的实现</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+  	<time datetime="2020-03-15T08:04:11.916Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="多栏等高自适应布局的实现"><a href="#多栏等高自适应布局的实现" class="headerlink" title="多栏等高自适应布局的实现"></a>多栏等高自适应布局的实现</h2><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法<img src="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%A4%9A%E6%A0%8F%E5%B8%83%E5%B1%80%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5.png" alt="多栏布局的常见情况"></p>
+<h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><h3 id="利用闭合浮动配合magin与padding实现"><a href="#利用闭合浮动配合magin与padding实现" class="headerlink" title="利用闭合浮动配合magin与padding实现"></a>利用闭合浮动配合magin与padding实现</h3><p>布局中常使用float浮动实现多栏布局，float使得内容脱离常规流需要先闭合浮动</p>
+<p>闭合浮动后给子元素一个很大的padding-bottom和一个很大的负margin-bottom实现多栏等高</p>
+<p>代码实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, quia! Voluptatem quam maxime pariatur sed laudantium, quod ipsam quae. Consectetur magnam itaque molestias accusamus dolorem quidem voluptatum illum, ipsum iusto.<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis dignissimos in perspiciatis, alias dolorem labore.<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel dolores qui maxime eum! Totam sint sit rem labore molestias aut, aliquam expedita iusto cumque.<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>: none;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">10px</span> -<span class="number">9999px</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding-bottom</span>: <span class="number">9999px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#4577dc</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<p><img src="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/%E6%B5%AE%E5%8A%A8%E5%AE%9E%E7%8E%B0.png" alt="浮动实现"></p>
+<h3 id="采用table布局实现"><a href="#采用table布局实现" class="headerlink" title="采用table布局实现"></a>采用table布局实现</h3><p>父元素<code>display: table</code>子元素<code>display: table-cell</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>: none;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">display</span>: table;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: table-cell;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#4577dc</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">3px</span> solid white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/table%E5%AE%9E%E7%8E%B0.png" alt="table实现"></p>
+<h3 id="flex实现"><a href="#flex实现" class="headerlink" title="flex实现"></a>flex实现</h3><p>利用flex布局实现</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>: none;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#4577dc</span>;</span><br><span class="line">  <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">3px</span> solid white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/flex%E5%AE%9E%E7%8E%B0.png" alt="flex实现"></p>
+<h3 id="grid-布局实现"><a href="#grid-布局实现" class="headerlink" title="grid 布局实现"></a>grid 布局实现</h3><p>利用grid布局实现</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>: none;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-auto-flow</span>: column;</span><br><span class="line">  <span class="attribute">grid-gap</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#4577dc</span>;</span><br><span class="line">  <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">3px</span> solid white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/grid%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0.png" alt="grid布局实现"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在现在的css中有很多的方法可以很轻松的完成各种等高布局了，唯一需要考虑的是浏览器的兼容性问题</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.im/post/5b0fb34151882515662238fd" target="_blank" rel="noopener">常用的多列等高布局收藏</a></p>
+<p>《The Book Of CSS3》</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-伪元素content的内容" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -223,6 +310,69 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-aaa" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/aaa/">aaa</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/aaa/" class="archive-article-date">
+  	<time datetime="2020-03-15T03:25:56.637Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一个测试</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/aaa/">展开全文 >></a>
         </p>
       
 
