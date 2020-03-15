@@ -152,6 +152,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-单向阴影的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/">单向阴影的实现</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+  	<time datetime="2020-03-15T13:40:59.059Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要探讨css单向阴影的实现和延伸</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径</p>
+<p>实现： </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.a</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">5px</span> <span class="number">0</span> <span class="number">3px</span> -<span class="number">3px</span> red ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B11.png" alt></p>
+<p>当xy轴只有一个发生偏移时，通过正负模糊半径和扩散半径实现了单向的偏移</p>
+<p>当xy轴偏移量增大时<code>box-shadow: 15px 0 3px -3px red ;</code></p>
+<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B12.png" alt></p>
+<p>可以看出阴影也变得更加明显</p>
+<p>而当模糊半径和负扩散半径同时增大时<code>box-shadow: 5px 0 10px -10px red ;</code></p>
+<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B13.png" alt></p>
+<p>阴影变得更加不明显</p>
+<p>当偏移量与模糊半径之和等于负扩散半径时，阴影完全消失<code>box-shadow: 5px 0 3px -8px red ;</code></p>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>当一个语句块内出现二次<code>box-shadow</code>时后面的会覆盖掉前面的语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-shadow: 5px 0 3px -3px red ;</span><br><span class="line">box-shadow: 0 5px 3px -3px red ;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B14.png" alt></p>
+<p>正确的做法是用逗号隔开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">box-shadow: 5px 0 3px -3px red ,0 5px 3px -3px red;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B15.png" alt></p>
+<p>由上图可以发现用两次单向阴影叠加时可以得到一个双侧的阴影</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-闭合浮动的多种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
