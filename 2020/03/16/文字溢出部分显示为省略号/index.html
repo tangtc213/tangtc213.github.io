@@ -6,25 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>单向阴影的实现 | Hexo</title>
+  <title>文字溢出部分显示为省略号 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言这篇博客主要探讨css单向阴影的实现和延伸 实现核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径 实现：  1234567.a &amp;#123;  float: left;  width: 150px;  height: 100px;  background-color: #fff;  box-shadow: 5px 0 3px -3px red ;&amp;#125;   当xy轴只有一个发生偏移">
+  <meta name="description" content="前言这篇博客的主要内容时如何实现文字溢出的部分显示为省略号 具体实现思路： 要解决三个问题  如何让文字溢出而不是折行 如何让文字溢出的部分隐藏 如何在溢出处添加省略号  方案：   文字不折行 white-space: nowrap  文字溢出部分隐藏 overflow: hidden  在溢出的地方添加省略号 text-overflow: ellipsis;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单向阴影的实现">
-<meta property="og:url" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="文字溢出部分显示为省略号">
+<meta property="og:url" content="http://yoursite.com/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言这篇博客主要探讨css单向阴影的实现和延伸 实现核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径 实现：  1234567.a &amp;#123;  float: left;  width: 150px;  height: 100px;  background-color: #fff;  box-shadow: 5px 0 3px -3px red ;&amp;#125;   当xy轴只有一个发生偏移">
+<meta property="og:description" content="前言这篇博客的主要内容时如何实现文字溢出的部分显示为省略号 具体实现思路： 要解决三个问题  如何让文字溢出而不是折行 如何让文字溢出的部分隐藏 如何在溢出处添加省略号  方案：   文字不折行 white-space: nowrap  文字溢出部分隐藏 overflow: hidden  在溢出的地方添加省略号 text-overflow: ellipsis;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B11.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B12.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B13.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B14.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B15.png">
-<meta property="article:published_time" content="2020-03-15T13:40:59.059Z">
-<meta property="article:modified_time" content="2020-03-15T14:07:17.467Z">
+<meta property="og:image" content="http://yoursite.com/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA1.png">
+<meta property="article:published_time" content="2020-03-16T03:09:42.753Z">
+<meta property="article:modified_time" content="2020-03-16T03:19:54.748Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B11.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,49 +156,46 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-单向阴影的实现" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-文字溢出部分显示为省略号" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      单向阴影的实现
+      文字溢出部分显示为省略号
     </h1>
   
 
         
-        <a href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T13:40:59.059Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+        <a href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/" class="archive-article-date">
+  	<time datetime="2020-03-16T03:09:42.753Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要探讨css单向阴影的实现和延伸</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径</p>
-<p>实现： </p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.a</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">5px</span> <span class="number">0</span> <span class="number">3px</span> -<span class="number">3px</span> red ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B11.png" alt></p>
-<p>当xy轴只有一个发生偏移时，通过正负模糊半径和扩散半径实现了单向的偏移</p>
-<p>当xy轴偏移量增大时<code>box-shadow: 15px 0 3px -3px red ;</code></p>
-<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B12.png" alt></p>
-<p>可以看出阴影也变得更加明显</p>
-<p>而当模糊半径和负扩散半径同时增大时<code>box-shadow: 5px 0 10px -10px red ;</code></p>
-<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B13.png" alt></p>
-<p>阴影变得更加不明显</p>
-<p>当偏移量与模糊半径之和等于负扩散半径时，阴影完全消失<code>box-shadow: 5px 0 3px -8px red ;</code></p>
-<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>当一个语句块内出现二次<code>box-shadow</code>时后面的会覆盖掉前面的语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-shadow: 5px 0 3px -3px red ;</span><br><span class="line">box-shadow: 0 5px 3px -3px red ;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B14.png" alt></p>
-<p>正确的做法是用逗号隔开</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">box-shadow: 5px 0 3px -3px red ,0 5px 3px -3px red;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B15.png" alt></p>
-<p>由上图可以发现用两次单向阴影叠加时可以得到一个双侧的阴影</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客的主要内容时如何实现文字溢出的部分显示为省略号</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>思路： 要解决三个问题</p>
+<ul>
+<li>如何让文字溢出而不是折行</li>
+<li>如何让文字溢出的部分隐藏</li>
+<li>如何在溢出处添加省略号</li>
+</ul>
+<p>方案： </p>
+<ul>
+<li><p>文字不折行</p>
+<p><code>white-space: nowrap</code></p>
+</li>
+<li><p>文字溢出部分隐藏</p>
+<p><code>overflow: hidden</code></p>
+</li>
+<li><p>在溢出的地方添加省略号</p>
+<p><code>text-overflow: ellipsis;</code></p>
+</li>
+</ul>
+<p><img src="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA1.png" alt></p>
 
       
 
@@ -282,7 +275,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -296,18 +289,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          文字溢出部分显示为省略号
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">闭合浮动的多种方法</div>
+    <a href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单向阴影的实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
