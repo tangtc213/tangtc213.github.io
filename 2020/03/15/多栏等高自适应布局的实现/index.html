@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>多栏等高自适应布局的实现 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="多栏等高自适应布局的实现前言对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法 实现方案利用闭合浮动配合magin与padding实现布局中常使用float浮动实现多栏布局，float使得内容脱离常规流需要先闭合浮动 闭合浮动后给子元素一个很大的padding-bottom和一个很大的负margin-bottom实现多栏等">
+  <meta name="description" content="多栏等高自适应布局的实现前言对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多栏等高自适应布局的实现">
 <meta property="og:url" content="http://yoursite.com/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="多栏等高自适应布局的实现前言对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法 实现方案利用闭合浮动配合magin与padding实现布局中常使用float浮动实现多栏布局，float使得内容脱离常规流需要先闭合浮动 闭合浮动后给子元素一个很大的padding-bottom和一个很大的负margin-bottom实现多栏等">
+<meta property="og:description" content="多栏等高自适应布局的实现前言对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%A4%9A%E6%A0%8F%E5%B8%83%E5%B1%80%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/%E6%B5%AE%E5%8A%A8%E5%AE%9E%E7%8E%B0.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/flex%E5%AE%9E%E7%8E%B0.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/grid%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0.png">
 <meta property="article:published_time" content="2020-03-15T08:04:11.916Z">
-<meta property="article:modified_time" content="2020-03-15T08:42:42.112Z">
+<meta property="article:modified_time" content="2020-03-17T01:58:39.879Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -183,7 +183,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="多栏等高自适应布局的实现"><a href="#多栏等高自适应布局的实现" class="headerlink" title="多栏等高自适应布局的实现"></a>多栏等高自适应布局的实现</h2><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法<img src="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%A4%9A%E6%A0%8F%E5%B8%83%E5%B1%80%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5.png" alt="多栏布局的常见情况"></p>
+        <h2 id="多栏等高自适应布局的实现"><a href="#多栏等高自适应布局的实现" class="headerlink" title="多栏等高自适应布局的实现"></a>多栏等高自适应布局的实现</h2><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法</p>
+<a id="more"></a>
+
+<p><img src="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%A4%9A%E6%A0%8F%E5%B8%83%E5%B1%80%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5.png" alt="多栏布局的常见情况"></p>
 <h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><h3 id="利用闭合浮动配合magin与padding实现"><a href="#利用闭合浮动配合magin与padding实现" class="headerlink" title="利用闭合浮动配合magin与padding实现"></a>利用闭合浮动配合magin与padding实现</h3><p>布局中常使用float浮动实现多栏布局，float使得内容脱离常规流需要先闭合浮动</p>
 <p>闭合浮动后给子元素一个很大的padding-bottom和一个很大的负margin-bottom实现多栏等高</p>
 <p>代码实现：</p>

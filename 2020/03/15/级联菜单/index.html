@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>级联菜单 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言这篇博客主要完成级联菜单的设计思路和具体实现 大致思路级联菜单的结构为树状结构&#x2F;层级结构除第一层以外，内部的每一层都是定位的，摆放到正确的位置即可 具体实现 采用ul &gt; li 包ul &gt; li 的嵌套结构 先套三层 1234567891011121314html代码&lt;header&gt;  &lt;nav class&#x3D;&quot;a&quot;&gt;消息&lt;ul class&#x3D;&quot;frist">
+  <meta name="description" content="前言这篇博客主要完成级联菜单的设计思路和具体实现 大致思路级联菜单的结构为树状结构&#x2F;层级结构除第一层以外，内部的每一层都是定位的，摆放到正确的位置即可 具体实现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="级联菜单">
 <meta property="og:url" content="http://yoursite.com/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="前言这篇博客主要完成级联菜单的设计思路和具体实现 大致思路级联菜单的结构为树状结构&#x2F;层级结构除第一层以外，内部的每一层都是定位的，摆放到正确的位置即可 具体实现 采用ul &gt; li 包ul &gt; li 的嵌套结构 先套三层 1234567891011121314html代码&lt;header&gt;  &lt;nav class&#x3D;&quot;a&quot;&gt;消息&lt;ul class&#x3D;&quot;frist">
+<meta property="og:description" content="前言这篇博客主要完成级联菜单的设计思路和具体实现 大致思路级联菜单的结构为树状结构&#x2F;层级结构除第一层以外，内部的每一层都是定位的，摆放到正确的位置即可 具体实现">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/%E6%8E%92%E6%88%90%E6%A8%AA%E6%8E%92.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/%E9%9A%90%E8%97%8F%E5%AD%90%E8%8F%9C%E5%8D%95.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/%E6%98%BE%E7%A4%BA%E8%8F%9C%E5%8D%95.png">
 <meta property="article:published_time" content="2020-03-15T01:46:09.246Z">
-<meta property="article:modified_time" content="2020-03-15T07:43:08.736Z">
+<meta property="article:modified_time" content="2020-03-17T01:59:14.664Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -185,7 +185,9 @@
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要完成级联菜单的设计思路和具体实现</p>
 <h2 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h2><p>级联菜单的结构为树状结构/层级结构<br>除第一层以外，内部的每一层都是定位的，摆放到正确的位置即可</p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><ul>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><a id="more"></a>
+
+<ul>
 <li><p>采用ul &gt; li 包ul &gt; li 的嵌套结构</p>
 <p>先套三层</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">html代码<span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span>消息<span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"frist"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复<span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"second"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复人1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复人2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>回复人3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>系统通知<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>我的消息<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span>&gt;</span>动态<span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span>&gt;</span>收藏<span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>

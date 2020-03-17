@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>单向阴影的实现 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言这篇博客主要探讨css单向阴影的实现和延伸 实现核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径 实现：  1234567.a &amp;#123;  float: left;  width: 150px;  height: 100px;  background-color: #fff;  box-shadow: 5px 0 3px -3px red ;&amp;#125;   当xy轴只有一个发生偏移">
+  <meta name="description" content="前言这篇博客主要探讨css单向阴影的实现和延伸 实现核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单向阴影的实现">
 <meta property="og:url" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="前言这篇博客主要探讨css单向阴影的实现和延伸 实现核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径 实现：  1234567.a &amp;#123;  float: left;  width: 150px;  height: 100px;  background-color: #fff;  box-shadow: 5px 0 3px -3px red ;&amp;#125;   当xy轴只有一个发生偏移">
+<meta property="og:description" content="前言这篇博客主要探讨css单向阴影的实现和延伸 实现核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B11.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B12.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B14.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B15.png">
 <meta property="article:published_time" content="2020-03-15T13:40:59.059Z">
-<meta property="article:modified_time" content="2020-03-15T14:07:17.467Z">
+<meta property="article:modified_time" content="2020-03-17T01:58:23.257Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -185,6 +185,8 @@
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要探讨css单向阴影的实现和延伸</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径</p>
+<a id="more"></a>
+
 <p>实现： </p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.a</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">5px</span> <span class="number">0</span> <span class="number">3px</span> -<span class="number">3px</span> red ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
