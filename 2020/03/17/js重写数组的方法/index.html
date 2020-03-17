@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | tang的博客</title>
+  <title>js重写数组的方法 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="tangtc233的技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tang的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/page/2/index.html">
+  <meta name="description" content="前言为了加深对数组的理解这篇博客重新写了一遍数组的方法 数组的长度array.length 1234567var lengthOfArray &#x3D; function(list) &amp;#123;            i &#x3D; 0            while(list[i] !&#x3D; null) &amp;#123;                i++            &amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js重写数组的方法">
+<meta property="og:url" content="http://yoursite.com/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="tangtc233的技术博客">
+<meta property="og:description" content="前言为了加深对数组的理解这篇博客重新写了一遍数组的方法 数组的长度array.length 1234567var lengthOfArray &#x3D; function(list) &amp;#123;            i &#x3D; 0            while(list[i] !&#x3D; null) &amp;#123;                i++            &amp;#125;">
 <meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-17T12:13:54.260Z">
+<meta property="article:modified_time" content="2020-03-17T12:28:24.445Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -155,79 +157,188 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-js重写数组的方法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/" class="archive-article-date">
-  	<time datetime="2020-03-15T01:46:09.246Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/">级联菜单</a>
+    <h1 class="article-title" itemprop="name">
+      js重写数组的方法
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/14/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-03-14T03:15:38.388Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-14</time>
+        
+        <a href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-03-17T12:13:54.260Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/14/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/">行框的判断和基线的对齐方式</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了加深对数组的理解这篇博客重新写了一遍数组的方法</p>
+<h3 id="数组的长度"><a href="#数组的长度" class="headerlink" title="数组的长度"></a>数组的长度</h3><p><code>array.length</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lengthOfArray = <span class="function"><span class="keyword">function</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span>(list[i] != <span class="literal">null</span>) &#123;</span><br><span class="line">                i++</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<h3 id="from方法"><a href="#from方法" class="headerlink" title="from方法"></a>from方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fromArray = <span class="function"><span class="keyword">function</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> map = []</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">typeof</span>(list) == <span class="string">"string"</span>) &#123;</span><br><span class="line">                    map = list.split(<span class="string">''</span>)</span><br><span class="line">                    <span class="keyword">return</span> map</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(list)) &#123;</span><br><span class="line">                    map = list</span><br><span class="line">                    <span class="keyword">return</span> map</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> fault</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="of方法"><a href="#of方法" class="headerlink" title="of方法"></a>of方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayof</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> map = []</span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">                    map.push(<span class="built_in">arguments</span>[i])</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> map</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="entries方法"><a href="#entries方法" class="headerlink" title="entries方法"></a><em>entries</em>方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayentries</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> map = &#123;&#125;</span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                    map[i] = list[i]</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> map</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="reverse方法"><a href="#reverse方法" class="headerlink" title="reverse方法"></a>reverse方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayreverse</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> stack = []</span><br><span class="line">               <span class="keyword">var</span> n = list.length - <span class="number">1</span></span><br><span class="line">               <span class="keyword">var</span> i = <span class="number">0</span></span><br><span class="line">               <span class="keyword">while</span>(n &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                   stack[i] = list[n]</span><br><span class="line">                   i++</span><br><span class="line">                   n--</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">return</span> stack</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="tostring-方法"><a href="#tostring-方法" class="headerlink" title="tostring 方法"></a>tostring 方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arraytostring</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">                str = <span class="string">''</span></span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">                    str  = str + list[i] + <span class="string">','</span></span><br><span class="line">                &#125;</span><br><span class="line">                str  = str + list[list.length - <span class="number">1</span>]</span><br><span class="line">                <span class="keyword">return</span> str</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="fill方法"><a href="#fill方法" class="headerlink" title="fill方法"></a>fill方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayFill</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++)&#123;</span><br><span class="line">                list[i] = x</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> list</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flat方法"><a href="#flat方法" class="headerlink" title="flat方法"></a>flat方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayFlat</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">while</span>(x--) &#123;</span><br><span class="line">                stack = []</span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; list.length; i++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">typeof</span>(list[i]) == <span class="string">"object"</span>) &#123;</span><br><span class="line">                        <span class="keyword">while</span> (list[i].length != <span class="number">0</span>) &#123;</span><br><span class="line">                            stack.push(list[i].shift())</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        stack.push(list[i])</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                list = stack</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> list</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="includes方法"><a href="#includes方法" class="headerlink" title="includes方法"></a>includes方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayIncludes</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            flag = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(list[i] === x) &#123;</span><br><span class="line">                    flag = <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> flag == <span class="number">1</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="indexOf方法"><a href="#indexOf方法" class="headerlink" title="indexOf方法"></a>indexOf方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayIndexOf</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(list[i] === x) &#123;</span><br><span class="line">                    <span class="keyword">return</span> i</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="lastIndexOf方法"><a href="#lastIndexOf方法" class="headerlink" title="lastIndexOf方法"></a>lastIndexOf方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayLastIndexOf</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(i = list.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">                <span class="keyword">if</span>(list[i] === x) &#123;</span><br><span class="line">                    <span class="keyword">return</span> i</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="pop方法"><a href="#pop方法" class="headerlink" title="pop方法"></a>pop方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayPop</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">                stack[i] = list[i]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="push方法"><a href="#push方法" class="headerlink" title="push方法"></a>push方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayPush</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">    k = list.length</span><br><span class="line">    list[k] = x</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="shift方法"><a href="#shift方法" class="headerlink" title="shift方法"></a>shift方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayShift</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                stack[i - <span class="number">1</span>] = list[i]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="unshift方法"><a href="#unshift方法" class="headerlink" title="unshift方法"></a>unshift方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayUnshift</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            stack[<span class="number">0</span>] = x</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= list.length; i++) &#123;</span><br><span class="line">                stack[i] = list[i - <span class="number">1</span>]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="slice方法"><a href="#slice方法" class="headerlink" title="slice方法"></a>slice方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arraySlice</span>(<span class="params">list, a, b</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            <span class="keyword">for</span>(i = a; i &lt;= b; i++)&#123;</span><br><span class="line">                stack.push(list[i])</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">纯css完成轮播图的思路</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2020/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2020/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
   
 
 
@@ -251,8 +362,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
