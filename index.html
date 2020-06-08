@@ -157,6 +157,173 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-高阶函数的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">高阶函数的实现</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+  	<time datetime="2020-06-08T11:15:33.885Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客主要是对高阶函数for<code>forEach()</code> ,<code>filter()</code>, <code>map()</code>,  <code>reduce</code>,进行实现并更深入的探究</p>
+<h2 id="常规实现"><a href="#常规实现" class="headerlink" title="常规实现"></a>常规实现</h2><h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach()"></a>forEach()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法对数组的每个元素执行一次给定的函数。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Array&#125;</span> </span>array </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Function&#125;</span> <span class="variable">func</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;any&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">array, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">        action(array[i],i,array)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-零宽断言" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/">零宽断言</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/" class="archive-article-date">
+  	<time datetime="2020-05-03T01:58:37.590Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h1><h1 id><a href="#" class="headerlink" title></a></h1><h3 id="零宽断言的几种形式"><a href="#零宽断言的几种形式" class="headerlink" title="零宽断言的几种形式"></a>零宽断言的几种形式</h3><ul>
+<li><p><code>/^xxx$/</code>从开始到结尾<code>/^foo/.test(&quot;kfoo&quot;)``/foo$/.test(&quot;foobar&quot;)</code></p>
+</li>
+<li><p><code>/\bxxx\b/</code>左右为空的断言</p>
+</li>
+<li><p><code>/(?=foo)</code>某个位置的右边紧跟foo，正预测先行断言<code>/fo.(?=bar)/.exec(&quot;kkforsfsfoebar&quot;)</code></p>
+</li>
+<li><p><code>/(?!foo)</code>某个位置的右边不紧跟foo，负预测先行断言<code>/fo.(?!bar)/.exec(&quot;kkforsfsfoebar&quot;)</code></p>
+</li>
+<li><p><code>/(?&lt;=bar</code>某个位置的左边紧跟bar， 正回顾后发断言<code>/(?&lt;=bar)fo./.exec(&quot;kkbarforsfsfoebar&quot;)</code></p>
+</li>
+<li><p><code>/(?&lt;!bar)</code>某个位置的左边不紧跟bar， 负回顾后发断言<code>/(?&lt;!bar)fo./.exec(&quot;kkbarforsfsfoebar&quot;)</code></p>
+</li>
+</ul>
+<h2 id="用正则表达式判断有效的密码"><a href="#用正则表达式判断有效的密码" class="headerlink" title="用正则表达式判断有效的密码"></a>用正则表达式判断有效的密码</h2><p>要求：</p>
+<ul>
+<li>6 - 10位字符</li>
+<li>必须要有字母</li>
+<li>必须要有数字</li>
+</ul>
+<p>函数功能实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validPass</span>(<span class="params">password</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(</span><br><span class="line">		/^\w&#123;<span class="number">3</span>,<span class="number">20</span>&#125;$/.test(password) &amp;&amp;</span><br><span class="line">		/\d/.test(password) &amp;&amp;</span><br><span class="line">		/[a-zA-Z]/.test(password)</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'VALID'</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'INVALID'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另一种实现方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validPass</span>(<span class="params">password</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(</span><br><span class="line">		/^(?=.*\d)(?=.*[a-zA-Z])&#123;<span class="number">3</span>,<span class="number">10</span>&#125;$/.test(password)</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'VALID'</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'INVALID'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="零宽断言扩展"><a href="#零宽断言扩展" class="headerlink" title="零宽断言扩展"></a>零宽断言扩展</h2><p>匹配若干个字符右边是foo</p>
+<p><code>/(?=.*foo)/.exec()</code></p>
+<p>匹配若干个字符右边不是foo</p>
+<p><code>/(?!=.*foo)/.exec()</code></p>
+<p>匹配若干个字符左边是foo</p>
+<p><code>/(?!=foo.*)/.exec()</code></p>
+<p><code>^,$,\b</code>的改写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^   (?&lt;!.) 左边没有任何东西</span><br><span class="line">$   (?!.)  右边没有任何东西</span><br><span class="line">&#x2F;b  (?&#x3D;\W)(?&lt;&#x3D;\w)|(?&#x3D;\W)(?&lt;&#x3D;&#x2F;w)  一边是字母一边不是</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-js重写数组的方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -719,139 +886,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/03/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-多栏等高自适应布局的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/">多栏等高自适应布局的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T08:04:11.916Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="多栏等高自适应布局的实现"><a href="#多栏等高自适应布局的实现" class="headerlink" title="多栏等高自适应布局的实现"></a>多栏等高自适应布局的实现</h2><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于多栏布局常出现的因为文字内容的不同导致包含块的高度不一致，为了解决这种情况，我找到并总结了一些实现多栏等高自适应布局的方法</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-伪元素content的内容" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/">伪元素content的内容</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/" class="archive-article-date">
-  	<time datetime="2020-03-15T04:48:06.749Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要介绍的是伪元素的content的值可以是什么、怎么用。</p>
-<h2 id="content"><a href="#content" class="headerlink" title="content"></a>content</h2><p><code>::after</code> <code>before</code> 用来创建伪元素作为已选中元素的最后一个或第一个子元素。</p>
-<p>默认为行内元素，</p>
-<p><code>content</code>属性用于在伪元素中插入内容（匿名的可替换元素）</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/">展开全文 >></a>
         </p>
       
 
