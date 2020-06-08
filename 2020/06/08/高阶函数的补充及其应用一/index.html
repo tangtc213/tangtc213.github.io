@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>tang的博客</title>
+  <title>高阶函数的补充及其应用一 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="tangtc233的技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tang的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="前言这篇博客通过一些高阶函数的实例运用加深对高阶的理解 原始数据下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高阶函数的补充及其应用一">
+<meta property="og:url" content="http://yoursite.com/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="tangtc233的技术博客">
+<meta property="og:description" content="前言这篇博客通过一些高阶函数的实例运用加深对高阶的理解 原始数据下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名">
 <meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-06-08T12:37:45.482Z">
+<meta property="article:modified_time" content="2020-06-08T13:23:14.399Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -155,16 +157,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-高阶函数的补充及其应用一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-高阶函数的补充及其应用一" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">高阶函数的补充及其应用一</a>
+    <h1 class="article-title" itemprop="name">
+      高阶函数的补充及其应用一
     </h1>
   
 
@@ -179,11 +179,56 @@
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客通过一些高阶函数的实例运用加深对高阶的理解</p>
 <h3 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h3><p>下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名</p>
-        
-          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/#more">more >></a>
-        
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">var</span> ANCESTRY_FILE = <span class="built_in">JSON</span>.stringify([</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Carolus Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1832</span>, <span class="string">"died"</span>: <span class="number">1905</span>, <span class="string">"father"</span>: <span class="string">"Carel Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria van Brussel"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Emma de Milliano"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1876</span>, <span class="string">"died"</span>: <span class="number">1956</span>, <span class="string">"father"</span>: <span class="string">"Petrus de Milliano"</span>, <span class="string">"mother"</span>: <span class="string">"Sophia van Damme"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria de Rycke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1683</span>, <span class="string">"died"</span>: <span class="number">1724</span>, <span class="string">"father"</span>: <span class="string">"Frederik de Rycke"</span>, <span class="string">"mother"</span>: <span class="string">"Laurentia van Vlaenderen"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1714</span>, <span class="string">"died"</span>: <span class="number">1748</span>, <span class="string">"father"</span>: <span class="string">"Jacobus van Brussel"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna van Rooten"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Philibert Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1907</span>, <span class="string">"died"</span>: <span class="number">1997</span>, <span class="string">"father"</span>: <span class="string">"Emile Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Emma de Milliano"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan Frans van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1761</span>, <span class="string">"died"</span>: <span class="number">1833</span>, <span class="string">"father"</span>: <span class="string">"Jacobus Bernardus van Brussel"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pauwels van Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1535</span>, <span class="string">"died"</span>: <span class="number">1582</span>, <span class="string">"father"</span>: <span class="string">"N. van Haverbeke"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Clara Aernoudts"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1918</span>, <span class="string">"died"</span>: <span class="number">2012</span>, <span class="string">"father"</span>: <span class="string">"Henry Aernoudts"</span>, <span class="string">"mother"</span>: <span class="string">"Sidonie Coene"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Emile Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1877</span>, <span class="string">"died"</span>: <span class="number">1968</span>, <span class="string">"father"</span>: <span class="string">"Carolus Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria Sturm"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lieven de Causmaecker"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1696</span>, <span class="string">"died"</span>: <span class="number">1724</span>, <span class="string">"father"</span>: <span class="string">"Carel de Causmaecker"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna Claes"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1602</span>, <span class="string">"died"</span>: <span class="number">1642</span>, <span class="string">"father"</span>: <span class="string">"Lieven van Haverbeke"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Livina Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1692</span>, <span class="string">"died"</span>: <span class="number">1743</span>, <span class="string">"father"</span>: <span class="string">"Daniel Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna de Pape"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter Bernard Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1695</span>, <span class="string">"died"</span>: <span class="number">1762</span>, <span class="string">"father"</span>: <span class="string">"Willem Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella Wauters"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lieven van Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1570</span>, <span class="string">"died"</span>: <span class="number">1636</span>, <span class="string">"father"</span>: <span class="string">"Pauwels van Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Lievijne Jans"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Joanna de Causmaecker"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1762</span>, <span class="string">"died"</span>: <span class="number">1807</span>, <span class="string">"father"</span>: <span class="string">"Bernardus de Causmaecker"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Willem Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1668</span>, <span class="string">"died"</span>: <span class="number">1731</span>, <span class="string">"father"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Hercke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter Antone Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1753</span>, <span class="string">"died"</span>: <span class="number">1798</span>, <span class="string">"father"</span>: <span class="string">"Jan Francies Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella de Decker"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1801</span>, <span class="string">"died"</span>: <span class="number">1834</span>, <span class="string">"father"</span>: <span class="string">"Jan Frans van Brussel"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna de Causmaecker"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Angela Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1728</span>, <span class="string">"died"</span>: <span class="number">1734</span>, <span class="string">"father"</span>: <span class="string">"Pieter Bernard Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Livina de Vrieze"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Elisabeth Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1711</span>, <span class="string">"died"</span>: <span class="number">1754</span>, <span class="string">"father"</span>: <span class="string">"Jan Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria de Rycke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lievijne Jans"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1542</span>, <span class="string">"died"</span>: <span class="number">1582</span>, <span class="string">"father"</span>:<span class="literal">null</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Bernardus de Causmaecker"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1721</span>, <span class="string">"died"</span>: <span class="number">1789</span>, <span class="string">"father"</span>: <span class="string">"Lieven de Causmaecker"</span>, <span class="string">"mother"</span>: <span class="string">"Livina Haverbeke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jacoba Lammens"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1699</span>, <span class="string">"died"</span>: <span class="number">1740</span>, <span class="string">"father"</span>: <span class="string">"Lieven Lammens"</span>, <span class="string">"mother"</span>: <span class="string">"Livina de Vrieze"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter de Decker"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1705</span>, <span class="string">"died"</span>: <span class="number">1780</span>, <span class="string">"father"</span>: <span class="string">"Joos de Decker"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella van de Steene"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Joanna de Pape"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1654</span>, <span class="string">"died"</span>: <span class="number">1723</span>, <span class="string">"father"</span>: <span class="string">"Vincent de Pape"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella Wauters"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Daniel Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1652</span>, <span class="string">"died"</span>: <span class="number">1723</span>, <span class="string">"father"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Hercke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1631</span>, <span class="string">"died"</span>: <span class="number">1676</span>, <span class="string">"father"</span>: <span class="string">"Pieter Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Anna van Hecke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Martina de Pape"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1666</span>, <span class="string">"died"</span>: <span class="number">1727</span>, <span class="string">"father"</span>: <span class="string">"Vincent de Pape"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella Wauters"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan Francies Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1725</span>, <span class="string">"died"</span>: <span class="number">1779</span>, <span class="string">"father"</span>: <span class="string">"Pieter Bernard Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Livina de Vrieze"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1905</span>, <span class="string">"died"</span>: <span class="number">1997</span>, <span class="string">"father"</span>: <span class="string">"Emile Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Emma de Milliano"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Petronella de Decker"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1731</span>, <span class="string">"died"</span>: <span class="number">1781</span>, <span class="string">"father"</span>: <span class="string">"Pieter de Decker"</span>, <span class="string">"mother"</span>: <span class="string">"Livina Haverbeke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Livina Sierens"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1761</span>, <span class="string">"died"</span>: <span class="number">1826</span>, <span class="string">"father"</span>: <span class="string">"Jan Sierens"</span>, <span class="string">"mother"</span>: <span class="string">"Maria van Waes"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Laurentia Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1710</span>, <span class="string">"died"</span>: <span class="number">1786</span>, <span class="string">"father"</span>: <span class="string">"Jan Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria de Rycke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Carel Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1796</span>, <span class="string">"died"</span>: <span class="number">1837</span>, <span class="string">"father"</span>: <span class="string">"Pieter Antone Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Livina Sierens"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Elisabeth Hercke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1632</span>, <span class="string">"died"</span>: <span class="number">1674</span>, <span class="string">"father"</span>: <span class="string">"Willem Hercke"</span>, <span class="string">"mother"</span>: <span class="string">"Margriet de Brabander"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1671</span>, <span class="string">"died"</span>: <span class="number">1731</span>, <span class="string">"father"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Hercke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Anna van Hecke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1607</span>, <span class="string">"died"</span>: <span class="number">1670</span>, <span class="string">"father"</span>: <span class="string">"Paschasius van Hecke"</span>, <span class="string">"mother"</span>: <span class="string">"Martijntken Beelaert"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria Sturm"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1835</span>, <span class="string">"died"</span>: <span class="number">1917</span>, <span class="string">"father"</span>: <span class="string">"Charles Sturm"</span>, <span class="string">"mother"</span>: <span class="string">"Seraphina Spelier"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jacobus Bernardus van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1736</span>, <span class="string">"died"</span>: <span class="number">1809</span>, <span class="string">"father"</span>: <span class="string">"Jan van Brussel"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Haverbeke"</span>&#125;</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = <span class="built_in">JSON</span>.parse(ANCESTRY_FILE)</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用1-获取其中男性或女性的信息"><a href="#运用1-获取其中男性或女性的信息" class="headerlink" title="运用1 获取其中男性或女性的信息"></a>运用1 获取其中男性或女性的信息</h3><p>利用<code>filter()</code>过滤我们需要的信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">filter(data, <span class="function"><span class="keyword">function</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(p.sex == <span class="string">"m"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面的函数是前一篇博客完成的<code>filter()</code>函数效果与下面的函数一致</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data.filter(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(p.sex == <span class="string">"m"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>那么如何获取男性女性的姓名集合呢？ 通过<code>filter()</code>, <code>map()</code>的链式调用可以实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data.filter(<span class="function"><span class="params">p</span> =&gt;</span> &#123;<span class="keyword">if</span>(p.sex == <span class="string">"m"</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;&#125;).map(<span class="function"><span class="params">p</span> =&gt;</span> p.name)</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用二-实现男性女性年龄平均值的计算"><a href="#运用二-实现男性女性年龄平均值的计算" class="headerlink" title="运用二 实现男性女性年龄平均值的计算"></a>运用二 实现男性女性年龄平均值的计算</h3><p>将函数进行模块化封装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构建一个函数实现平均值的计算</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">average</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 平均值是总量除以数量, 使用reduce完成总量的累计</span></span><br><span class="line">            <span class="keyword">return</span> ary.reduce(<span class="function">(<span class="params">sum , item</span>) =&gt;</span> &#123;<span class="keyword">return</span> (sum += item), sum&#125;) / ary.length</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 构建年龄的计算</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">age</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span>  p.died - p.born</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 判断是否为女性</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">male</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> p.sex == <span class="string">"m"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否为男性</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">female</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> p.sex ==<span class="string">"f"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 求女性的平均年龄</span></span><br><span class="line">        average(data.filter(male).map(age))</span><br><span class="line">        <span class="comment">// 求男性的平均年龄</span></span><br><span class="line">        average(data.filter(female).map(age))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将人物资料与人物名字之间构成集合</span></span><br><span class="line">        <span class="keyword">var</span> byname = data.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;byname[p.name] = p&#125;)</span><br><span class="line">        <span class="comment">// 使用reduce重写这个集合</span></span><br><span class="line">        <span class="keyword">var</span> byname2 =  data.reduce(<span class="function">(<span class="params">obj, item</span>) =&gt;</span> &#123;</span><br><span class="line">            byname2[item.name] = item</span><br><span class="line">            <span class="keyword">return</span> byname2</span><br><span class="line">        &#125;, &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用三-利用高阶函数完成数据分组"><a href="#运用三-利用高阶函数完成数据分组" class="headerlink" title="运用三 利用高阶函数完成数据分组"></a>运用三 利用高阶函数完成数据分组</h3><h4 id="keyBy"><a href="#keyBy" class="headerlink" title="keyBy()"></a>keyBy()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// keyby 的实质是以对象的属性作为关键字建立映射</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">keyby</span>(<span class="params">ary, key</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">            ary.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;result[p[key]] = p&#125;)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy()"></a>groupBy()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 利用关键字property作为分组依据对数组元素进行分组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">groupby1</span>(<span class="params">ary, property</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">            ary.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> key = p[property]</span><br><span class="line">                <span class="keyword">if</span>(!(key <span class="keyword">in</span> result)) &#123;</span><br><span class="line">                    result[key] = []</span><br><span class="line">                &#125;</span><br><span class="line">                    result[key].push(p)</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 利用函数的返回值作为分组依据对数组元素进行分组</span><br><span class="line">        function groupby2(ary, f) &#123;</span><br><span class="line">            var result &#x3D; &#123;&#125;</span><br><span class="line">            ary.forEach(p &#x3D;&gt; &#123;</span><br><span class="line">                var key &#x3D; f(p)</span><br><span class="line">                if(!(key in result)) &#123;</span><br><span class="line">                    result[key] &#x3D; []</span><br><span class="line">                &#125;</span><br><span class="line">                    result[key].push(p)</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">            return result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//再次优化</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">groupby3</span>(<span class="params">ary, by</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">            ary.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> f = by</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">typeof</span>(by) === <span class="string">"string"</span>) &#123;</span><br><span class="line">                   f = <span class="function"><span class="params">item</span> =&gt;</span> item[by]</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">var</span> key = f(p)</span><br><span class="line">                <span class="keyword">if</span>(!(key <span class="keyword">in</span> result)) &#123;</span><br><span class="line">                    result[key] = []</span><br><span class="line">                &#125;</span><br><span class="line">                    result[key].push(p)</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用四-计算每个世纪人们的平均寿命"><a href="#运用四-计算每个世纪人们的平均寿命" class="headerlink" title="运用四 计算每个世纪人们的平均寿命"></a>运用四 计算每个世纪人们的平均寿命</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算每个世纪人的寿命平均值</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getAge</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> p.died - p.born</span><br><span class="line">        &#125; <span class="comment">// 得到每个人的寿命</span></span><br><span class="line">        <span class="comment">// 另一种求数组平均值的方法</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getAverage</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> ary.reduce(<span class="function">(<span class="params">sum, item, idx, ary</span>) =&gt;</span> (sum *= idx,sum += item, sum / (idx + <span class="number">1</span>)), <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getCentury</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(p.died &lt; <span class="number">1600</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"16th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(p.died &lt; <span class="number">1700</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"17th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(p.died &lt; <span class="number">1800</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"18th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(p.died &lt; <span class="number">1900</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"19th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"20th"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="comment">// 得到人属于哪个时期</span></span><br><span class="line">        <span class="keyword">var</span> group = groupby3(data, getCentury) <span class="comment">// 将数据以世纪分组</span></span><br><span class="line">        <span class="keyword">var</span> averageResult = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span>(obj <span class="keyword">in</span> group) &#123;</span><br><span class="line">            averageResult[obj] = getAverage(group[obj].map(getAge))</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -192,16 +237,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">高阶函数的实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -221,698 +325,14 @@
 
 
 
-
-  
-    <article id="post-高阶函数的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">高阶函数的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-06-08T11:15:33.885Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客主要是对高阶函数for<code>forEach()</code> ,<code>filter()</code>, <code>map()</code>,  <code>reduce</code>,进行实现并更深入的探究</p>
-<h2 id="常规实现"><a href="#常规实现" class="headerlink" title="常规实现"></a>常规实现</h2><h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach()"></a>forEach()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法对数组的每个元素执行一次给定的函数。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Array&#125;</span> </span>array </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Function&#125;</span> <span class="variable">func</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;any&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">array, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">        action(array[i],i,array)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-零宽断言" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/">零宽断言</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/" class="archive-article-date">
-  	<time datetime="2020-05-03T01:58:37.590Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h1><h1 id><a href="#" class="headerlink" title></a></h1><h3 id="零宽断言的几种形式"><a href="#零宽断言的几种形式" class="headerlink" title="零宽断言的几种形式"></a>零宽断言的几种形式</h3><ul>
-<li><p><code>/^xxx$/</code>从开始到结尾<code>/^foo/.test(&quot;kfoo&quot;)``/foo$/.test(&quot;foobar&quot;)</code></p>
-</li>
-<li><p><code>/\bxxx\b/</code>左右为空的断言</p>
-</li>
-<li><p><code>/(?=foo)</code>某个位置的右边紧跟foo，正预测先行断言<code>/fo.(?=bar)/.exec(&quot;kkforsfsfoebar&quot;)</code></p>
-</li>
-<li><p><code>/(?!foo)</code>某个位置的右边不紧跟foo，负预测先行断言<code>/fo.(?!bar)/.exec(&quot;kkforsfsfoebar&quot;)</code></p>
-</li>
-<li><p><code>/(?&lt;=bar</code>某个位置的左边紧跟bar， 正回顾后发断言<code>/(?&lt;=bar)fo./.exec(&quot;kkbarforsfsfoebar&quot;)</code></p>
-</li>
-<li><p><code>/(?&lt;!bar)</code>某个位置的左边不紧跟bar， 负回顾后发断言<code>/(?&lt;!bar)fo./.exec(&quot;kkbarforsfsfoebar&quot;)</code></p>
-</li>
-</ul>
-<h2 id="用正则表达式判断有效的密码"><a href="#用正则表达式判断有效的密码" class="headerlink" title="用正则表达式判断有效的密码"></a>用正则表达式判断有效的密码</h2><p>要求：</p>
-<ul>
-<li>6 - 10位字符</li>
-<li>必须要有字母</li>
-<li>必须要有数字</li>
-</ul>
-<p>函数功能实现</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validPass</span>(<span class="params">password</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(</span><br><span class="line">		/^\w&#123;<span class="number">3</span>,<span class="number">20</span>&#125;$/.test(password) &amp;&amp;</span><br><span class="line">		/\d/.test(password) &amp;&amp;</span><br><span class="line">		/[a-zA-Z]/.test(password)</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'VALID'</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'INVALID'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>另一种实现方式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validPass</span>(<span class="params">password</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(</span><br><span class="line">		/^(?=.*\d)(?=.*[a-zA-Z])&#123;<span class="number">3</span>,<span class="number">10</span>&#125;$/.test(password)</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'VALID'</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'INVALID'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="零宽断言扩展"><a href="#零宽断言扩展" class="headerlink" title="零宽断言扩展"></a>零宽断言扩展</h2><p>匹配若干个字符右边是foo</p>
-<p><code>/(?=.*foo)/.exec()</code></p>
-<p>匹配若干个字符右边不是foo</p>
-<p><code>/(?!=.*foo)/.exec()</code></p>
-<p>匹配若干个字符左边是foo</p>
-<p><code>/(?!=foo.*)/.exec()</code></p>
-<p><code>^,$,\b</code>的改写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^   (?&lt;!.) 左边没有任何东西</span><br><span class="line">$   (?!.)  右边没有任何东西</span><br><span class="line">&#x2F;b  (?&#x3D;\W)(?&lt;&#x3D;\w)|(?&#x3D;\W)(?&lt;&#x3D;&#x2F;w)  一边是字母一边不是</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-js重写数组的方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/">js重写数组的方法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-03-17T12:13:54.260Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了加深对数组的理解这篇博客重新写了一遍数组的方法</p>
-<h3 id="Array-length"><a href="#Array-length" class="headerlink" title="Array.length()"></a>Array.length()</h3><p>数组的长度</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lengthOfArray = <span class="function"><span class="keyword">function</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span>(list[i] != <span class="literal">null</span>) &#123;</span><br><span class="line">                i++</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from()"></a>Array.from()</h3><p>数组浅拷贝</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fromArray = <span class="function"><span class="keyword">function</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> map = []</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">typeof</span>(list) == <span class="string">"string"</span>) &#123;</span><br><span class="line">                    map = list.split(<span class="string">''</span>)</span><br><span class="line">                    <span class="keyword">return</span> map</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(list)) &#123;</span><br><span class="line">                    map = list</span><br><span class="line">                    <span class="keyword">return</span> map</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> fault</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-of"><a href="#Array-of" class="headerlink" title="Array.of()"></a>Array.of()</h3><p>创建一个具有可变数量参数的新数组</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayof</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> map = []</span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">                    map.push(<span class="built_in">arguments</span>[i])</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> map</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-entries"><a href="#Array-entries" class="headerlink" title="Array.entries()"></a>Array.entries()</h3><p>返回一个对象，对象包括索引的键/值对</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayentries</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> map = &#123;&#125;</span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                    map[i] = list[i]</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> map</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-reverse"><a href="#Array-reverse" class="headerlink" title="Array.reverse()"></a>Array.reverse()</h3><p>返回一个元素位置颠倒的数组</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayreverse</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> stack = []</span><br><span class="line">               <span class="keyword">var</span> n = list.length - <span class="number">1</span></span><br><span class="line">               <span class="keyword">var</span> i = <span class="number">0</span></span><br><span class="line">               <span class="keyword">while</span>(n &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                   stack[i] = list[n]</span><br><span class="line">                   i++</span><br><span class="line">                   n--</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">return</span> stack</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-tostring"><a href="#Array-tostring" class="headerlink" title="Array.tostring()"></a>Array.tostring()</h3><p>数组变字符串</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arraytostring</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">                str = <span class="string">''</span></span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">                    str  = str + list[i] + <span class="string">','</span></span><br><span class="line">                &#125;</span><br><span class="line">                str  = str + list[list.length - <span class="number">1</span>]</span><br><span class="line">                <span class="keyword">return</span> str</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-fill"><a href="#Array-fill" class="headerlink" title="Array.fill()"></a>Array.fill()</h3><p>对数组元素进行填充</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayFill</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++)&#123;</span><br><span class="line">                list[i] = x</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> list</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-flat"><a href="#Array-flat" class="headerlink" title="Array.flat()"></a>Array.flat()</h3><p>按照一个指定深度遍历数组，并将子数组展开后返回</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayFlat</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">while</span>(x--) &#123;</span><br><span class="line">                stack = []</span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; list.length; i++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">typeof</span>(list[i]) == <span class="string">"object"</span>) &#123;</span><br><span class="line">                        <span class="keyword">while</span> (list[i].length != <span class="number">0</span>) &#123;</span><br><span class="line">                            stack.push(list[i].shift())</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        stack.push(list[i])</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                list = stack</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> list</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-includes"><a href="#Array-includes" class="headerlink" title="Array.includes()"></a>Array.includes()</h3><p>判断数组是否包含一个指定的值</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayIncludes</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            flag = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(list[i] === x) &#123;</span><br><span class="line">                    flag = <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> flag == <span class="number">1</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-indexOf"><a href="#Array-indexOf" class="headerlink" title="Array.indexOf()"></a>Array.indexOf()</h3><p>正向查询元素序列并返回</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayIndexOf</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(list[i] === x) &#123;</span><br><span class="line">                    <span class="keyword">return</span> i</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-lastIndexOf"><a href="#Array-lastIndexOf" class="headerlink" title="Array.lastIndexOf()"></a>Array.lastIndexOf()</h3><p>逆向查询元素序列并返回</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayLastIndexOf</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(i = list.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">                <span class="keyword">if</span>(list[i] === x) &#123;</span><br><span class="line">                    <span class="keyword">return</span> i</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-pop"><a href="#Array-pop" class="headerlink" title="Array.pop()"></a>Array.pop()</h3><p>弹出最后一个元素</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayPop</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; list.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">                stack[i] = list[i]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-push"><a href="#Array-push" class="headerlink" title="Array.push()"></a>Array.push()</h3><p>数组的最后一位拼接一个元素</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayPush</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">    k = list.length</span><br><span class="line">    list[k] = x</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-shift"><a href="#Array-shift" class="headerlink" title="Array.shift()"></a>Array.shift()</h3><p>数组开头弹出一个元素</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayShift</span>(<span class="params">list</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">                stack[i - <span class="number">1</span>] = list[i]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-unshift"><a href="#Array-unshift" class="headerlink" title="Array.unshift()"></a>Array.unshift()</h3><p>数组开头添加一个元素</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayUnshift</span>(<span class="params">list, x</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            stack[<span class="number">0</span>] = x</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= list.length; i++) &#123;</span><br><span class="line">                stack[i] = list[i - <span class="number">1</span>]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Array-slice"><a href="#Array-slice" class="headerlink" title="Array.slice()"></a>Array.slice()</h3><p>返回一个从元素组裁剪出的新数组</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arraySlice</span>(<span class="params">list, a, b</span>) </span>&#123;</span><br><span class="line">            stack = []</span><br><span class="line">            <span class="keyword">for</span>(i = a; i &lt;= b; i++)&#123;</span><br><span class="line">                stack.push(list[i])</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> stack</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-纯css完成轮播图的思路" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/">纯css完成轮播图的思路</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" class="archive-article-date">
-  	<time datetime="2020-03-16T11:47:45.143Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文探讨的是如何在纯css环境中完成轮播图的编写</p>
-<h2 id="第一种方案"><a href="#第一种方案" class="headerlink" title="第一种方案"></a>第一种方案</h2><p>将轮播图排成一排然后通过动画效果实现轮播</p>
-<p>HTML部分：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-css计数器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/16/css%E8%AE%A1%E6%95%B0%E5%99%A8/">css计数器</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/16/css%E8%AE%A1%E6%95%B0%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-03-16T03:36:35.391Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本博客主要是为了理解和运用css计数器</p>
-<h2 id="css计数器的概念及定义"><a href="#css计数器的概念及定义" class="headerlink" title="css计数器的概念及定义"></a>css计数器的概念及定义</h2><p>本质上CSS计数器是由CSS维护的变量，这些变量可能根据CSS规则增加以跟踪使用次数。这允许你根据文档位置来调整内容表现</p>
-<p>计数器的值通过使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/counter-reset" target="_blank" rel="noopener"><code>counter-reset</code></a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/counter-increment" target="_blank" rel="noopener"><code>counter-increment</code></a> 操作，在 <code>content</code> 上应用 <code>counter()</code> 或 <code>counters()</code>函数来显示在页面上</p>
-        
-          <a class="article-more-a" href="/2020/03/16/css%E8%AE%A1%E6%95%B0%E5%99%A8/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/16/css%E8%AE%A1%E6%95%B0%E5%99%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-文字溢出部分显示为省略号" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/">文字溢出部分显示为省略号</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-03-16T03:09:42.753Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客的主要内容时如何实现文字溢出的部分显示为省略号</p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>思路： 要解决三个问题</p>
-<ul>
-<li>如何让文字溢出而不是折行</li>
-<li>如何让文字溢出的部分隐藏</li>
-<li>如何在溢出处添加省略号</li>
-</ul>
-        
-          <a class="article-more-a" href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-单向阴影的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/">单向阴影的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T13:40:59.059Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要探讨css单向阴影的实现和延伸</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-闭合浮动的多种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/">闭合浮动的多种方法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-03-15T13:21:13.640Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客的主要目的是探讨如何完成闭合浮动</p>
-<h2 id="闭合浮动"><a href="#闭合浮动" class="headerlink" title="闭合浮动"></a>闭合浮动</h2><p>  本来块元素是不会主动包住其内部的浮动元素的。<br>  所以需要块元素的高度扩展以包裹其内部的浮动元素</p>
-<p>完成闭合浮动和核心是触发包含块的BFC</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-浮动的规则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/">浮动的规则</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/" class="archive-article-date">
-  	<time datetime="2020-03-15T12:18:34.966Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客依照《CSS权威指南》进行对浮动规则的深刻理解</p>
-<h2 id="浮动的规则"><a href="#浮动的规则" class="headerlink" title="浮动的规则"></a>浮动的规则</h2><ul>
-<li>浮动元素的左右外边界不能超过包含块的左右内边界</li>
-</ul>
-<p>那么能否通过负margin实现伪超越边界呢？</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -935,8 +355,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
