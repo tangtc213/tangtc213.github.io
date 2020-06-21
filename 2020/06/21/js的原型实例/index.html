@@ -6,20 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | tang的博客</title>
+  <title>js的原型实例 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="tangtc233的技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tang的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="前言​        最近学习了关于js中原型与构造函数的理论知识和使用方法，这篇博客通过《JavaScript编程精解》中给的画表格的例子重新复现这个实例，加深对函数原型的理解，后面还有对函数中出现的this的探讨及理解 一些概念函数的封装、多态、继承：封装： &#x2F;&#x2F; 把数据和操作这组数据的函数放在一起，称为对象。此过程叫封装 &#x2F;&#x2F; 封装的另一层含义： 将复杂的操作或计算写成函数， 调用时只需考虑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js的原型实例">
+<meta property="og:url" content="http://yoursite.com/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="tangtc233的技术博客">
+<meta property="og:description" content="前言​        最近学习了关于js中原型与构造函数的理论知识和使用方法，这篇博客通过《JavaScript编程精解》中给的画表格的例子重新复现这个实例，加深对函数原型的理解，后面还有对函数中出现的this的探讨及理解 一些概念函数的封装、多态、继承：封装： &#x2F;&#x2F; 把数据和操作这组数据的函数放在一起，称为对象。此过程叫封装 &#x2F;&#x2F; 封装的另一层含义： 将复杂的操作或计算写成函数， 调用时只需考虑">
 <meta property="og:locale" content="zh">
+<meta property="og:image" content="http://yoursite.com/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B%5C%E5%87%BD%E6%95%B0%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="article:published_time" content="2020-06-21T10:15:35.054Z">
+<meta property="article:modified_time" content="2020-06-21T12:56:49.596Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
 <meta property="article:tag" content="js">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B%5C%E5%87%BD%E6%95%B0%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
   
     <link rel="alternative" href="/atom.xml" title="tang的博客" type="application/atom+xml">
   
@@ -155,295 +159,212 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-js的原型实例" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      js的原型实例
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
+
+        
+        <a href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
   	<time datetime="2020-06-21T10:15:35.054Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-21</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">js的原型实例</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​        最近学习了关于<code>js</code>中原型与构造函数的理论知识和使用方法，这篇博客通过《JavaScript编程精解》中给的画表格的例子重新复现这个实例，加深对函数原型的理解，后面还有对函数中出现的this的探讨及理解</p>
+<h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><h4 id="函数的封装、多态、继承："><a href="#函数的封装、多态、继承：" class="headerlink" title="函数的封装、多态、继承："></a>函数的封装、多态、继承：</h4><p>封装：</p>
+<p><em>// 把数据和操作这组数据的函数放在一起，称为对象。此过程叫封装</em></p>
+<p><em>// 封装的另一层含义： 将复杂的操作或计算写成函数， 调用时只需考虑高晨概念，进而无需考虑该操作的运作细节</em></p>
+<p>多态：</p>
+<p>  <em>// 多个不同类型的对象具有相同的一组接口（方法与方法接受的参数类型与返回值的类型）</em></p>
+<p>继承：</p>
+<p>  <em>// 当一个类型拥有另一个类型的所有特性。可以让这一个类型直接通过某种方式直接获得该类型的所有属性和方法， 即称为继承</em></p>
+<p>  <em>// 被继承称为父类，继承者称为子类</em></p>
+<h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><p>定义：</p>
+<p>每个对象除了拥有自己的属性以外，几乎都包含一个原型（prototype）。原型是另一个对象，是对象的一个属性来源。当访问一个对象不包含的属性时，就会从对象的原型中搜索属性，接着是原型的原型依次类推。</p>
+<p>方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getPrototypeOf() <span class="comment">//返回对象的原型</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty()  <span class="comment">//会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(object1, <span class="string">'property1'</span>, &#123;</span><br><span class="line">  value: <span class="number">42</span>,</span><br><span class="line">  writable: <span class="literal">false</span> <span class="comment">//不可写入</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.create()  <span class="comment">//创建一个新对象，使用现有的对象来提供新创建的对象的__proto__</span></span><br><span class="line"><span class="built_in">Object</span>.create(<span class="literal">null</span>) <span class="comment">//创建无原型对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hasOwnProperty() <span class="comment">// 判断对象自身是否包括某个属性，而不会搜索其原型</span></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><p>使用方法： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;使用构造函数来创建对象，调用时在之前加关键字new 表示调用其构造函数，使用new创建的对象称为构造函数的实例</span><br><span class="line">&#x2F;&#x2F; 构造函数会自动获得一个名为prototype的属性，默认是一个派生子Object.prototype的空对象。所有使用构造函数创建的对象都会将构造函数的prototype属性作为原型</span><br></pre></td></tr></table></figure>
 
+<h2 id="实例：-表格的绘制"><a href="#实例：-表格的绘制" class="headerlink" title="实例： 表格的绘制"></a>实例： 表格的绘制</h2><h4 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h4><p>编写一个程序，将由表格单元格组成的二维数组转化成字符串，该字符串包含与二维数组对应且布局规整的表格</p>
+<h4 id="原始数据："><a href="#原始数据：" class="headerlink" title="原始数据："></a>原始数据：</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [</span><br><span class="line">    [<span class="string">"foobar"</span>, <span class="string">"babaz"</span>, <span class="string">"bazzz\n1\n22222"</span>],</span><br><span class="line">    [<span class="string">"foobar"</span>, <span class="string">"bar\nbaz"</span>, <span class="string">"bazzz\n1\n22222"</span>],</span><br><span class="line">    [<span class="string">"foobar"</span>, <span class="string">"barsfbaz"</span>, <span class="string">"bazzz\n1\n22222"</span>],</span><br><span class="line">    [<span class="string">"foobar"</span>, <span class="string">"bar\nb\naz"</span>, <span class="string">"bazzz\n1\n22222"</span>],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建一个表示单元格的构造函数"><a href="#创建一个表示单元格的构造函数" class="headerlink" title="创建一个表示单元格的构造函数"></a>创建一个表示单元格的构造函数</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将str存入cell中</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Cell</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">            <span class="comment">//如果未构造一个new的函数，那么返回一个new的构造函数</span></span><br><span class="line">            <span class="keyword">if</span>(!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Cell)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> Cell(val)</span><br><span class="line">            &#125;</span><br><span class="line">         <span class="keyword">this</span>.lines = str.split(<span class="string">'\n'</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建求出每行每列最小值的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Cell.prototype.minWidth = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.max(...this.lines.map(<span class="function"><span class="params">it</span> =&gt;</span> it.length))</span><br><span class="line">&#125;</span><br><span class="line">Cell.prototype.minHeight = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.lines.length</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建一个根据输入高贺宽可以画出表格的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Cell.prototype.draw = <span class="function"><span class="keyword">function</span>(<span class="params">width, height</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(width &lt; <span class="keyword">this</span>.minWidth() || height &lt; <span class="keyword">this</span>.minHeight()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Rrror(<span class="string">'Size not enough!!!'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> result = []</span><br><span class="line">        <span class="keyword">var</span> lines = <span class="keyword">this</span>.lines</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; height; i++) &#123;</span><br><span class="line">            <span class="keyword">var</span> line = lines[i] || <span class="string">''</span><span class="comment">//将每一行数据传入line中未定义的变成' '</span></span><br><span class="line">            result.push(line.padEnd(width, <span class="string">' '</span>)) <span class="comment">// 补全每行的空格</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>将原始数据转换为rows</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rows = data.map(<span class="function"><span class="params">row</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> row.map(<span class="function"><span class="params">str</span> =&gt;</span> <span class="keyword">new</span> UnderLineCell(<span class="keyword">new</span> Cell(str)))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>计算高度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rowHeight</span>(<span class="params">rows</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rows.map(<span class="function"><span class="keyword">function</span>(<span class="params">row</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> row.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">max, cell</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">Math</span>.max(max, cell.minHeight())</span><br><span class="line">            &#125;,<span class="number">0</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>计算宽度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">colWidth</span>(<span class="params">rows</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rows[<span class="number">0</span>].map(<span class="function"><span class="keyword">function</span>(<span class="params">_, i</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> rows.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">max, row</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">Math</span>.max(max, row[i].minWidth())</span><br><span class="line">            &#125;,<span class="number">0</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>画表格的函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawTable</span>(<span class="params">rows</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> heights = rowHeight(rows)</span><br><span class="line">        <span class="keyword">var</span> widths = colWidth(rows)</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drawline</span> (<span class="params">blocks, lineNo</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> blocks.map(<span class="function"><span class="keyword">function</span>(<span class="params">block</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> block[lineNo]</span><br><span class="line">            &#125;).join(<span class="string">" "</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drawRow</span>(<span class="params">row, rowNum</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> blocks = row.map(<span class="function"><span class="keyword">function</span>(<span class="params">cell, colNum</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> cell.draw(widths[colNum], heights[rowNum])</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> blocks[<span class="number">0</span>].map(<span class="function"><span class="keyword">function</span>(<span class="params">_,lineNo</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> drawline(blocks, lineNo)</span><br><span class="line">            &#125;).join(<span class="string">"\n"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rows.map(drawRow).join(<span class="string">"\n"</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="构建衍生部分"><a href="#构建衍生部分" class="headerlink" title="构建衍生部分"></a>构建衍生部分</h4><p><em>在每个格子下面添加一系列破折号作为下划线</em></p>
+<p>使用继承继承cell的一些方法但draw方法会重写</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UnderLineCell</span>(<span class="params">inner</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.inner = inner</span><br><span class="line">    &#125;</span><br><span class="line">    UnderLineCell.prototype.minWidth = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.inner.minWidth()</span><br><span class="line">    &#125;</span><br><span class="line">    UnderLineCell.prototype.minHeight = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.inner.minHeight() + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    UnderLineCell.prototype.draw = <span class="function"><span class="keyword">function</span>(<span class="params">width, height</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="keyword">this</span>.inner.draw(width, height - <span class="number">1</span>)</span><br><span class="line">        result.push(<span class="string">'-'</span>.repeat(width))</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>继承部分： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">RCell</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">        Cell.call(<span class="keyword">this</span>, str)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// RCell.prototype = Object.create(Cell.prototype)</span></span><br><span class="line">    <span class="comment">// Cell为原型继承</span></span><br><span class="line">    RCell.prototype.__proto__ = Cell.prototype</span><br><span class="line">    RCell.prototype.draw = <span class="function"><span class="keyword">function</span>(<span class="params">width, height</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(width &lt; <span class="keyword">this</span>.minWidth() || height &lt; <span class="keyword">this</span>.minHeight()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Rrror(<span class="string">'Size not enough!!!'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> result = []</span><br><span class="line">        <span class="keyword">var</span> lines = <span class="keyword">this</span>.lines</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; height; i++) &#123;</span><br><span class="line">            <span class="keyword">var</span> line = lines[i] || <span class="string">''</span><span class="comment">//将每一行数据传入line中未定义的变成' '</span></span><br><span class="line">            result.push(line.padStart(width, <span class="string">' '</span>)) <span class="comment">// 补全每行的空格</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B%5C%E5%87%BD%E6%95%B0%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt></p>
+<p>​    </p>
+<p>​                                                                                <code>drawTable(rows)</code>的运行结果</p>
+<h2 id="关于原型中this的taolun"><a href="#关于原型中this的taolun" class="headerlink" title="关于原型中this的taolun"></a>关于原型中this的taolun</h2><p>下面的内容参考自</p>
+<p><a href="http://www.ruanyifeng.com/blog/2018/06/javascript-this.html" target="_blank" rel="noopener">阮一峰的JavaScript this的运行原理</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 将一个对象赋值给变量obj时</span></span><br><span class="line">    <span class="keyword">var</span> obj = &#123;<span class="attr">foo</span> : <span class="string">"bar"</span>&#125;</span><br><span class="line">    <span class="comment">// 具体是在内存空间中生成一个对象&#123;foo : "bar"&#125; 然后将这个对象的内存地址赋值给obj</span></span><br><span class="line">    <span class="comment">// =&gt; obj 实际上是一个变量地址，访问对象时是先从obj取出对象的地址，然后去这个地址上获取对象</span></span><br><span class="line">    <span class="comment">// 原始的对象以字典结构保存当访问obj.foo属性时实际上</span></span><br><span class="line">    <span class="comment">// 是由obj -&gt; foo -&gt; &#123;[[value]] : 'bar', [[writable]] : true, [[enumerable]] : true,[[configurable]]: true&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 但当属性的值是一个函数时</span></span><br><span class="line">    <span class="keyword">var</span> obj = &#123;<span class="attr">foo</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;&#125;</span><br><span class="line">    <span class="comment">// 函数会重新保存在内存的一个位置， 并把地址赋值foo属性的value中</span></span><br><span class="line">    <span class="comment">// 也就是 obj -&gt; foo -&gt; &#123;[[value]]: xxx&#125; &lt;- function() &#123;&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这样调用函数时，函数可能会在不同的环境中执行， 比如：</span></span><br><span class="line">    <span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="keyword">var</span> obj = &#123;<span class="attr">f</span>: f&#125;</span><br><span class="line">    <span class="comment">// 当单独调用时 f() 是在全局环境中实现的</span></span><br><span class="line">    <span class="comment">// 当使用obj.f()调用时是在obj环境调用的，</span></span><br><span class="line">    <span class="comment">// 所以调用的函数是同一个但调用的方式和环境是不相同的</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 而this的设计目的就是在函数体内部指代函数的当前运行环境</span></span><br><span class="line">    <span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  f: f,</span><br><span class="line">  x: <span class="number">2</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 单独执行</span></span><br><span class="line">f() <span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 调用环境是全局环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// obj 环境执行</span></span><br><span class="line">obj.f() <span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 调用环境在obj内</span></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-06-14T12:06:04.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js中二叉树的基础</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">js中二叉树的基础</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="archive-article-date">
-  	<time datetime="2020-06-08T12:37:45.482Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">高阶函数的补充及其应用一</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-06-08T11:15:33.885Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">高阶函数的实现</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/" class="archive-article-date">
-  	<time datetime="2020-05-03T01:58:37.590Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/">零宽断言</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-03-17T12:13:54.260Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/">js重写数组的方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" class="archive-article-date">
-  	<time datetime="2020-03-16T11:47:45.143Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/">纯css完成轮播图的思路</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/16/css%E8%AE%A1%E6%95%B0%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-03-16T03:36:35.391Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/16/css%E8%AE%A1%E6%95%B0%E5%99%A8/">css计数器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-03-16T03:09:42.753Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/">文字溢出部分显示为省略号</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T13:40:59.059Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/">单向阴影的实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="extend next" rel="next" href="/archives/2020/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -467,8 +388,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
