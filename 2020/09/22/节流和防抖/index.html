@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | tang的博客</title>
+  <title>节流和防抖 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="tangtc233的技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tang的博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="前言通过使用js重新实现节流函数和防抖函数，加深对这两个概念的理解 定义和应用场景节流和防抖的实质是一种节约资源的行为 函数节流throttle: 指定时间间隔内只会执行一次任务 ​        如使用长轮询时使用_.throttle可以有效的定时从服务器对客户端发送改变的数据。从而节约资源 函数防抖debound: 任务频繁触发的情况下，只有任务触发的间隔超过指定间隔的时候，任务才会执行 ​">
+<meta property="og:type" content="article">
+<meta property="og:title" content="节流和防抖">
+<meta property="og:url" content="http://yoursite.com/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="tangtc233的技术博客">
+<meta property="og:description" content="前言通过使用js重新实现节流函数和防抖函数，加深对这两个概念的理解 定义和应用场景节流和防抖的实质是一种节约资源的行为 函数节流throttle: 指定时间间隔内只会执行一次任务 ​        如使用长轮询时使用_.throttle可以有效的定时从服务器对客户端发送改变的数据。从而节约资源 函数防抖debound: 任务频繁触发的情况下，只有任务触发的间隔超过指定间隔的时候，任务才会执行 ​">
 <meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-09-22T14:12:21.631Z">
+<meta property="article:modified_time" content="2020-09-22T14:38:34.051Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -155,295 +157,169 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-节流和防抖" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      节流和防抖
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" class="archive-article-date">
+
+        
+        <a href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" class="archive-article-date">
   	<time datetime="2020-09-22T14:12:21.631Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-22</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/">节流和防抖</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过使用js重新实现节流函数和防抖函数，加深对这两个概念的理解</p>
+<h3 id="定义和应用场景"><a href="#定义和应用场景" class="headerlink" title="定义和应用场景"></a>定义和应用场景</h3><p>节流和防抖的实质是一种节约资源的行为</p>
+<p>函数节流throttle: 指定时间间隔内只会执行一次任务</p>
+<p>​        如使用长轮询时使用_.throttle可以有效的定时从服务器对客户端发送改变的数据。从而节约资源</p>
+<p>函数防抖debound: 任务频繁触发的情况下，只有任务触发的间隔超过指定间隔的时候，任务才会执行</p>
+<p>​        网站为了提高用户体验，不会再输入框失去焦点的时候再去判断用户名是否被占用，而是在输入的时候就在判断这个用户名是否已被注册</p>
+<h3 id="两个函数的实现"><a href="#两个函数的实现" class="headerlink" title="两个函数的实现"></a>两个函数的实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">f, time = <span class="number">1000</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> canRun = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// 初始状态设置为真</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!canRun) <span class="keyword">return</span>; <span class="comment">//canRun 为假时不运行</span></span><br><span class="line">        canRun = <span class="literal">false</span>; <span class="comment">// 将canRun设置为假</span></span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            f.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">            canRun = <span class="literal">true</span>;</span><br><span class="line">        &#125;, time);  <span class="comment">// 每隔time时间后重新运行一次函数的调用</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">f, time</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> id = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        clearTimeout(id) <span class="comment">// 每当键按下时将上一次的延时取消</span></span><br><span class="line">        id = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            f.call(<span class="keyword">this</span>, e)</span><br><span class="line">        &#125;, e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过闭包保存一个标记来保存 setTimeout 返回的值，每当用户输入的时候把前一个 setTimeout clear 掉，</span></span><br><span class="line"><span class="comment">//创建一个新的 setTimeout，这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行f调用</span></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>通过引入lodash可以很简单的使用节流和防抖函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i lodash</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line">_.throttle(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to throttle.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to throttle invocations to.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=true] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br><span class="line"></span><br><span class="line">_.debounce(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to debounce.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to delay.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=false] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.maxWait] (number): The maximum time func is allowed to be delayed before it's invoked.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-09-21T14:07:07.787Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-21</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js实现链表及其方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">js实现链表及其方法</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/" class="archive-article-date">
-  	<time datetime="2020-06-28T11:29:21.436Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/">JSON解析器及其扩展</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
-  	<time datetime="2020-06-21T10:15:35.054Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">js的原型实例</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-06-14T12:06:04.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">js中二叉树的基础</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="archive-article-date">
-  	<time datetime="2020-06-08T12:37:45.482Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">高阶函数的补充及其应用一</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-06-08T11:15:33.885Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">高阶函数的实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/" class="archive-article-date">
-  	<time datetime="2020-05-03T01:58:37.590Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/">零宽断言</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-03-17T12:13:54.260Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/">js重写数组的方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" class="archive-article-date">
-  	<time datetime="2020-03-16T11:47:45.143Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/">纯css完成轮播图的思路</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -467,8 +343,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
