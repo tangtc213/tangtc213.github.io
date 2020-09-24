@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | tang的博客</title>
+  <title>bom速记 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="tangtc233的技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tang的博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="BOM 什么是BOM？  Browser Object Model   DOM一般指document上提供的相关 API  API Application Programming Interface 应用编程接口 以函数，类，方法，属性等体现出来   GUI Graphic User Interface 图形用户界面 以画面和键鼠操作的形式体现   CLI 命令行接口 Command Line I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bom速记">
+<meta property="og:url" content="http://yoursite.com/2020/09/24/bom%E9%80%9F%E8%AE%B0/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="tangtc233的技术博客">
+<meta property="og:description" content="BOM 什么是BOM？  Browser Object Model   DOM一般指document上提供的相关 API  API Application Programming Interface 应用编程接口 以函数，类，方法，属性等体现出来   GUI Graphic User Interface 图形用户界面 以画面和键鼠操作的形式体现   CLI 命令行接口 Command Line I">
 <meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-09-24T10:50:57.133Z">
+<meta property="article:modified_time" content="2020-09-24T10:57:10.247Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -155,295 +157,429 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-bom速记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      bom速记
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/24/bom%E9%80%9F%E8%AE%B0/" class="archive-article-date">
+
+        
+        <a href="/2020/09/24/bom%E9%80%9F%E8%AE%B0/" class="archive-article-date">
   	<time datetime="2020-09-24T10:50:57.133Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-24</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/24/bom%E9%80%9F%E8%AE%B0/">bom速记</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h1><ul>
+<li><p>什么是BOM？</p>
+<ul>
+<li>Browser Object Model</li>
+</ul>
+</li>
+<li><p>DOM一般指document上提供的相关 API</p>
+<ul>
+<li>API Application Programming Interface 应用编程接口<ul>
+<li>以函数，类，方法，属性等体现出来</li>
+</ul>
+</li>
+<li>GUI Graphic User Interface 图形用户界面<ul>
+<li>以画面和键鼠操作的形式体现</li>
+</ul>
+</li>
+<li>CLI 命令行接口 Command Line Interface<ul>
+<li>以命令的输入与输出为体现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>BOM一般来说泛指那些浏览器里提供的除JS内置API以外</p>
+<ul>
+<li>与DOM操作无关的API</li>
+</ul>
+</li>
+<li><p>原则上这是一个非官方的叫法，并没有相关的文档</p>
+</li>
+<li><p><a href="https://stackoverflow.com/questions/4416317/what-is-the-dom-and-bom-in-javascript" target="_blank" rel="noopener">https://stackoverflow.com/questions/4416317/what-is-the-dom-and-bom-in-javascript</a></p>
+</li>
+<li><p>如</p>
+<ul>
+<li>alert/prompt/confirm</li>
+<li>Worker</li>
+<li>Blob Binary Large Object blob</li>
+</ul>
+</li>
+<li><p>完善的 BOM API 一般认为是以下这些浏览器提供的对象</p>
+<ul>
+<li>screen</li>
+<li>history</li>
+<li>location</li>
+<li>navigator</li>
+<li>window</li>
+</ul>
+</li>
+<li><p>这几个对象可以分别为我们提供与页面和浏览器相关的各种信息</p>
+<ul>
+<li><p>screen</p>
+<ul>
+<li>width/height 操作系统像素</li>
+<li>availHeight/Width</li>
+<li>color/pixelDepth = 24<ul>
+<li>色深，说白了即色彩的多样性，现代开发中基本没啥用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>location</p>
+<ul>
+<li><p>host 域名：端口-带端口号</p>
+</li>
+<li><p>hostname 域名-不带端口号</p>
+</li>
+<li><p>hash URL#后面一部分</p>
+<ul>
+<li>window.on hashchange</li>
+<li>另外 hash 的内容是不会主动被浏览器发往服务器的<ul>
+<li>即请求 <a href="http://example.com/a.html#abc" target="_blank" rel="noopener">http://example.com/a.html#abc</a></li>
+<li>在网络层面，相当于请求<a href="http://example.com/a.html" target="_blank" rel="noopener">http://example.com/a.html</a></li>
+<li>浏览器发送的第一行内容是 GET /a.html HTTP/1.1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>port 端口</p>
+</li>
+<li><p>protocol 协议 http:</p>
+</li>
+<li><p>origin 源/域，即如果两个页面的location.origin不同，则被认为是不同的域的</p>
+<ul>
+<li>‘<a href="http://example.com:8080&#39;">http://example.com:8080&#39;</a></li>
+<li><a href="http://www.baidu.com/a.html" target="_blank" rel="noopener">http://www.baidu.com/a.html</a></li>
+<li><a href="http://www.baidu.com:8080/b.html" target="_blank" rel="noopener">http://www.baidu.com:8080/b.html</a></li>
+</ul>
+</li>
+<li><p>href 地址栏里的完整URL，包含hash</p>
+</li>
+<li><p>search 第一个?后面#前面的内容，即query string部分，也叫查询字符串query string</p>
+<ul>
+<li><a href="http://example.com/a/b/c.html?foo=bar&amp;c=d#abcdef?iekjdsf" target="_blank" rel="noopener">http://example.com/a/b/c.html?foo=bar&amp;c=d#abcdef?iekjdsf</a></li>
+</ul>
+</li>
+<li><p>reload() 刷新页面</p>
+</li>
+<li><p>location.assign(url) &lt;=&gt; location.href = url &lt;=&gt; location = url</p>
+</li>
+<li><p>replace(url) 用url替换当面页面地址，且不把跳转记录保存在浏览器的前进后退按钮中</p>
+</li>
+<li><p>同时，上面列的所有属性几乎都是可写的，更改它们会导致浏览器做出相应的操作（一般来说是重新加载或刷新页面）</p>
+<ul>
+<li>更改hash不会让页面刷新，但会触发window.onhashchange事件，可以在这个事件的handler里做相应的操作（如刷新，或请求ajax）（一般用来做前端路由）<ul>
+<li>在老浏览器里，可以用setInterval，每隔比如说50ms检测一次location.hash的值，如果发现变化了，就主动调用window.onhashchange()函数<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lastHash = location.hash;</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lastHash != location.hash) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'hash has changed'</span>)</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.onhashchange === <span class="string">'function'</span>)&#123;</span><br><span class="line">          <span class="built_in">window</span>.onhashchange()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//window.onhashchange || window.onhashchange()</span></span><br><span class="line">        lastHash = location.hash</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="number">50</span>)</span><br></pre></td></tr></table></figure></li>
+<li>如果hash对应于页面某元素的id或name的值，页面也会跳转到那个元素的位置。</li>
+<li>:target 选择器，选中的是id的值为hash内容的元素</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>location对象本身也是可以被赋值的，与给href属性赋值是一样的效果</p>
+</li>
+<li><p>同时，a标签上也几乎有与location对象一一对应的属性</p>
+<ul>
+<li>同样是可读写的</li>
+<li>可以使用这个特性来实现url的解析</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>history</p>
+<ul>
+<li>length</li>
+<li>pushState(state, pageTitle, url)<ul>
+<li>然后通过 ajax 来请求数据并更新页面内容的</li>
+<li>通过window.onpopstate在浏览器后退时，把页面改回对应原来URL的内容<ul>
+<li>history其实是一个栈</li>
+<li>在按前进后退时会在栈中来回游走</li>
+</ul>
+</li>
+<li>现代浏览器中，可以用这个方法实现URL的改变但页面不刷新</li>
+<li>以此实现 pjax =&gt; pushState + ajax</li>
+</ul>
+</li>
+<li>replaceState(参数同上)</li>
+<li>go(number)</li>
+<li>back()/forward()<ul>
+<li>等同于按前进后退按钮，会触发popstate事件</li>
+<li>back()相当于go(-1)，forward()相当于go(1)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>navigator</p>
+<ul>
+<li>onLine，是否在线，H5属性</li>
+<li>userAgent 用户代理字符串<ul>
+<li>有很多与浏览器本身有关的信息，一般也用于通过JS判断浏览器的版本，厂商，操作系统等信息</li>
+<li>有些浏览器可以强行修改这个字符串</li>
+<li>会在发送http请求时放进User-Agent首部里<ul>
+<li>服务器同样可以根据这个头来判断请求是来自手机还是PC，以此返回不同的页面内容<ul>
+<li>HTTP 响应头里有一个首部：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 removed temper</span><br><span class="line">Location: http:&#x2F;&#x2F;m.mi.com</span><br></pre></td></tr></table></figure></li>
+<li>注意此跟media query响应式不同，响应式是页面相同，但在不同的屏幕上显示不同的样式</li>
+<li>而服务器根据这个内容返回不同的页面，是指针对不同的页面，吐出的html源代码都不同</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>还有很多其它的属性，但基本不用，各位可以自行在控制台中查看</p>
+</li>
+</ul>
+</li>
+<li><p>window</p>
+<ul>
+<li><p>name</p>
+<ul>
+<li>总是字符串</li>
+<li>不随页面的导航而清空（除非页面里的js主动更改）</li>
+<li>可以实现跨域</li>
+</ul>
+</li>
+<li><p>opener</p>
+<ul>
+<li>可以使用这个特性实现跨页面的颜色选择器</li>
+<li>蠕虫</li>
+</ul>
+</li>
+<li><p>open</p>
+<ul>
+<li><p>打开一个新窗口</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open</a></p>
+<ul>
+<li><pre><code class="js">javascript:<span class="built_in">window</span>.open(
+<span class="string">'https://wx.qq.com/?lang=zh_CN'</span>,
+<span class="string">''</span>,
+<span class="string">'left=200,top=100,width=800,height=666,toolbar=yes,modal=yes'</span>)
 
-        <div class="article-info info-on-right">
-          
-          
+<span class="built_in">window</span>.open(url, title, {
+  menubar: <span class="literal">true</span>,
+  addressbar: <span class="literal">false</span>,
+  toolbar: <span class="literal">false</span>,
+  top: <span class="number">200</span>,
+  left: <span class="number">300</span>,
+  width: <span class="number">500</span>,
+})</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>parent</p>
+<ul>
+<li>父窗体（frame）</li>
+</ul>
+</li>
+<li><p>top</p>
+<ul>
+<li>顶层窗体（frame）</li>
+</ul>
+</li>
+<li><p>screenX/Y</p>
+<ul>
+<li>窗口左上角距离屏幕左上角的距离</li>
+</ul>
+</li>
+<li><p>pageX/YOffset</p>
+</li>
+<li><p>scrollX/Y</p>
+</li>
+<li><p>scrollBy/To</p>
+</li>
+<li><p>status</p>
+<ul>
+<li>以前浏览器还有状态栏时，显示在状态栏上的文字</li>
+</ul>
+</li>
+<li><p>window.document.title</p>
+<ul>
+<li>设置网页的标题</li>
+</ul>
+</li>
+<li><p>atob/btoa()</p>
+<ul>
+<li>base64编解码</li>
+</ul>
+</li>
+<li><p>blur/focus()</p>
+<ul>
+<li>让窗口获取或者失去焦点</li>
+<li>on blur/focus<ul>
+<li>不少考试系统</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>window.getComputedStyle(node, [pseudoElementSelector])</p>
+<ul>
+<li>window.getComputedStyle(document.body)</li>
+<li>window.getComputedStyle(document.body, ‘before’)</li>
+</ul>
+</li>
+<li><p>stop()停止加载页面</p>
+</li>
+<li><ul>
+<li>相关文档请自行查询MDN</li>
+</ul>
+</li>
+<li><p>mdn</p>
+<ul>
+<li>history</li>
+<li>screen</li>
+<li>location</li>
+<li>navigator</li>
+</ul>
+</li>
+</ul>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/09/24/bom%E9%80%9F%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-09-24T09:26:51.498Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-24</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">正则速记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/">正则速记</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/24/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-09-24T09:16:52.908Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/24/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/">applycallbind的实现</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" class="archive-article-date">
-  	<time datetime="2020-09-22T14:12:21.631Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/">节流和防抖</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-09-21T14:07:07.787Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">js实现链表及其方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/" class="archive-article-date">
-  	<time datetime="2020-06-28T11:29:21.436Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/">JSON解析器及其扩展</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
-  	<time datetime="2020-06-21T10:15:35.054Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">js的原型实例</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-06-14T12:06:04.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">js中二叉树的基础</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="archive-article-date">
-  	<time datetime="2020-06-08T12:37:45.482Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">高阶函数的补充及其应用一</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-06-08T11:15:33.885Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">高阶函数的实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -467,8 +603,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
