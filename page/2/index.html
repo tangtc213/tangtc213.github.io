@@ -157,6 +157,384 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-js实现链表及其方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">js实现链表及其方法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-09-21T14:07:07.787Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="js-实现链表及其方法"><a href="#js-实现链表及其方法" class="headerlink" title="js 实现链表及其方法"></a>js 实现链表及其方法</h2><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>通过js我们可以实现链表的搭建及其一些方法从而加深对链表的理解</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>  一个简单的链表,直接创建时应该从最后一项开始创建，到头结点，下面的例子中<code>Node1</code>就是头结点，<code>Node1</code>形成了一个链式结构，这就是链表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Node3 = &#123;</span><br><span class="line">    val : <span class="string">'c'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : <span class="literal">null</span> <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> Node2 = &#123;</span><br><span class="line">    val : <span class="string">'b'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : Node3 <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> Node1 = &#123;</span><br><span class="line">    val : <span class="string">'a'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : Node2 <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="由数组转化为链表函数的实现"><a href="#由数组转化为链表函数的实现" class="headerlink" title="由数组转化为链表函数的实现"></a>由数组转化为链表函数的实现</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">arrayToList1</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">if</span> (ary.length == <span class="number">0</span>) &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">var</span> node = &#123;&#125;</span><br><span class="line">          node.val = ary.shift() <span class="comment">//每创建一个节点，将数组元素从头部取出</span></span><br><span class="line">          node.next = arrayToList1(ary)</span><br><span class="line">          <span class="keyword">return</span> node</span><br><span class="line">      &#125;</span><br><span class="line"><span class="keyword">var</span> nodeA = arrayToListl([<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id><a href="#" class="headerlink" title></a></h4><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>从末尾插入链表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertListlast</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (node.next == <span class="literal">null</span>) &#123;</span><br><span class="line">                node.next = &#123;</span><br><span class="line">                    val : num,</span><br><span class="line">                    next : <span class="literal">null</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> insertListlast(node.next, num)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从开始插入链表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertListfrist</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> N = node</span><br><span class="line">            node = &#123;</span><br><span class="line">                val : num,</span><br><span class="line">                next : N</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断元素是否在链表内</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInlist</span>(<span class="params">node, value</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">var</span> n = node</span><br><span class="line">           <span class="keyword">while</span>(n != <span class="literal">null</span> &amp;&amp; n.val != value) &#123;</span><br><span class="line">               n = n.next</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (n == <span class="literal">null</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>将多项函数整合后即可实现一个链表class</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.node = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 初始化链表</span></span><br><span class="line">    init(array) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">arrayToList1</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (ary.length == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">var</span> node = &#123;&#125;</span><br><span class="line">            node.val = ary.shift()</span><br><span class="line">            node.next = arrayToList1(ary)</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = arrayToList1(array)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从头部插入链表</span></span><br><span class="line">    insertHead(num) &#123;</span><br><span class="line">        <span class="keyword">var</span> n = <span class="keyword">this</span>.node</span><br><span class="line">        <span class="keyword">var</span> newNode = &#123;</span><br><span class="line">            val : num,</span><br><span class="line">            next : n</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = newNode</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从尾部插入链表</span></span><br><span class="line">    insertEnd(num) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">insertListlast</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (node.next == <span class="literal">null</span>) &#123;</span><br><span class="line">                node.next = &#123;</span><br><span class="line">                    val : num,</span><br><span class="line">                    next : <span class="literal">null</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> insertListlast(node.next, num)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = insertListlast(<span class="keyword">this</span>.node, num)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 判断元素是否在链表内</span></span><br><span class="line">    has() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> tempNode = <span class="keyword">this</span>.node</span><br><span class="line">            <span class="keyword">while</span>(tempNode != <span class="literal">null</span> &amp;&amp; tempNode.val != value) &#123;</span><br><span class="line">                tempNode = tempNode.next</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (tempNode == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JSON解析器及其扩展" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/">JSON解析器及其扩展</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/" class="archive-article-date">
+  	<time datetime="2020-06-28T11:29:21.436Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要探讨的是如何实现<code>JSON</code>解析器，以及如何将语句用树状结构来表示</p>
+<h3 id="JSON解析器"><a href="#JSON解析器" class="headerlink" title="JSON解析器"></a>JSON解析器</h3><p>​    <code>JSON.parse</code>方法可以将一段<code>JSON</code>类型的字符串转换为机器可以看懂的结构</p>
+<p>比如对<code>&#39;[111,222,{&quot;a&quot;:3},{&quot;b&quot;:true,&quot;c&quot;:&quot;fooobar&quot;,&quot;d&quot;:[1,false,[null,4,{&quot;x&quot;:1,&quot;y&quot;:2}]]}]&#39;</code>进行转换可以得到以下结构的数据</p>
+<p>​    <img src="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/JSON%E5%AE%9E%E4%BE%8B.png" alt></p>
+<p>而这个方法是如何实现的呢，我们可以通过使用遍历加递归降级的方法将一个复杂的字符串转换为一些简单的部分，通过多个函数对不同的数据类型分类转换。</p>
+<h3 id="JSON解析器的实现"><a href="#JSON解析器的实现" class="headerlink" title="JSON解析器的实现"></a>JSON解析器的实现</h3><p>首先分类谈论遇到什么字符返回什么内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseValue</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">'['</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseArray()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">'&#123;'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseObject()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">'"'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> parseString()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">"t"</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseTrue()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">"f"</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseFalse()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">"N"</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseNull()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> parseNumber()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>遇见各种类型数据时的处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 遇到数组的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseArray</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = []</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">while</span>(str[i] != <span class="string">']'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> value = parseValue()</span><br><span class="line">        result.push(value)</span><br><span class="line">         <span class="keyword">if</span>(str[i]===<span class="string">','</span>) &#123;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 遇到字符串的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseString</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">var</span> result = <span class="string">''</span></span><br><span class="line">    <span class="keyword">while</span>(str[i] != <span class="string">'"'</span> ) &#123;</span><br><span class="line">        result += str[i]</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遇到对象时的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseObject</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">while</span>(str[i] != <span class="string">'&#125;'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> key = parseString()</span><br><span class="line">        i++</span><br><span class="line">        <span class="keyword">var</span> value = parseValue()</span><br><span class="line">        result[key] = value</span><br><span class="line">        <span class="keyword">if</span>(str[i] === <span class="string">','</span>) &#123;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遇到数字时的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseNumber</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> numStr = <span class="string">''</span></span><br><span class="line">    <span class="keyword">while</span>(isNumberDight(str[i])) &#123;</span><br><span class="line">        numStr += str[i++]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseInt</span>(numStr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isNumberDight</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> code = c.charCodeAt(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span> code0 = <span class="string">'0'</span>.charCodeAt(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span> code9 = <span class="string">'9'</span>.charCodeAt(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> code &gt;= code0 &amp;&amp; code &lt;= code9</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遇到true</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseTrue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i+=<span class="number">4</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 遇到false</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseFalse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i+=<span class="number">5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseNull</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i+=<span class="number">4</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>下面是一道leetcodde上的题目它可以使用类似解析器的方式完成</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">expression</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;boolean&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//  解析布尔表达式</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    给你一个以字符串形式表述的 布尔表达式（boolean） expression，返回该式的运算结果。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">有效的表达式需遵循以下约定：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">"t"，运算结果为 True</span></span><br><span class="line"><span class="comment">"f"，运算结果为 False</span></span><br><span class="line"><span class="comment">"!(expr)"，运算过程为对内部表达式 expr 进行逻辑 非的运算（NOT）</span></span><br><span class="line"><span class="comment">"&amp;(expr1,expr2,...)"，运算过程为对 2 个或以上内部表达式 expr1, expr2, ... 进行逻辑 与的运算（AND）</span></span><br><span class="line"><span class="comment">"|(expr1,expr2,...)"，运算过程为对 2 个或以上内部表达式 expr1, expr2, ... 进行逻辑 或的运算（OR）</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">来源：力扣（LeetCode）</span></span><br><span class="line"><span class="comment">链接：https://leetcode-cn.com/problems/parsing-a-boolean-expression</span></span><br><span class="line"><span class="comment">著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>解法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">0</span></span><br><span class="line"><span class="keyword">var</span> expr = <span class="string">"|(&amp;(t,f,t),!(t))"</span></span><br><span class="line"><span class="keyword">var</span> parseBoolExpr = <span class="function"><span class="keyword">function</span>(<span class="params">expression</span>) </span>&#123;</span><br><span class="line">    expr = expression</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> parseExpr()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseExpr</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"|"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseOr()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"&amp;"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseAnd()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"!"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseNot()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"t"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseTrue()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"f"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseFalse()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 运行树</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">runTree</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root.type === <span class="string">'fcall'</span>) &#123;</span><br><span class="line">        <span class="keyword">switch</span>(root.name) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&amp;'</span> :</span><br><span class="line">                <span class="keyword">var</span> and = <span class="function">(<span class="params">...args</span>) =&gt;</span> args.reduce(<span class="function">(<span class="params">a,b</span>) =&gt;</span> a &amp;&amp; b)</span><br><span class="line">                <span class="keyword">return</span> and(...root.params.map(runTree))</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'|'</span> :</span><br><span class="line">                <span class="keyword">var</span> or = <span class="function">(<span class="params">...args</span>) =&gt;</span> args.reduce(<span class="function">(<span class="params">a,b</span>) =&gt;</span> a || b)</span><br><span class="line">                <span class="keyword">return</span> or(...root.params.map(runTree))</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'!'</span> :</span><br><span class="line">                <span class="keyword">return</span> !runTree(root.params[<span class="number">0</span>])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.type === <span class="string">"value"</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> root.value</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 构建语法树时返回的是节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseOr</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> node = &#123;</span><br><span class="line">        type: <span class="string">'fcall'</span>,</span><br><span class="line">        name: <span class="string">'|'</span>,</span><br><span class="line">        params: [],</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// |(a,b,c,)</span></span><br><span class="line">    i += <span class="number">2</span> <span class="comment">// 包括括号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        node.params.push(parseExpr())</span><br><span class="line">        <span class="keyword">if</span>(expr[i] === <span class="string">")"</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++  <span class="comment">// 跳过逗号</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++ <span class="comment">// 跳过括号</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseAnd</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> node = &#123;</span><br><span class="line">        type: <span class="string">'fcall'</span>,</span><br><span class="line">        name: <span class="string">'&amp;'</span>,</span><br><span class="line">        params: [],</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// |(a,b,c,)</span></span><br><span class="line">    i += <span class="number">2</span> <span class="comment">// 包括括号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        node.params.push(parseExpr())</span><br><span class="line">        <span class="keyword">if</span>(expr[i] === <span class="string">")"</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++  <span class="comment">// 跳过逗号</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++ <span class="comment">// 跳过括号</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseNot</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> node = &#123;</span><br><span class="line">        type: <span class="string">'fcall'</span>,</span><br><span class="line">        name: <span class="string">'!'</span>,</span><br><span class="line">        params: [],</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// |(a,b,c,)</span></span><br><span class="line">    i += <span class="number">2</span> <span class="comment">// 包括括号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        node.params.push(parseExpr())</span><br><span class="line">        <span class="keyword">if</span>(expr[i] === <span class="string">")"</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++  <span class="comment">// 跳过逗号</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++ <span class="comment">// 跳过括号</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseTrue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: <span class="string">'value'</span>,</span><br><span class="line">        name: <span class="string">'t'</span>,</span><br><span class="line">        value: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseFalse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: <span class="string">'value'</span>,</span><br><span class="line">        name: <span class="string">'f'</span>,</span><br><span class="line">        value: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//  将代码转换为c语言风格</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">transformToCStyle</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root.type == <span class="string">'fcall'</span>) &#123;</span><br><span class="line">        <span class="keyword">switch</span>(root.name) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'|'</span> :</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'and('</span> + root.params.map(transformToCStyle).join(<span class="string">','</span>) + <span class="string">')'</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&amp;'</span> :</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'or('</span> + root.params.map(transformToCStyle).join(<span class="string">','</span>) + <span class="string">')'</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'!'</span> :</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'!('</span> + root.params.map(transformToCStyle).join(<span class="string">','</span>) + <span class="string">')'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(root.type == <span class="string">'value'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> root.value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-js的原型实例" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">js的原型实例</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
+  	<time datetime="2020-06-21T10:15:35.054Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​        最近学习了关于<code>js</code>中原型与构造函数的理论知识和使用方法，这篇博客通过《JavaScript编程精解》中给的画表格的例子重新复现这个实例，加深对函数原型的理解，后面还有对函数中出现的this的探讨及理解</p>
+<h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><h4 id="函数的封装、多态、继承："><a href="#函数的封装、多态、继承：" class="headerlink" title="函数的封装、多态、继承："></a>函数的封装、多态、继承：</h4><p>封装：</p>
+<p><em>// 把数据和操作这组数据的函数放在一起，称为对象。此过程叫封装</em></p>
+<p><em>// 封装的另一层含义： 将复杂的操作或计算写成函数， 调用时只需考虑高晨概念，进而无需考虑该操作的运作细节</em></p>
+<p>多态：</p>
+<p>  <em>// 多个不同类型的对象具有相同的一组接口（方法与方法接受的参数类型与返回值的类型）</em></p>
+<p>继承：</p>
+<p>  <em>// 当一个类型拥有另一个类型的所有特性。可以让这一个类型直接通过某种方式直接获得该类型的所有属性和方法， 即称为继承</em></p>
+<p>  <em>// 被继承称为父类，继承者称为子类</em></p>
+        
+          <a class="article-more-a" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-js中二叉树的基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">js中二叉树的基础</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" class="archive-article-date">
+  	<time datetime="2020-06-14T12:06:04.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这周学习了有关二叉树的一些基础并在leetcode上刷了一些有关的题目，下面是对这周的学习做一下基本的总结</p>
+<h2 id="二叉树的基本概念"><a href="#二叉树的基本概念" class="headerlink" title="二叉树的基本概念"></a>二叉树的基本概念</h2><p>首先是树的一些概念</p>
+<pre><code>树的概念：
+树是特殊的图 T = （V， E），节点数|v| = n, 边数|E| = e
+指定一节点r =&gt; root 树的根-&gt; T=&gt; 有根树
+取T 内部的节点为根得到的子树也是有根树，称作Ti = subtree（ri）
+ri是r的child（子节点）ri之间互称兄弟，r是父节点
+指定Ti作为T的第i个子树ri称作r的第i个孩子=&gt; T就是有序树（order Tree）</code></pre>
+        
+          <a class="article-more-a" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-高阶函数的补充及其应用一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">高阶函数的补充及其应用一</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="archive-article-date">
+  	<time datetime="2020-06-08T12:37:45.482Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客通过一些高阶函数的实例运用加深对高阶的理解</p>
+<h3 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h3><p>下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名</p>
+        
+          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-高阶函数的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -541,351 +919,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/03/16/css%E8%AE%A1%E6%95%B0%E5%99%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-文字溢出部分显示为省略号" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/">文字溢出部分显示为省略号</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-03-16T03:09:42.753Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客的主要内容时如何实现文字溢出的部分显示为省略号</p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>思路： 要解决三个问题</p>
-<ul>
-<li>如何让文字溢出而不是折行</li>
-<li>如何让文字溢出的部分隐藏</li>
-<li>如何在溢出处添加省略号</li>
-</ul>
-        
-          <a class="article-more-a" href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/16/%E6%96%87%E5%AD%97%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8F%B7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-单向阴影的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/">单向阴影的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-03-15T13:40:59.059Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要探讨css单向阴影的实现和延伸</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>核心思想是通过阴影单向偏移并使用负扩散半径抵消模糊半径</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E5%8D%95%E5%90%91%E9%98%B4%E5%BD%B1%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-闭合浮动的多种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/">闭合浮动的多种方法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-03-15T13:21:13.640Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客的主要目的是探讨如何完成闭合浮动</p>
-<h2 id="闭合浮动"><a href="#闭合浮动" class="headerlink" title="闭合浮动"></a>闭合浮动</h2><p>  本来块元素是不会主动包住其内部的浮动元素的。<br>  所以需要块元素的高度扩展以包裹其内部的浮动元素</p>
-<p>完成闭合浮动和核心是触发包含块的BFC</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-浮动的规则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/">浮动的规则</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/" class="archive-article-date">
-  	<time datetime="2020-03-15T12:18:34.966Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客依照《CSS权威指南》进行对浮动规则的深刻理解</p>
-<h2 id="浮动的规则"><a href="#浮动的规则" class="headerlink" title="浮动的规则"></a>浮动的规则</h2><ul>
-<li>浮动元素的左右外边界不能超过包含块的左右内边界</li>
-</ul>
-<p>那么能否通过负margin实现伪超越边界呢？</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-水平垂直居中方案" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/">水平垂直居中方案</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/" class="archive-article-date">
-  	<time datetime="2020-03-15T09:44:41.050Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这次博客是对垂直水平居中方案的一个总结</p>
-<h2 id="行内元素的垂直水平居中"><a href="#行内元素的垂直水平居中" class="headerlink" title="行内元素的垂直水平居中"></a>行内元素的垂直水平居中</h2><ul>
-<li>第一种</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是中心位置吗<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>父元素字号清零、line-height等于自身身高、text-align设为center</p>
-<p>子元素字号回复、vertical-align设置为middle</p>
-        
-          <a class="article-more-a" href="/2020/03/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/">展开全文 >></a>
         </p>
       
 

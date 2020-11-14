@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>正则速记 | tang的博客</title>
+  <title>使用nodejs设置一个静态文件服务器 | tang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="正则速记正则的创建12var re1 &#x3D; new RegExp(&quot;abc&quot;)var re2 &#x3D; &#x2F;abc&#x2F;  正则的方法匹配测试123var exp1 &#x3D; &quot;abcde&quot;&#x2F;abc&#x2F;.test(exp1)re2.test(&quot;acbde&quot;) 匹配字符集 1234&#x2F;&#x2F; 匹配到[]中的任意一部分&#x2F;[0123456789]&#x2F;.test(&quot;in 1996&quot;)&#x2F;&#x2F; 用-替代一个范围[0-9].test(&quot;in">
+  <meta name="description" content="如和实现一个显示文件夹列表的静态服务器引入依赖1234const fs &#x3D; require(&#39;fs&#39;)const http &#x3D; require(&#39;http&#39;)const path &#x3D; require(&#39;path&#39;)const _ &#x3D; require(&#39;lodash&#39;) 设定端口 与 确定当前位置 12const PORT &#x3D; 8081dirPath &#x3D; path.resolve(&#39;.&#x2F;&#39;)  创建">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则速记">
-<meta property="og:url" content="http://yoursite.com/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/index.html">
+<meta property="og:title" content="使用nodejs设置一个静态文件服务器">
+<meta property="og:url" content="http://yoursite.com/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="正则速记正则的创建12var re1 &#x3D; new RegExp(&quot;abc&quot;)var re2 &#x3D; &#x2F;abc&#x2F;  正则的方法匹配测试123var exp1 &#x3D; &quot;abcde&quot;&#x2F;abc&#x2F;.test(exp1)re2.test(&quot;acbde&quot;) 匹配字符集 1234&#x2F;&#x2F; 匹配到[]中的任意一部分&#x2F;[0123456789]&#x2F;.test(&quot;in 1996&quot;)&#x2F;&#x2F; 用-替代一个范围[0-9].test(&quot;in">
+<meta property="og:description" content="如和实现一个显示文件夹列表的静态服务器引入依赖1234const fs &#x3D; require(&#39;fs&#39;)const http &#x3D; require(&#39;http&#39;)const path &#x3D; require(&#39;path&#39;)const _ &#x3D; require(&#39;lodash&#39;) 设定端口 与 确定当前位置 12const PORT &#x3D; 8081dirPath &#x3D; path.resolve(&#39;.&#x2F;&#39;)  创建">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2020-09-24T09:26:51.498Z">
-<meta property="article:modified_time" content="2020-10-14T11:25:35.390Z">
+<meta property="article:published_time" content="2020-09-29T09:35:46.761Z">
+<meta property="article:modified_time" content="2020-09-30T06:26:08.938Z">
 <meta property="article:author" content="Tangtc233">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="css">
@@ -157,70 +157,35 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-正则速记" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-使用nodejs设置一个静态文件服务器" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      正则速记
+      使用nodejs设置一个静态文件服务器
     </h1>
   
 
         
-        <a href="/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-09-24T09:26:51.498Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-24</time>
+        <a href="/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="archive-article-date">
+  	<time datetime="2020-09-29T09:35:46.761Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="正则速记"><a href="#正则速记" class="headerlink" title="正则速记"></a>正则速记</h2><h3 id="正则的创建"><a href="#正则的创建" class="headerlink" title="正则的创建"></a>正则的创建</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re1 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"abc"</span>)</span><br><span class="line"><span class="keyword">var</span> re2 = <span class="regexp">/abc/</span></span><br></pre></td></tr></table></figure>
+        <h2 id="如和实现一个显示文件夹列表的静态服务器"><a href="#如和实现一个显示文件夹列表的静态服务器" class="headerlink" title="如和实现一个显示文件夹列表的静态服务器"></a>如和实现一个显示文件夹列表的静态服务器</h2><h4 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br></pre></td></tr></table></figure>
+<p>设定端口 与 确定当前位置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PORT = <span class="number">8081</span></span><br><span class="line">dirPath = path.resolve(<span class="string">'./'</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="正则的方法"><a href="#正则的方法" class="headerlink" title="正则的方法"></a>正则的方法</h3><h4 id="匹配测试"><a href="#匹配测试" class="headerlink" title="匹配测试"></a>匹配测试</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> exp1 = <span class="string">"abcde"</span></span><br><span class="line">/abc/.test(exp1)</span><br><span class="line">re2.test(<span class="string">"acbde"</span>)</span><br></pre></td></tr></table></figure>
-<p>匹配字符集</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配到[]中的任意一部分</span></span><br><span class="line">/[<span class="number">0123456789</span>]/.test(<span class="string">"in 1996"</span>)</span><br><span class="line"><span class="comment">// 用-替代一个范围</span></span><br><span class="line">[<span class="number">0</span><span class="number">-9</span>].test(<span class="string">"in 1996"</span>)</span><br></pre></td></tr></table></figure>
-<p>其他快捷写法<br>\d 任意数字<br>\w 任意字母或数字符号<br>\s 任意空白符号<br>\D 非数字<br>\W 非字母或数字<br>\S 非空白符号</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配一个日期格式 如 "2020-09-01 15:30"</span></span><br><span class="line">datetime = <span class="regexp">/\d\d\d\d-\d\d-\d\d \d\d:\d\d/</span></span><br><span class="line">datetime.test(<span class="string">"2020-09-01 15:30"</span>)</span><br></pre></td></tr></table></figure>
-<p>模式重复</p>
-<ul>
-<li>：该元素至少重复一次</li>
-</ul>
-<ul>
-<li>：存在或不存在都行，多少次都行<br>？：存在0次或1次<br>元素后面加 {4} 表示指定出现4次<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对日期匹配进行优化</span></span><br><span class="line">datetime = <span class="regexp">/\d&#123;4&#125;-\d&#123;1,2&#125;-\d&#123;1,2&#125; \d&#123;1,2|&#125;:\d&#123;1,2&#125;</span></span><br><span class="line"><span class="regexp">datetime.test("2020-09-01 15:30")</span></span><br></pre></td></tr></table></figure>
+<h4 id="创建服务器"><a href="#创建服务器" class="headerlink" title="创建服务器"></a>创建服务器</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 输出请求的路径</span></span><br><span class="line">    <span class="keyword">let</span> url = <span class="built_in">decodeURIComponent</span>(req.url)</span><br><span class="line">    <span class="comment">// 建立目标路径</span></span><br><span class="line">    <span class="keyword">let</span> targetPath = path.join(dirPath, url)</span><br><span class="line">    fs.stat(targetPath, (err, stat) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            res.write(<span class="number">404</span>)</span><br><span class="line">            res.end(<span class="string">'conect error'</span>)</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 判断文件类型</span></span><br><span class="line">            <span class="comment">// 如果该路径是文件</span></span><br><span class="line">            <span class="keyword">if</span>(stat.isFile()) &#123;</span><br><span class="line">                fs.createReadStream(target).pipe(res)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stat.isDirectory()) &#123;</span><br><span class="line">            <span class="comment">// 如果是文件夹的话 ，先判断是否有默认文件index.html</span></span><br><span class="line">            <span class="keyword">let</span> indexPath = path.join(targetPath, index.html)</span><br><span class="line">            fs.stat(indexPath, (err, stat) =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span>(err) &#123;</span><br><span class="line">                    <span class="comment">// 如果不是文件夹请求的</span></span><br><span class="line">                    <span class="keyword">if</span>(!req.url.endsWith(<span class="string">'/'</span>)) &#123;</span><br><span class="line">                        <span class="comment">// 将响应头重定向并以此地址再发一次请求</span></span><br><span class="line">                        res.writeHead(<span class="number">302</span>, &#123;</span><br><span class="line">                            <span class="string">'Location'</span> :req.url + <span class="string">'/'</span></span><br><span class="line">                        &#125;)</span><br><span class="line">                        <span class="keyword">return</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 将文件夹中的东西以页面的形式展示出来</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="comment">// 展示方法：utf8编码的页面</span></span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    <span class="comment">// 读取文件夹目录</span></span><br><span class="line">                    fs.readdir(targetPath, &#123;<span class="attr">withFileTypes</span>: <span class="literal">true</span>&#125;, (err, entries) =&gt; &#123;</span><br><span class="line">                        <span class="keyword">var</span> pageHtml = renderIndexPage(entries, targetPath,req.url)</span><br><span class="line">                        res.write(pageHtml)</span><br><span class="line">                        res.end()</span><br><span class="line"></span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     <span class="comment">// 将index.html的内容以流的形式展现</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    fs.createReadStream(indexPath).pipe(res)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
-<p>子表达式分组<br>使用()进行分组</p>
-<h4 id="执行exec"><a href="#执行exec" class="headerlink" title="执行exec"></a>执行exec</h4><p>无法匹配时返回null，否则返回匹配一个表示字符串信息的对象<br>返回的对象包含index属性 =&gt; 字符串成功匹配的起始位置<br>其首元素是模式匹配成功的字符串<br>exec的核心作用是提取</p>
-<p>字符边界<br>^ 以xxx开头<br>$ 以xxx结尾<br>nums = /^d+$/ 表示匹配全是数字的字符串<br>\b 单词边界</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/\bcat\b/.test(<span class="string">'aaacatbbb'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="创建模板引擎"><a href="#创建模板引擎" class="headerlink" title="创建模板引擎"></a>创建模板引擎</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pageTp1 = <span class="string">`</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html lang="en"&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;Document&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt; Index of &lt;%= url %&gt;&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;table&gt;</span></span><br><span class="line"><span class="string">        &lt;tbody&gt;</span></span><br><span class="line"><span class="string">            &lt;% entries.forEach((entry, idx) =&gt; &#123;</span></span><br><span class="line"><span class="string">                var slash = entry.isDirectory() ? '/' : ''</span></span><br><span class="line"><span class="string">            %&gt;</span></span><br><span class="line"><span class="string">                &lt;tr&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;%= filesize(50000) %&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;a href="&lt;%= entry.name %&gt;&lt;%= slash %&gt;"&gt;&lt;%= entry.name %&gt;&lt;%= slash %&gt;&lt;/a&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                &lt;/tr&gt;</span></span><br><span class="line"><span class="string">            &lt;% &#125;) %&gt;</span></span><br><span class="line"><span class="string">        &lt;/tbody&gt;</span></span><br><span class="line"><span class="string">    &lt;/table&gt;</span></span><br><span class="line"><span class="string">    &lt;footer&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Node.js <span class="subst">$&#123;process.version&#125;</span> My Nubility Server Running&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/footer&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="keyword">var</span> compiledTp1 = _.template(pageTp1)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建模板字符串调用函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderIndexPage</span>(<span class="params">entries, parentDir, url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> filesize = <span class="built_in">require</span>(<span class="string">'filesize'</span>)</span><br><span class="line">    <span class="keyword">return</span> compiledTp1(&#123;entries, parentDir, url, filesize&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>管道符号任选匹配</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/\b(cow|pig|chicken)s?\b/.test(<span class="string">'pigs'</span>)</span><br></pre></td></tr></table></figure>
-
-<h4 id="replace-方法"><a href="#replace-方法" class="headerlink" title="replace 方法"></a>replace 方法</h4><p>字符串的replace方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"papa"</span>.replace(<span class="string">'p'</span>,<span class="string">'m'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>加入正则后的replace方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"papa"</span>.replace(<span class="regexp">/pa/</span>, <span class="string">"ma"</span>)</span><br><span class="line"><span class="comment">// 全部替换</span></span><br><span class="line"><span class="string">"papa"</span>.replace(<span class="regexp">/pa/g</span>, <span class="string">"ma"</span>)</span><br></pre></td></tr></table></figure>
-
-<p>使用元组配合替换</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 交换两个人的名字,并替换掉逗号</span></span><br><span class="line"><span class="string">" AAA,li BBB,wang "</span>.replace(<span class="regexp">/(\w+),(\w+)/g</span>, <span class="string">"$2 $1"</span>)</span><br></pre></td></tr></table></figure>
-
-<h4 id="search-方法"><a href="#search-方法" class="headerlink" title="search 方法"></a>search 方法</h4><p>返回首先匹配表达式的索引</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"  word"</span>.search(<span class="regexp">/\S/</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
+<h4 id="监听端口"><a href="#监听端口" class="headerlink" title="监听端口"></a>监听端口</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.listen(PORT, <span class="string">'127.0.0.1'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'listen on the Port '</span>, PORT)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
       
 
@@ -300,7 +265,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -314,18 +279,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/09/24/bom%E9%80%9F%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/12/%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          bom速记
+          各种排序算法
         
       </div>
     </a>
   
   
-    <a href="/2020/09/24/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">applycallbind的实现</div>
+    <a href="/2020/09/29/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">nodejs核心模块回顾“</div>
       <i class="icon-circle-right"></i>
     </a>
   

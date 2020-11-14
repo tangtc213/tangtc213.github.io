@@ -157,6 +157,397 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-一个简易的redux的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/">一个简易的redux的实现</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+  	<time datetime="2020-11-14T12:30:34.157Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Redux 的目标是创建一个状态管理库，来提供最简化 API</p>
+<h2 id="redux的核心概念"><a href="#redux的核心概念" class="headerlink" title="redux的核心概念"></a>redux的核心概念</h2><p>redux的核心容器是state，它相当于存放信息的盒子，<br>但是你不能直接改变盒子里的东西要想更新 state 中的数据，你需要发起一个 action。Action 就是一个普通 JavaScript 对象用来描述发生了什么<br>强制使用 action 来描述所有变化带来的好处是可以清晰地知道应用中到底发生了什么。如果一些东西改变了，就可以知道为什么变。action 就像是描述发生了什么的指示器。最终，为了把 action 和 state 串起来，开发一些函数，这就是 reducer。<br>所以reducer相当于对于action的解释<br>Reducer 只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
+<p>state有下面几个方法：<br>提供 getState() 方法获取 state；<br>提供 dispatch(action) 方法更新 state；<br>通过 subscribe(listener) 注册监听器;<br>通过 subscribe(listener) 返回的函数注销监听器。</p>
+<h2 id="简易的redux的实现"><a href="#简易的redux的实现" class="headerlink" title="简易的redux的实现"></a>简易的redux的实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(reducer, initState) &#123;</span><br><span class="line">        <span class="comment">// 创建一个reducer需要传入reducer和初始化的state</span></span><br><span class="line">        <span class="keyword">this</span>.reducer = reducer</span><br><span class="line">        <span class="keyword">this</span>.state = state</span><br><span class="line">        <span class="keyword">this</span>.subscribes = []</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    getState() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.reducer</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dispatch(action) &#123;</span><br><span class="line">        <span class="keyword">this</span>.state = <span class="keyword">this</span>.reducer(<span class="keyword">this</span>.state, action)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> f <span class="keyword">of</span> <span class="keyword">this</span>.subscribes) &#123;</span><br><span class="line">            f()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> action</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    subscribe(f) &#123;</span><br><span class="line">        <span class="keyword">this</span>.subscribes.push(f)</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unsubscribe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.subscribes = <span class="keyword">this</span>.subscribes.filter(<span class="function"><span class="params">it</span> =&gt;</span> it !== f)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用上面的class简易的实现一个todo的store</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">var</span> actions = &#123;</span><br><span class="line">    setEditingIdx(state, action) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            editingIdx: action.index,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    addTodo(state, action) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            todos: [</span><br><span class="line">                ...state.todos,</span><br><span class="line">                &#123;</span><br><span class="line">                    content: action.todoText,</span><br><span class="line">                    completed: <span class="literal">false</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    deleteTodo(state, action) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            todos: todos.filter(<span class="function">(<span class="params">it, idx</span>) =&gt;</span> idx != action.index )</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">todoReducer</span>(<span class="params">state, action <span class="regexp">/**&#123;type: 'addTodo', type: 'deleteTodo&#125; */</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> f = actions[action.type]</span><br><span class="line">    <span class="keyword">if</span>(f) &#123;</span><br><span class="line">        <span class="keyword">return</span> f(state ,action)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> state</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 最后创建初始化仓库</span></span><br><span class="line">store  = <span class="keyword">new</span> Store(todoReducer, &#123;</span><br><span class="line">    editingIdx: <span class="number">-1</span>,</span><br><span class="line">    category: <span class="string">'all'</span>,</span><br><span class="line">    todos: [&#123;</span><br><span class="line">        content: <span class="string">'eat'</span>,</span><br><span class="line">        completed: <span class="literal">true</span>,</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        content: <span class="string">'run'</span>,</span><br><span class="line">        completed: <span class="literal">true</span>,</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        content: <span class="string">'read'</span>,</span><br><span class="line">        completed: <span class="literal">false</span>,</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        content: <span class="string">'sleep'</span>,</span><br><span class="line">        completed: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-各种排序算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/12/%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">各种排序算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/12/%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-11-12T11:13:50.312Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><pre><code>对之前学习的各种排序的方法做一个简单的小结</code></pre><h2 id="分类和实现"><a href="#分类和实现" class="headerlink" title="分类和实现"></a>分类和实现</h2><pre><code>常见的排序方法和实现，常见的排序算法有冒泡排序、选择排序、并归排序、快排
+首先随机生成一组十个数据</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = []</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">10</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">    ary.push(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">100</span>))</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 得到</span></span><br><span class="line">ary = [<span class="number">25</span>, <span class="number">61</span>, <span class="number">11</span>, <span class="number">21</span>, <span class="number">51</span>, <span class="number">55</span>, <span class="number">32</span>, <span class="number">50</span>, <span class="number">42</span>, <span class="number">16</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>后面构建的算法函数都会对这个数组进行处理</code></pre><h3 id="冒泡排序及其优化的方法"><a href="#冒泡排序及其优化的方法" class="headerlink" title="冒泡排序及其优化的方法"></a>冒泡排序及其优化的方法</h3><pre><code>冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。
+实现步骤
+1从开始比较相邻的两个数 、如果第二个比第一个大就交换它们
+2这样最后一个数就是最大的、在从头开始将第二大的数找出并排列
+3重复执行直到排序完成</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> len = ary.length</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len ; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span> ; j &lt; len - <span class="number">1</span> - i ; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(ary[j] &gt; ary[i + <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">let</span> temp = ary[j+<span class="number">1</span>]</span><br><span class="line">                ary[j+<span class="number">1</span>] = ary[j]</span><br><span class="line">                ary[j] = temp</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ary</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这样的效率并不高<br> 通过设置标志位可以提高效率</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bubbleSort2</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = ary.length</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> done = <span class="literal">false</span>; done = !done; len--) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ary[i] &gt; ary[i + <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">var</span> temp = ary[i];</span><br><span class="line">                ary[i] = ary[i + <span class="number">1</span>];</span><br><span class="line">                ary[i + <span class="number">1</span>] = temp;</span><br><span class="line">                done = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ary</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法分析<br>    最佳情况： T(n) = O(n)<br>    最差情况： T(n) = O(n2)</p>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><pre><code>表现最稳定的排序算法之一无论什么数据进去都是O(n²)的时间复杂度
+这是一种简单直观的排序算法。它的工作原理：首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕
+
+实现步骤
+1.设置一个空数组将其分成一个有序区和无序区
+2.从无序区找到最小的数据将其放在第一个位置
+3.将无序区的第一数字放置到有序区的最后一个位置
+4.重复n-1次</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = ary.length</span><br><span class="line">    <span class="keyword">let</span> min, temp</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        min = i</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = i+<span class="number">1</span>; j &lt; len; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(ary[j] &lt; ary[min]) &#123;</span><br><span class="line">                min = j</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        temp = ary[i]</span><br><span class="line">        ary[i] = ary[min]</span><br><span class="line">        ary[min] = temp</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ary</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法分析<br>    最佳情况： T(n) = O(n2)<br>    最差情况： T(n) = O(n2)</p>
+<h3 id="并归排序"><a href="#并归排序" class="headerlink" title="并归排序"></a>并归排序</h3><pre><code>和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是O(n log n）的时间复杂度。代价是需要额外的内存空间
+归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法
+将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并。
+实现步骤
+1.把长度为n的输入序列分成两个长度为n/2的子序列
+2.对这两个子序列分别采用归并排序
+3.将两个排序好的子序列合并成一个最终的排序序列</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 自上而下递归</span></span><br><span class="line">    <span class="keyword">let</span> len = ary.length</span><br><span class="line">    <span class="keyword">if</span>(len &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> ary</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 取中间值</span></span><br><span class="line">    <span class="keyword">let</span> middle = <span class="built_in">Math</span>.floor(len / <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">let</span> left = ary.slice(<span class="number">0</span>, middle)</span><br><span class="line">    <span class="keyword">let</span> right = ary.slice(middle)</span><br><span class="line">    <span class="keyword">return</span> merge(mergeSort(left), mergeSort(right))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left, right</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = []</span><br><span class="line">    <span class="keyword">while</span> (left.length &amp;&amp; right.length) &#123;</span><br><span class="line">        <span class="keyword">if</span>(left[<span class="number">0</span>] &lt;= right[<span class="number">0</span>]) &#123;</span><br><span class="line">            result.push(left.shift())</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result.push(right.shift())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (left.length) &#123;</span><br><span class="line">        result.push(left.shift())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (right.length) &#123;</span><br><span class="line">        result.push(right.shift())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法分析<br>最佳情况：T(n) = O(nlog2 n)<br>最坏情况：T(n) = O(nlog2 n)</p>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，则可分别对这两部分记录继续进行排序，以达到整个序列有序。<br>使用分治法来把一个串（list）分为两个子串（sub-lists）</p>
+<p>实现步骤<br>1.从数列中挑出一个元素，称为 “基准”<br>2.重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面<br>3.递归地把小于基准值元素的子数列和大于基准值元素的子数列排序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ary.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> ary</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 设置基准</span></span><br><span class="line">    <span class="keyword">let</span> pivotIndex = <span class="built_in">Math</span>.floor(ary.length / <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">let</span> pivot = ary.splice(pivotIndex, <span class="number">1</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">let</span> left = []</span><br><span class="line">    <span class="keyword">let</span> right = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(ary[i] &lt; pivot) &#123;</span><br><span class="line">            left.push(ary[i])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right.push(ary[i])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> quickSort(left).concat([pivot], quickSort(right))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/12/%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-使用nodejs设置一个静态文件服务器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/">使用nodejs设置一个静态文件服务器</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="archive-article-date">
+  	<time datetime="2020-09-29T09:35:46.761Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="如和实现一个显示文件夹列表的静态服务器"><a href="#如和实现一个显示文件夹列表的静态服务器" class="headerlink" title="如和实现一个显示文件夹列表的静态服务器"></a>如和实现一个显示文件夹列表的静态服务器</h2><h4 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br></pre></td></tr></table></figure>
+<p>设定端口 与 确定当前位置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PORT = <span class="number">8081</span></span><br><span class="line">dirPath = path.resolve(<span class="string">'./'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建服务器"><a href="#创建服务器" class="headerlink" title="创建服务器"></a>创建服务器</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 输出请求的路径</span></span><br><span class="line">    <span class="keyword">let</span> url = <span class="built_in">decodeURIComponent</span>(req.url)</span><br><span class="line">    <span class="comment">// 建立目标路径</span></span><br><span class="line">    <span class="keyword">let</span> targetPath = path.join(dirPath, url)</span><br><span class="line">    fs.stat(targetPath, (err, stat) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            res.write(<span class="number">404</span>)</span><br><span class="line">            res.end(<span class="string">'conect error'</span>)</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 判断文件类型</span></span><br><span class="line">            <span class="comment">// 如果该路径是文件</span></span><br><span class="line">            <span class="keyword">if</span>(stat.isFile()) &#123;</span><br><span class="line">                fs.createReadStream(target).pipe(res)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stat.isDirectory()) &#123;</span><br><span class="line">            <span class="comment">// 如果是文件夹的话 ，先判断是否有默认文件index.html</span></span><br><span class="line">            <span class="keyword">let</span> indexPath = path.join(targetPath, index.html)</span><br><span class="line">            fs.stat(indexPath, (err, stat) =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span>(err) &#123;</span><br><span class="line">                    <span class="comment">// 如果不是文件夹请求的</span></span><br><span class="line">                    <span class="keyword">if</span>(!req.url.endsWith(<span class="string">'/'</span>)) &#123;</span><br><span class="line">                        <span class="comment">// 将响应头重定向并以此地址再发一次请求</span></span><br><span class="line">                        res.writeHead(<span class="number">302</span>, &#123;</span><br><span class="line">                            <span class="string">'Location'</span> :req.url + <span class="string">'/'</span></span><br><span class="line">                        &#125;)</span><br><span class="line">                        <span class="keyword">return</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 将文件夹中的东西以页面的形式展示出来</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="comment">// 展示方法：utf8编码的页面</span></span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    <span class="comment">// 读取文件夹目录</span></span><br><span class="line">                    fs.readdir(targetPath, &#123;<span class="attr">withFileTypes</span>: <span class="literal">true</span>&#125;, (err, entries) =&gt; &#123;</span><br><span class="line">                        <span class="keyword">var</span> pageHtml = renderIndexPage(entries, targetPath,req.url)</span><br><span class="line">                        res.write(pageHtml)</span><br><span class="line">                        res.end()</span><br><span class="line"></span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     <span class="comment">// 将index.html的内容以流的形式展现</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    fs.createReadStream(indexPath).pipe(res)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建模板引擎"><a href="#创建模板引擎" class="headerlink" title="创建模板引擎"></a>创建模板引擎</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pageTp1 = <span class="string">`</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html lang="en"&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;Document&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt; Index of &lt;%= url %&gt;&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;table&gt;</span></span><br><span class="line"><span class="string">        &lt;tbody&gt;</span></span><br><span class="line"><span class="string">            &lt;% entries.forEach((entry, idx) =&gt; &#123;</span></span><br><span class="line"><span class="string">                var slash = entry.isDirectory() ? '/' : ''</span></span><br><span class="line"><span class="string">            %&gt;</span></span><br><span class="line"><span class="string">                &lt;tr&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;%= filesize(50000) %&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;a href="&lt;%= entry.name %&gt;&lt;%= slash %&gt;"&gt;&lt;%= entry.name %&gt;&lt;%= slash %&gt;&lt;/a&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                &lt;/tr&gt;</span></span><br><span class="line"><span class="string">            &lt;% &#125;) %&gt;</span></span><br><span class="line"><span class="string">        &lt;/tbody&gt;</span></span><br><span class="line"><span class="string">    &lt;/table&gt;</span></span><br><span class="line"><span class="string">    &lt;footer&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Node.js <span class="subst">$&#123;process.version&#125;</span> My Nubility Server Running&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/footer&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="keyword">var</span> compiledTp1 = _.template(pageTp1)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建模板字符串调用函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderIndexPage</span>(<span class="params">entries, parentDir, url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> filesize = <span class="built_in">require</span>(<span class="string">'filesize'</span>)</span><br><span class="line">    <span class="keyword">return</span> compiledTp1(&#123;entries, parentDir, url, filesize&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="监听端口"><a href="#监听端口" class="headerlink" title="监听端口"></a>监听端口</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.listen(PORT, <span class="string">'127.0.0.1'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'listen on the Port '</span>, PORT)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-nodejs核心模块回顾“" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/29/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/">nodejs核心模块回顾“</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/29/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/" class="archive-article-date">
+  	<time datetime="2020-09-29T04:40:49.375Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="nodejs核心模块回顾"><a href="#nodejs核心模块回顾" class="headerlink" title="nodejs核心模块回顾"></a>nodejs核心模块回顾</h2><h3 id="http"><a href="#http" class="headerlink" title="http"></a>http</h3><pre><code>提供http服务器功能</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 客户端</span></span><br><span class="line">    <span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>) <span class="comment">//引入模块</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个请求</span></span><br><span class="line">    <span class="keyword">let</span> request = http.request(</span><br><span class="line">        &#123;</span><br><span class="line">            protocol: <span class="string">'http:'</span>,     <span class="comment">// 请求的协议</span></span><br><span class="line">            host: <span class="string">'777.tang233.top'</span>,   <span class="comment">// 请求的host</span></span><br><span class="line">            port: <span class="number">80</span>,              <span class="comment">// 端口</span></span><br><span class="line">            method: <span class="string">'GET'</span>,         <span class="comment">// GET请求</span></span><br><span class="line">            timeout: <span class="number">2000</span>,         <span class="comment">// 超时时间</span></span><br><span class="line">            path: <span class="string">'/'</span>              <span class="comment">// 请求路径</span></span><br><span class="line">        &#125;,</span><br><span class="line">        res =&gt; &#123; <span class="comment">// 连接成功后，接收到后台服务器返回的响应，回调函数就会被调用一次。</span></span><br><span class="line">            res.on(<span class="string">'data'</span>, data =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data.toString(<span class="string">'utf8'</span>)); <span class="comment">// 打印返回的数据。</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">// 设置请求头部</span></span><br><span class="line">    request.setHeader(<span class="string">'Cache-Control'</span>, <span class="string">'max-age=0'</span>);</span><br><span class="line">    <span class="comment">// 真正的发送请求</span></span><br><span class="line">    request.end();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">let</span> server = <span class="keyword">new</span> http.Server();</span><br><span class="line">server.on(<span class="string">'request'</span>, (req, res) =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(req.url);</span><br><span class="line"><span class="comment">//设置应答头信息</span></span><br><span class="line">res.writeHead(<span class="number">200</span>, &#123; <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span> &#125;);</span><br><span class="line">res.write(<span class="string">'hello we are family&lt;br&gt;'</span>);</span><br><span class="line">res.end(<span class="string">'server already end\n'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//显示了三次这也证明了TCP的三次握手</span></span><br><span class="line">server.on(<span class="string">'connection'</span>, () =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'握手'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'close'</span>, () =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server will close'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//关闭服务为了触发close事件</span></span><br><span class="line">server.close();</span><br><span class="line">server.listen(<span class="number">8080</span>);</span><br><span class="line"><span class="comment">// 另一种</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain'</span>&#125;)</span><br><span class="line">    res.write(<span class="string">"hi, from aicoder.com"</span>);</span><br><span class="line">    res.end();</span><br><span class="line"></span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="url"><a href="#url" class="headerlink" title="url"></a>url</h3><pre><code>用于解析和生成URL
+url.resolve(from, to) 第一个参数是基准url，其余url是根据基准url生成对应的位置
+`url.resolve(&apos;/one/two/three&apos;, &apos;four&apos;)`</code></pre><h3 id="fs"><a href="#fs" class="headerlink" title="fs"></a>fs</h3><pre><code>与文件系统交互</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 异步读取文件</span></span><br><span class="line">fs.readFile(<span class="string">'./image.png'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, buffer</span>) =&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err</span><br><span class="line">    <span class="keyword">var</span> text = buffer.toString()</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 同步读取文件</span></span><br><span class="line"><span class="keyword">var</span> text = fs.readFileSync(fileName, <span class="string">'utf8'</span>);</span><br><span class="line"><span class="comment">// 异步写入文件</span></span><br><span class="line">fs.writeFile(<span class="string">'message.txt'</span>, <span class="string">'hello world'</span>, (err) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Its saved'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 同步写入文件</span></span><br><span class="line">fs.writeFileSync(fileName, str, <span class="string">'utf8'</span>);</span><br><span class="line"><span class="comment">// 新建目录</span></span><br><span class="line">fs.mkdir(<span class="string">'./helloDir'</span>,<span class="number">0777</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取文件或文件夹的具体信息</span></span><br><span class="line">fs.stat(<span class="string">'/etc/filename'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, stats</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(stats.ifFile()) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'%s is filename'</span> , file)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(stats.isDirectory) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"%s is a directory"</span>, file)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="path-处理文件路径"><a href="#path-处理文件路径" class="headerlink" title="path 处理文件路径"></a>path 处理文件路径</h3><pre><code>path 的各种方法
+path.join()
+作用是连接路径 `path.join(mydir, &apos;foo&apos;)` 返回`mydir/foo`
+
+path.resolve() 将相对路径转化为绝对路径
+`path.resolve(&apos;foo/bar&apos;, &apos;/tmp/file/&apos;, &apos;..&apos;, &apos;a/../subfile&apos;)`
+path.relative 接受两个参数，这两个参数都应该是绝对路径。该方法返回第二个路径相对于第一个路径的那个相对路径。
+`path.relative(&apos;/data/orandea/test/aaa&apos;, &apos;/data/orandea/impl/bbb&apos;)` 返回 `../../impl/bbb`
+path.parse() 返回路径各部分的信息。</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFilePath = <span class="string">'/someDir/someFile.json'</span>;</span><br><span class="line">path.parse(myFilePath).base</span><br><span class="line"><span class="comment">// "someFile.json"</span></span><br><span class="line">path.parse(myFilePath).name</span><br><span class="line"><span class="comment">// "someFile"</span></span><br><span class="line">path.parse(myFilePath).ext</span><br><span class="line"><span class="comment">// ".json"</span></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/29/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-js使用异步的四种方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/28/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/">js使用异步的四种方式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/28/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-09-28T11:22:06.186Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="异步使用的四种方式"><a href="#异步使用的四种方式" class="headerlink" title="异步使用的四种方式"></a>异步使用的四种方式</h2><h4 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h4><pre><code>f2在f1执行一秒后执行</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    setTimeOut(<span class="function"><span class="params">()</span>=&gt;</span> &#123;</span><br><span class="line">        callback()</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">f1(f2)</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><pre><code>利用事件使a在触发事件后再执行b
+`f1.on(&apos;done&apos;,f2)`</code></pre><h4 id="promise-事件"><a href="#promise-事件" class="headerlink" title="promise 事件"></a>promise 事件</h4><p>每一个异步任务返回一个promise对象，有一个then方法允许指定回调函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(!err) &#123;</span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                resolve()</span><br><span class="line">            &#125;, <span class="number">0</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            reject()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">f1().then(<span class="function"><span class="params">()</span> =&gt;</span> f2()).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err))</span><br></pre></td></tr></table></figure>
+
+<h3 id="async-function"><a href="#async-function" class="headerlink" title="async function"></a>async function</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            resolve()</span><br><span class="line">        &#125;, <span class="number">2000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncCall</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo =  <span class="built_in">Date</span>.now()</span><br><span class="line">    <span class="keyword">await</span> bar()</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">Date</span>.now() - foo)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="使用异步函数完成循序执行和并行执行"><a href="#使用异步函数完成循序执行和并行执行" class="headerlink" title="使用异步函数完成循序执行和并行执行"></a>使用异步函数完成循序执行和并行执行</h4><p>并行执行parallel</p>
+<p>首先定义一组tasks函数,tasks全部执行完后再执行cb回调</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parallel</span>(<span class="params">tasks,cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(task <span class="keyword">of</span> tasks) &#123;</span><br><span class="line">        task(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            count++</span><br><span class="line">            <span class="keyword">if</span>(tasks.length == count) &#123;</span><br><span class="line">                cb()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>串行执行serise</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serise</span>(<span class="params">tasks, cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">startOneTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(count &lt; tasks.length) &#123;</span><br><span class="line">            task[i++](<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                startOneTask()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cb()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>并行限制执行parallelLimit</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">parallelLimit</span>(<span class="params">tasks, limit, cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> limitCount = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(limitCount &lt; tasks.length) &#123;</span><br><span class="line">            tasks[i++](<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                one()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cb()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; limit; j++) &#123;</span><br><span class="line">        one()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/28/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-dom回顾" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -811,384 +1202,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-js实现链表及其方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">js实现链表及其方法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-09-21T14:07:07.787Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="js-实现链表及其方法"><a href="#js-实现链表及其方法" class="headerlink" title="js 实现链表及其方法"></a>js 实现链表及其方法</h2><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>通过js我们可以实现链表的搭建及其一些方法从而加深对链表的理解</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>  一个简单的链表,直接创建时应该从最后一项开始创建，到头结点，下面的例子中<code>Node1</code>就是头结点，<code>Node1</code>形成了一个链式结构，这就是链表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Node3 = &#123;</span><br><span class="line">    val : <span class="string">'c'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : <span class="literal">null</span> <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> Node2 = &#123;</span><br><span class="line">    val : <span class="string">'b'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : Node3 <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> Node1 = &#123;</span><br><span class="line">    val : <span class="string">'a'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : Node2 <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="由数组转化为链表函数的实现"><a href="#由数组转化为链表函数的实现" class="headerlink" title="由数组转化为链表函数的实现"></a>由数组转化为链表函数的实现</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">arrayToList1</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">if</span> (ary.length == <span class="number">0</span>) &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">var</span> node = &#123;&#125;</span><br><span class="line">          node.val = ary.shift() <span class="comment">//每创建一个节点，将数组元素从头部取出</span></span><br><span class="line">          node.next = arrayToList1(ary)</span><br><span class="line">          <span class="keyword">return</span> node</span><br><span class="line">      &#125;</span><br><span class="line"><span class="keyword">var</span> nodeA = arrayToListl([<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>])</span><br></pre></td></tr></table></figure>
-
-<h4 id><a href="#" class="headerlink" title></a></h4><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>从末尾插入链表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertListlast</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (node.next == <span class="literal">null</span>) &#123;</span><br><span class="line">                node.next = &#123;</span><br><span class="line">                    val : num,</span><br><span class="line">                    next : <span class="literal">null</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> insertListlast(node.next, num)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p>从开始插入链表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertListfrist</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> N = node</span><br><span class="line">            node = &#123;</span><br><span class="line">                val : num,</span><br><span class="line">                next : N</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p>判断元素是否在链表内</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInlist</span>(<span class="params">node, value</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">var</span> n = node</span><br><span class="line">           <span class="keyword">while</span>(n != <span class="literal">null</span> &amp;&amp; n.val != value) &#123;</span><br><span class="line">               n = n.next</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (n == <span class="literal">null</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>将多项函数整合后即可实现一个链表class</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.node = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 初始化链表</span></span><br><span class="line">    init(array) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">arrayToList1</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (ary.length == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">var</span> node = &#123;&#125;</span><br><span class="line">            node.val = ary.shift()</span><br><span class="line">            node.next = arrayToList1(ary)</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = arrayToList1(array)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从头部插入链表</span></span><br><span class="line">    insertHead(num) &#123;</span><br><span class="line">        <span class="keyword">var</span> n = <span class="keyword">this</span>.node</span><br><span class="line">        <span class="keyword">var</span> newNode = &#123;</span><br><span class="line">            val : num,</span><br><span class="line">            next : n</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = newNode</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从尾部插入链表</span></span><br><span class="line">    insertEnd(num) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">insertListlast</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (node.next == <span class="literal">null</span>) &#123;</span><br><span class="line">                node.next = &#123;</span><br><span class="line">                    val : num,</span><br><span class="line">                    next : <span class="literal">null</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> insertListlast(node.next, num)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = insertListlast(<span class="keyword">this</span>.node, num)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 判断元素是否在链表内</span></span><br><span class="line">    has() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> tempNode = <span class="keyword">this</span>.node</span><br><span class="line">            <span class="keyword">while</span>(tempNode != <span class="literal">null</span> &amp;&amp; tempNode.val != value) &#123;</span><br><span class="line">                tempNode = tempNode.next</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (tempNode == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JSON解析器及其扩展" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/">JSON解析器及其扩展</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/" class="archive-article-date">
-  	<time datetime="2020-06-28T11:29:21.436Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要探讨的是如何实现<code>JSON</code>解析器，以及如何将语句用树状结构来表示</p>
-<h3 id="JSON解析器"><a href="#JSON解析器" class="headerlink" title="JSON解析器"></a>JSON解析器</h3><p>​    <code>JSON.parse</code>方法可以将一段<code>JSON</code>类型的字符串转换为机器可以看懂的结构</p>
-<p>比如对<code>&#39;[111,222,{&quot;a&quot;:3},{&quot;b&quot;:true,&quot;c&quot;:&quot;fooobar&quot;,&quot;d&quot;:[1,false,[null,4,{&quot;x&quot;:1,&quot;y&quot;:2}]]}]&#39;</code>进行转换可以得到以下结构的数据</p>
-<p>​    <img src="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/JSON%E5%AE%9E%E4%BE%8B.png" alt></p>
-<p>而这个方法是如何实现的呢，我们可以通过使用遍历加递归降级的方法将一个复杂的字符串转换为一些简单的部分，通过多个函数对不同的数据类型分类转换。</p>
-<h3 id="JSON解析器的实现"><a href="#JSON解析器的实现" class="headerlink" title="JSON解析器的实现"></a>JSON解析器的实现</h3><p>首先分类谈论遇到什么字符返回什么内容</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseValue</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">'['</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseArray()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">'&#123;'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseObject()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">'"'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> parseString()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">"t"</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseTrue()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">"f"</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseFalse()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(str[i] === <span class="string">"N"</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> parseNull()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> parseNumber()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>遇见各种类型数据时的处理</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 遇到数组的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseArray</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = []</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">while</span>(str[i] != <span class="string">']'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> value = parseValue()</span><br><span class="line">        result.push(value)</span><br><span class="line">         <span class="keyword">if</span>(str[i]===<span class="string">','</span>) &#123;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 遇到字符串的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseString</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">var</span> result = <span class="string">''</span></span><br><span class="line">    <span class="keyword">while</span>(str[i] != <span class="string">'"'</span> ) &#123;</span><br><span class="line">        result += str[i]</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遇到对象时的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseObject</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">while</span>(str[i] != <span class="string">'&#125;'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> key = parseString()</span><br><span class="line">        i++</span><br><span class="line">        <span class="keyword">var</span> value = parseValue()</span><br><span class="line">        result[key] = value</span><br><span class="line">        <span class="keyword">if</span>(str[i] === <span class="string">','</span>) &#123;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遇到数字时的处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseNumber</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> numStr = <span class="string">''</span></span><br><span class="line">    <span class="keyword">while</span>(isNumberDight(str[i])) &#123;</span><br><span class="line">        numStr += str[i++]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseInt</span>(numStr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isNumberDight</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> code = c.charCodeAt(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span> code0 = <span class="string">'0'</span>.charCodeAt(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">var</span> code9 = <span class="string">'9'</span>.charCodeAt(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> code &gt;= code0 &amp;&amp; code &lt;= code9</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遇到true</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseTrue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i+=<span class="number">4</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 遇到false</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseFalse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i+=<span class="number">5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseNull</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i+=<span class="number">4</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>下面是一道leetcodde上的题目它可以使用类似解析器的方式完成</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">expression</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;boolean&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//  解析布尔表达式</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    给你一个以字符串形式表述的 布尔表达式（boolean） expression，返回该式的运算结果。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">有效的表达式需遵循以下约定：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">"t"，运算结果为 True</span></span><br><span class="line"><span class="comment">"f"，运算结果为 False</span></span><br><span class="line"><span class="comment">"!(expr)"，运算过程为对内部表达式 expr 进行逻辑 非的运算（NOT）</span></span><br><span class="line"><span class="comment">"&amp;(expr1,expr2,...)"，运算过程为对 2 个或以上内部表达式 expr1, expr2, ... 进行逻辑 与的运算（AND）</span></span><br><span class="line"><span class="comment">"|(expr1,expr2,...)"，运算过程为对 2 个或以上内部表达式 expr1, expr2, ... 进行逻辑 或的运算（OR）</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">来源：力扣（LeetCode）</span></span><br><span class="line"><span class="comment">链接：https://leetcode-cn.com/problems/parsing-a-boolean-expression</span></span><br><span class="line"><span class="comment">著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-
-<p>解法：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">0</span></span><br><span class="line"><span class="keyword">var</span> expr = <span class="string">"|(&amp;(t,f,t),!(t))"</span></span><br><span class="line"><span class="keyword">var</span> parseBoolExpr = <span class="function"><span class="keyword">function</span>(<span class="params">expression</span>) </span>&#123;</span><br><span class="line">    expr = expression</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> parseExpr()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseExpr</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"|"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseOr()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"&amp;"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseAnd()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"!"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseNot()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"t"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseTrue()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(expr[i] === <span class="string">"f"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> parseFalse()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 运行树</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">runTree</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root.type === <span class="string">'fcall'</span>) &#123;</span><br><span class="line">        <span class="keyword">switch</span>(root.name) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&amp;'</span> :</span><br><span class="line">                <span class="keyword">var</span> and = <span class="function">(<span class="params">...args</span>) =&gt;</span> args.reduce(<span class="function">(<span class="params">a,b</span>) =&gt;</span> a &amp;&amp; b)</span><br><span class="line">                <span class="keyword">return</span> and(...root.params.map(runTree))</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'|'</span> :</span><br><span class="line">                <span class="keyword">var</span> or = <span class="function">(<span class="params">...args</span>) =&gt;</span> args.reduce(<span class="function">(<span class="params">a,b</span>) =&gt;</span> a || b)</span><br><span class="line">                <span class="keyword">return</span> or(...root.params.map(runTree))</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'!'</span> :</span><br><span class="line">                <span class="keyword">return</span> !runTree(root.params[<span class="number">0</span>])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.type === <span class="string">"value"</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> root.value</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 构建语法树时返回的是节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseOr</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> node = &#123;</span><br><span class="line">        type: <span class="string">'fcall'</span>,</span><br><span class="line">        name: <span class="string">'|'</span>,</span><br><span class="line">        params: [],</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// |(a,b,c,)</span></span><br><span class="line">    i += <span class="number">2</span> <span class="comment">// 包括括号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        node.params.push(parseExpr())</span><br><span class="line">        <span class="keyword">if</span>(expr[i] === <span class="string">")"</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++  <span class="comment">// 跳过逗号</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++ <span class="comment">// 跳过括号</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseAnd</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> node = &#123;</span><br><span class="line">        type: <span class="string">'fcall'</span>,</span><br><span class="line">        name: <span class="string">'&amp;'</span>,</span><br><span class="line">        params: [],</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// |(a,b,c,)</span></span><br><span class="line">    i += <span class="number">2</span> <span class="comment">// 包括括号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        node.params.push(parseExpr())</span><br><span class="line">        <span class="keyword">if</span>(expr[i] === <span class="string">")"</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++  <span class="comment">// 跳过逗号</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++ <span class="comment">// 跳过括号</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseNot</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> node = &#123;</span><br><span class="line">        type: <span class="string">'fcall'</span>,</span><br><span class="line">        name: <span class="string">'!'</span>,</span><br><span class="line">        params: [],</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// |(a,b,c,)</span></span><br><span class="line">    i += <span class="number">2</span> <span class="comment">// 包括括号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        node.params.push(parseExpr())</span><br><span class="line">        <span class="keyword">if</span>(expr[i] === <span class="string">")"</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            i++  <span class="comment">// 跳过逗号</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    i++ <span class="comment">// 跳过括号</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseTrue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: <span class="string">'value'</span>,</span><br><span class="line">        name: <span class="string">'t'</span>,</span><br><span class="line">        value: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseFalse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: <span class="string">'value'</span>,</span><br><span class="line">        name: <span class="string">'f'</span>,</span><br><span class="line">        value: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//  将代码转换为c语言风格</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">transformToCStyle</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root.type == <span class="string">'fcall'</span>) &#123;</span><br><span class="line">        <span class="keyword">switch</span>(root.name) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'|'</span> :</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'and('</span> + root.params.map(transformToCStyle).join(<span class="string">','</span>) + <span class="string">')'</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&amp;'</span> :</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'or('</span> + root.params.map(transformToCStyle).join(<span class="string">','</span>) + <span class="string">')'</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'!'</span> :</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'!('</span> + root.params.map(transformToCStyle).join(<span class="string">','</span>) + <span class="string">')'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(root.type == <span class="string">'value'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> root.value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-js的原型实例" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">js的原型实例</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" class="archive-article-date">
-  	<time datetime="2020-06-21T10:15:35.054Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​        最近学习了关于<code>js</code>中原型与构造函数的理论知识和使用方法，这篇博客通过《JavaScript编程精解》中给的画表格的例子重新复现这个实例，加深对函数原型的理解，后面还有对函数中出现的this的探讨及理解</p>
-<h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><h4 id="函数的封装、多态、继承："><a href="#函数的封装、多态、继承：" class="headerlink" title="函数的封装、多态、继承："></a>函数的封装、多态、继承：</h4><p>封装：</p>
-<p><em>// 把数据和操作这组数据的函数放在一起，称为对象。此过程叫封装</em></p>
-<p><em>// 封装的另一层含义： 将复杂的操作或计算写成函数， 调用时只需考虑高晨概念，进而无需考虑该操作的运作细节</em></p>
-<p>多态：</p>
-<p>  <em>// 多个不同类型的对象具有相同的一组接口（方法与方法接受的参数类型与返回值的类型）</em></p>
-<p>继承：</p>
-<p>  <em>// 当一个类型拥有另一个类型的所有特性。可以让这一个类型直接通过某种方式直接获得该类型的所有属性和方法， 即称为继承</em></p>
-<p>  <em>// 被继承称为父类，继承者称为子类</em></p>
-        
-          <a class="article-more-a" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-js中二叉树的基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">js中二叉树的基础</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-06-14T12:06:04.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这周学习了有关二叉树的一些基础并在leetcode上刷了一些有关的题目，下面是对这周的学习做一下基本的总结</p>
-<h2 id="二叉树的基本概念"><a href="#二叉树的基本概念" class="headerlink" title="二叉树的基本概念"></a>二叉树的基本概念</h2><p>首先是树的一些概念</p>
-<pre><code>树的概念：
-树是特殊的图 T = （V， E），节点数|v| = n, 边数|E| = e
-指定一节点r =&gt; root 树的根-&gt; T=&gt; 有根树
-取T 内部的节点为根得到的子树也是有根树，称作Ti = subtree（ri）
-ri是r的child（子节点）ri之间互称兄弟，r是父节点
-指定Ti作为T的第i个子树ri称作r的第i个孩子=&gt; T就是有序树（order Tree）</code></pre>
-        
-          <a class="article-more-a" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-高阶函数的补充及其应用一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">高阶函数的补充及其应用一</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="archive-article-date">
-  	<time datetime="2020-06-08T12:37:45.482Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客通过一些高阶函数的实例运用加深对高阶的理解</p>
-<h3 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h3><p>下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名</p>
-        
-          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">展开全文 >></a>
         </p>
       
 
