@@ -37,7 +37,7 @@
 
   
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -156,6 +156,69 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-封装日期格式化函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/07/%E5%B0%81%E8%A3%85%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%87%BD%E6%95%B0/">封装日期格式化函数</a>
+    </h1>
+  
+
+        
+        <a href="/2021/05/07/%E5%B0%81%E8%A3%85%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%87%BD%E6%95%B0/" class="archive-article-date">
+  	<time datetime="2021-05-07T13:03:40.504Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="格式化日期函数"><a href="#格式化日期函数" class="headerlink" title="格式化日期函数"></a>格式化日期函数</h2><p>利用字符串高效实现封装日期格式化函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> formatDate = <span class="function">(<span class="params">date, format = <span class="string">'yyyy-MM-dd hh:mm:ss'</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;</span><br><span class="line">    yyyy: date.getFullYear(),</span><br><span class="line">    MM: date.getMonth(),</span><br><span class="line">    dd: date.getDate(),</span><br><span class="line">    hh: date.getHours(),</span><br><span class="line">    mm: date.getMinutes(),</span><br><span class="line">    ss: date.getSeconds(),</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">const</span> key <span class="keyword">in</span> config) &#123;</span><br><span class="line">    format = format.replace(key,config[key])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> format;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/07/%E5%B0%81%E8%A3%85%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%87%BD%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-一个简易的redux的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1154,83 +1217,6 @@ path.parse() 返回路径各部分的信息。</code></pre><figure class="highli
 
 
   
-    <article id="post-节流和防抖" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/">节流和防抖</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" class="archive-article-date">
-  	<time datetime="2020-09-22T14:12:21.631Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过使用js重新实现节流函数和防抖函数，加深对这两个概念的理解</p>
-<h3 id="定义和应用场景"><a href="#定义和应用场景" class="headerlink" title="定义和应用场景"></a>定义和应用场景</h3><p>节流和防抖的实质是一种节约资源的行为</p>
-<p>函数节流throttle: 指定时间间隔内只会执行一次任务</p>
-<p>​        如使用长轮询时使用_.throttle可以有效的定时从服务器对客户端发送改变的数据。从而节约资源</p>
-<p>函数防抖debound: 任务频繁触发的情况下，只有任务触发的间隔超过指定间隔的时候，任务才会执行</p>
-<p>​        网站为了提高用户体验，不会再输入框失去焦点的时候再去判断用户名是否被占用，而是在输入的时候就在判断这个用户名是否已被注册</p>
-<h3 id="两个函数的实现"><a href="#两个函数的实现" class="headerlink" title="两个函数的实现"></a>两个函数的实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">f, time = <span class="number">1000</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> canRun = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// 初始状态设置为真</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!canRun) <span class="keyword">return</span>; <span class="comment">//canRun 为假时不运行</span></span><br><span class="line">        canRun = <span class="literal">false</span>; <span class="comment">// 将canRun设置为假</span></span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            f.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">            canRun = <span class="literal">true</span>;</span><br><span class="line">        &#125;, time);  <span class="comment">// 每隔time时间后重新运行一次函数的调用</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">f, time</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> id = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        clearTimeout(id) <span class="comment">// 每当键按下时将上一次的延时取消</span></span><br><span class="line">        id = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            f.call(<span class="keyword">this</span>, e)</span><br><span class="line">        &#125;, e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过闭包保存一个标记来保存 setTimeout 返回的值，每当用户输入的时候把前一个 setTimeout clear 掉，</span></span><br><span class="line"><span class="comment">//创建一个新的 setTimeout，这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行f调用</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>通过引入lodash可以很简单的使用节流和防抖函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i lodash</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line">_.throttle(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to throttle.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to throttle invocations to.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=true] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br><span class="line"></span><br><span class="line">_.debounce(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to debounce.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to delay.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=false] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.maxWait] (number): The maximum time func is allowed to be delayed before it's invoked.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1245,7 +1231,7 @@ path.parse() 返回路径各部分的信息。</code></pre><figure class="highli
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 Tangtc233
+    		&copy; 2021 Tangtc233
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
