@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -26,6 +26,7 @@
 <meta property="og:url" content="http://yoursite.com/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/index.html">
 <meta property="og:site_name" content="tang的博客">
 <meta property="og:description" content="正则速记正则的创建12var re1 &#x3D; new RegExp(&quot;abc&quot;)var re2 &#x3D; &#x2F;abc&#x2F;  正则的方法匹配测试123var exp1 &#x3D; &quot;abcde&quot;&#x2F;abc&#x2F;.test(exp1)re2.test(&quot;acbde&quot;) 匹配字符集 1234&#x2F;&#x2F; 匹配到[]中的任意一部分&#x2F;[0123456789]&#x2F;.test(&quot;in 1996&quot;)&#x2F;&#x2F; 用-替代一个范围[0-9].test(&quot;in">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-24T09:26:51.498Z">
 <meta property="article:modified_time" content="2020-10-14T11:25:35.390Z">
 <meta property="article:author" content="Tangtc233">
@@ -43,7 +44,7 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-Hans'
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -87,7 +88,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="تشغيل شريط التصفح">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -117,12 +118,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>الأرشيفات</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
   </ul>
@@ -152,7 +163,7 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -174,16 +185,16 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">نُشر في</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="أُنشأ: 2020-09-24 17:26:51" itemprop="dateCreated datePublished" datetime="2020-09-24T17:26:51+08:00">2020-09-24</time>
+              <time title="创建时间：2020-09-24 17:26:51" itemprop="dateCreated datePublished" datetime="2020-09-24T17:26:51+08:00">2020-09-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">عُدل في</span>
-                <time title="عُدل: 2020-10-14 19:25:35" itemprop="dateModified" datetime="2020-10-14T19:25:35+08:00">2020-10-14</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-14 19:25:35" itemprop="dateModified" datetime="2020-10-14T19:25:35+08:00">2020-10-14</time>
               </span>
 
           
@@ -312,10 +323,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          المحتويات
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          عام
+          站点概览
         </li>
       </ul>
 
@@ -336,7 +347,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">المقالات</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
   </nav>
@@ -369,7 +380,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tangtc233</span>
 </div>
-  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
