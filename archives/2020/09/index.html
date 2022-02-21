@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="tangtc233的技术博客">
@@ -185,7 +185,7 @@
 
       <div class="post-title">
           <a class="post-title-link" href="/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url">
-            <span itemprop="name">使用nodejs设置一个静态文件服务器</span>
+            <span itemprop="name">实现一个静态服务器文件夹</span>
           </a>
       </div>
 
@@ -205,7 +205,7 @@
 
       <div class="post-title">
           <a class="post-title-link" href="/2020/09/29/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/" itemprop="url">
-            <span itemprop="name">nodejs核心模块回顾“</span>
+            <span itemprop="name">NodeJS核心模块回顾</span>
           </a>
       </div>
 
@@ -225,7 +225,7 @@
 
       <div class="post-title">
           <a class="post-title-link" href="/2020/09/28/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/" itemprop="url">
-            <span itemprop="name">js使用异步的四种方式</span>
+            <span itemprop="name">异步初识</span>
           </a>
       </div>
 
@@ -245,7 +245,7 @@
 
       <div class="post-title">
           <a class="post-title-link" href="/2020/09/25/dom%E5%9B%9E%E9%A1%BE/" itemprop="url">
-            <span itemprop="name">dom回顾</span>
+            <span itemprop="name">DOM速记</span>
           </a>
       </div>
 
@@ -305,7 +305,7 @@
 
       <div class="post-title">
           <a class="post-title-link" href="/2020/09/24/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/" itemprop="url">
-            <span itemprop="name">applycallbind的实现</span>
+            <span itemprop="name">apply、call和bind的实现</span>
           </a>
       </div>
 
@@ -325,7 +325,7 @@
 
       <div class="post-title">
           <a class="post-title-link" href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" itemprop="url">
-            <span itemprop="name">节流和防抖</span>
+            <span itemprop="name">节流与防抖</span>
           </a>
       </div>
 
@@ -345,7 +345,7 @@
 
       <div class="post-title">
           <a class="post-title-link" href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" itemprop="url">
-            <span itemprop="name">js实现链表及其方法</span>
+            <span itemprop="name">实现链表及其方法</span>
           </a>
       </div>
 
@@ -428,6 +428,18 @@
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
   </nav>
 </div>
 
@@ -458,7 +470,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tangtc233</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         

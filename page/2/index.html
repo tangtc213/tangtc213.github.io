@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="tangtc233的技术博客">
@@ -161,6 +161,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/24/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">apply、call和bind的实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-24 17:16:52" itemprop="dateCreated datePublished" datetime="2020-09-24T17:16:52+08:00">2020-09-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><p>bind的实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myBind</span>(<span class="params">arg, f</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 返回一个新的函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 新函树的返回值是将arg绑定到第一个参数上</span></span><br><span class="line">        <span class="keyword">return</span> f(arg, ...args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>bind实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> arg <span class="keyword">of</span> <span class="built_in">arguments</span>) &#123;</span><br><span class="line">         sum += arg</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> funcB1 = myBind(<span class="number">10</span>, func1)</span><br><span class="line"><span class="built_in">console</span>.log(funcB1(<span class="number">3</span>, <span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="apply与call"><a href="#apply与call" class="headerlink" title="apply与call"></a>apply与call</h2><h4 id="apply与call的共同点和区别"><a href="#apply与call的共同点和区别" class="headerlink" title="apply与call的共同点和区别"></a>apply与call的共同点和区别</h4><p><em>apply 和 call的共同点和区别</em></p>
+<p><em>apply和call 都是接受一个函数体内this的指向和要传递的参数来返回结果</em></p>
+<p><em>pply第二个参数是一个带下标的集合</em></p>
+<p><em>call 从第二个参数开始每个参数一次传入函数</em></p>
+<p>call的实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// call的实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">obj,...args</span>) </span>&#123;</span><br><span class="line">    obj._fn_ = <span class="keyword">this</span></span><br><span class="line">    obj._fn_(...args)</span><br><span class="line">    <span class="keyword">delete</span> obj._fn_</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> test = &#123;</span><br><span class="line">    name: <span class="string">'test'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'obj'</span>,</span><br><span class="line">    f : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name, ...arguments)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.f()</span><br><span class="line">obj.fn.myCall(test, <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">obj.fn.call(test, <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apply的实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params">obj, arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> args = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span> ; i&lt;arr.length; i++)&#123;</span><br><span class="line">        args.push( arr[i] );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.myCall(obj, ...args);</span><br><span class="line">&#125;</span><br><span class="line">obj.fn.myApply(test, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -175,7 +258,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" class="post-title-link" itemprop="url">节流和防抖</a>
+            <a href="/2020/09/22/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" class="post-title-link" itemprop="url">节流与防抖</a>
         </h2>
 
         <div class="post-meta">
@@ -187,13 +270,15 @@
 
               <time title="创建时间：2020-09-22 22:12:21" itemprop="dateCreated datePublished" datetime="2020-09-22T22:12:21+08:00">2020-09-22</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 09:14:53" itemprop="dateModified" datetime="2020-11-27T09:14:53+08:00">2020-11-27</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
 
           
 
@@ -254,7 +339,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">js实现链表及其方法</a>
+            <a href="/2020/09/21/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">实现链表及其方法</a>
         </h2>
 
         <div class="post-meta">
@@ -263,9 +348,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-21 22:07:07 / 修改时间：22:39:26" itemprop="dateCreated datePublished" datetime="2020-09-21T22:07:07+08:00">2020-09-21</time>
+              <time title="创建时间：2020-09-21 22:07:07" itemprop="dateCreated datePublished" datetime="2020-09-21T22:07:07+08:00">2020-09-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
             </span>
 
           
@@ -332,7 +425,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/" class="post-title-link" itemprop="url">JSON解析器及其扩展</a>
+            <a href="/2020/06/28/JSON%E8%A7%A3%E6%9E%90%E5%99%A8%E5%8F%8A%E5%85%B6%E6%89%A9%E5%B1%95/" class="post-title-link" itemprop="url">JSON解析器实现</a>
         </h2>
 
         <div class="post-meta">
@@ -341,9 +434,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-06-28 19:29:21 / 修改时间：21:21:56" itemprop="dateCreated datePublished" datetime="2020-06-28T19:29:21+08:00">2020-06-28</time>
+              <time title="创建时间：2020-06-28 19:29:21" itemprop="dateCreated datePublished" datetime="2020-06-28T19:29:21+08:00">2020-06-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
             </span>
 
           
@@ -399,80 +500,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/" class="post-title-link" itemprop="url">js的原型实例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-21 18:15:35 / 修改时间：21:10:22" itemprop="dateCreated datePublished" datetime="2020-06-21T18:15:35+08:00">2020-06-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​        最近学习了关于<code>js</code>中原型与构造函数的理论知识和使用方法，这篇博客通过《JavaScript编程精解》中给的画表格的例子重新复现这个实例，加深对函数原型的理解，后面还有对函数中出现的this的探讨及理解</p>
-<h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><h4 id="函数的封装、多态、继承："><a href="#函数的封装、多态、继承：" class="headerlink" title="函数的封装、多态、继承："></a>函数的封装、多态、继承：</h4><p>封装：</p>
-<p><em>// 把数据和操作这组数据的函数放在一起，称为对象。此过程叫封装</em></p>
-<p><em>// 封装的另一层含义： 将复杂的操作或计算写成函数， 调用时只需考虑高晨概念，进而无需考虑该操作的运作细节</em></p>
-<p>多态：</p>
-<p>  <em>// 多个不同类型的对象具有相同的一组接口（方法与方法接受的参数类型与返回值的类型）</em></p>
-<p>继承：</p>
-<p>  <em>// 当一个类型拥有另一个类型的所有特性。可以让这一个类型直接通过某种方式直接获得该类型的所有属性和方法， 即称为继承</em></p>
-<p>  <em>// 被继承称为父类，继承者称为子类</em></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/21/js%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AE%9E%E4%BE%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -487,7 +514,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">js中二叉树的基础</a>
+            <a href="/2020/06/14/js%E4%B8%AD%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">二叉树基础</a>
         </h2>
 
         <div class="post-meta">
@@ -496,9 +523,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-06-14 20:06:04 / 修改时间：20:43:33" itemprop="dateCreated datePublished" datetime="2020-06-14T20:06:04+08:00">2020-06-14</time>
+              <time title="创建时间：2020-06-14 20:06:04" itemprop="dateCreated datePublished" datetime="2020-06-14T20:06:04+08:00">2020-06-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
             </span>
 
           
@@ -560,7 +595,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="post-title-link" itemprop="url">高阶函数的补充及其应用一</a>
+            <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="post-title-link" itemprop="url">高阶函数的实现二</a>
         </h2>
 
         <div class="post-meta">
@@ -569,9 +604,17 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-06-08 20:37:45 / 修改时间：21:23:14" itemprop="dateCreated datePublished" datetime="2020-06-08T20:37:45+08:00">2020-06-08</time>
+              <time title="创建时间：2020-06-08 20:37:45" itemprop="dateCreated datePublished" datetime="2020-06-08T20:37:45+08:00">2020-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
             </span>
 
           
@@ -627,7 +670,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">高阶函数的实现</a>
+            <a href="/2020/06/08/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">高阶函数的实现一</a>
         </h2>
 
         <div class="post-meta">
@@ -636,9 +679,17 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-06-08 19:15:33 / 修改时间：20:33:40" itemprop="dateCreated datePublished" datetime="2020-06-08T19:15:33+08:00">2020-06-08</time>
+              <time title="创建时间：2020-06-08 19:15:33" itemprop="dateCreated datePublished" datetime="2020-06-08T19:15:33+08:00">2020-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
             </span>
 
           
@@ -703,9 +754,17 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-05-03 09:58:37 / 修改时间：12:48:44" itemprop="dateCreated datePublished" datetime="2020-05-03T09:58:37+08:00">2020-05-03</time>
+              <time title="创建时间：2020-05-03 09:58:37" itemprop="dateCreated datePublished" datetime="2020-05-03T09:58:37+08:00">2020-05-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AD%A3%E5%88%99/" itemprop="url" rel="index"><span itemprop="name">正则</span></a>
+                </span>
             </span>
 
           
@@ -791,7 +850,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">js重写数组的方法</a>
+            <a href="/2020/03/17/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">重写数组方法</a>
         </h2>
 
         <div class="post-meta">
@@ -800,9 +859,17 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-17 20:13:54 / 修改时间：20:55:25" itemprop="dateCreated datePublished" datetime="2020-03-17T20:13:54+08:00">2020-03-17</time>
+              <time title="创建时间：2020-03-17 20:13:54" itemprop="dateCreated datePublished" datetime="2020-03-17T20:13:54+08:00">2020-03-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
             </span>
 
           
@@ -898,7 +965,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">纯css完成轮播图的思路</a>
+            <a href="/2020/03/16/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">纯css实现轮播图思路</a>
         </h2>
 
         <div class="post-meta">
@@ -910,13 +977,15 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
 
               <time title="创建时间：2020-03-16 19:47:45" itemprop="dateCreated datePublished" datetime="2020-03-16T19:47:45+08:00">2020-03-16</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-17 09:58:13" itemprop="dateModified" datetime="2020-03-17T09:58:13+08:00">2020-03-17</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
 
           
 
@@ -1028,6 +1097,18 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
   </nav>
 </div>
 
@@ -1058,7 +1139,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
   </span>
   <span class="author" itemprop="copyrightHolder">Tangtc233</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         

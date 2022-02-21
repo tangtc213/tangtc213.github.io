@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="前言这篇博客主要介绍的是伪元素的content的值可以是什么、怎么用。 content::after before 用来创建伪元素作为已选中元素的最后一个或第一个子元素。 默认为行内元素， content属性用于在伪元素中插入内容（匿名的可替换元素）">
@@ -32,11 +32,10 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7%E5%80%BC.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/%E8%AE%A1%E6%95%B0%E5%99%A8.png">
 <meta property="article:published_time" content="2020-03-15T04:48:06.749Z">
-<meta property="article:modified_time" content="2020-03-17T01:59:31.411Z">
+<meta property="article:modified_time" content="2020-03-15T04:48:06.749Z">
 <meta property="article:author" content="Tangtc233">
-<meta property="article:tag" content="html">
-<meta property="article:tag" content="css">
-<meta property="article:tag" content="js">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="样式">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/03/15/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/%E5%95%86%E6%A0%87.png">
 
@@ -194,13 +193,15 @@
 
               <time title="创建时间：2020-03-15 12:48:06" itemprop="dateCreated datePublished" datetime="2020-03-15T12:48:06+08:00">2020-03-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-17 09:59:31" itemprop="dateModified" datetime="2020-03-17T09:59:31+08:00">2020-03-17</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
 
           
 
@@ -213,7 +214,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要介绍的是伪元素的content的值可以是什么、怎么用。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客主要介绍的是伪元素的content的值可以是什么、怎么用。</p>
 <h2 id="content"><a href="#content" class="headerlink" title="content"></a>content</h2><p><code>::after</code> <code>before</code> 用来创建伪元素作为已选中元素的最后一个或第一个子元素。</p>
 <p>默认为行内元素，</p>
 <p><code>content</code>属性用于在伪元素中插入内容（匿名的可替换元素）</p>
@@ -261,6 +262,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%80%BB%E7%BB%93/" rel="tag"># 总结</a>
+              <a href="/tags/%E6%A0%B7%E5%BC%8F/" rel="tag"># 样式</a>
+          </div>
 
         
 
@@ -268,12 +273,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/" rel="prev" title="级联菜单">
-      <i class="fa fa-chevron-left"></i> 级联菜单
+    <a href="/2020/03/15/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/" rel="prev" title="级联菜单纯CSS实现">
+      <i class="fa fa-chevron-left"></i> 级联菜单纯CSS实现
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="next" title="多栏等高自适应布局的实现">
-      多栏等高自适应布局的实现 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/03/15/%E5%A4%9A%E6%A0%8F%E7%AD%89%E9%AB%98%E8%87%AA%E9%80%82%E5%BA%94%E5%B8%83%E5%B1%80%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="next" title="多栏等高自适应布局实现">
+      多栏等高自适应布局实现 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -333,7 +338,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#content"><span class="nav-number">2.</span> <span class="nav-text">content</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入可选项"><span class="nav-number">2.1.</span> <span class="nav-text">插入可选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#css3的content属性详解"><span class="nav-number"></span> <span class="nav-text">css3的content属性详解</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#content"><span class="nav-number">1.1.</span> <span class="nav-text">content</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入可选项"><span class="nav-number">1.1.1.</span> <span class="nav-text">插入可选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.2.</span> <span class="nav-text">参考文献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#css3的content属性详解"><span class="nav-number">2.</span> <span class="nav-text">css3的content属性详解</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -350,6 +355,18 @@
           <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -381,7 +398,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Tangtc233</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
