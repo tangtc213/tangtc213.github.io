@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/21/%E9%99%90%E5%88%B6%E6%89%A7%E8%A1%8C%E6%95%B0%E9%87%8F%E7%9A%84%E5%BC%82%E6%AD%A5%E5%AE%9E%E7%8E%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/21/%E9%99%90%E5%88%B6%E6%89%A7%E8%A1%8C%E6%95%B0%E9%87%8F%E7%9A%84%E5%BC%82%E6%AD%A5%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">限制执行数量的异步实现</a>
+            <a href="/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/" class="post-title-link" itemprop="url">高阶函数的实现二</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-02-21 21:29:29" itemprop="dateCreated datePublished" datetime="2022-02-21T21:29:29+08:00">2022-02-21</time>
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,20 +208,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="限制执行数量的异步实现"><a href="#限制执行数量的异步实现" class="headerlink" title="限制执行数量的异步实现"></a>限制执行数量的异步实现</h1><h3 id="一个需求"><a href="#一个需求" class="headerlink" title="一个需求"></a>一个需求</h3><p>我们需要在获取一系列数据，但是每次只能执行两个函数用来获取数据这该如何实现呢</p>
-<h3 id="通过回调的实现"><a href="#通过回调的实现" class="headerlink" title="通过回调的实现"></a>通过回调的实现</h3><p>【实现链接】<a href="https://jsbin.com/calm-credit-BE7" target="_blank" rel="noopener">https://jsbin.com/calm-credit-BE7</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 异步获取信息函数</span></span><br><span class="line"><span class="keyword">const</span> query = <span class="function">(<span class="params">taskNum, cb</span>) =&gt;</span> &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"this task"</span>, taskNum)</span><br><span class="line">    cb &amp;&amp; cb()</span><br><span class="line">  &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cbLimit = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> pendingList = tasks.slice(<span class="number">0</span>, limit)</span><br><span class="line">  <span class="keyword">let</span> flag = limit</span><br><span class="line">  <span class="comment">// 执行函数</span></span><br><span class="line">  <span class="keyword">const</span> step = <span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(flag &lt; tasks.length) &#123;</span><br><span class="line">    <span class="comment">// 初次执行传入id</span></span><br><span class="line">      <span class="keyword">if</span>(id) &#123;</span><br><span class="line">        query(id, () =&gt; step())</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        query(taskIds[flag++], () =&gt; step())</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  pendingList.forEach(<span class="function"><span class="params">task</span> =&gt;</span> &#123;</span><br><span class="line">    step(task)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">cbLimit(taskIds, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通过promise的实现"><a href="#通过promise的实现" class="headerlink" title="通过promise的实现"></a>通过promise的实现</h3><p>【实现链接】<a href="https://jsbin.com/frosty-frost-0ED" target="_blank" rel="noopener">https://jsbin.com/frosty-frost-0ED</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryPromise = <span class="function">(<span class="params">taskNum</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'this Task'</span>, taskNum);</span><br><span class="line">      resolve(taskNum)</span><br><span class="line">    &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> LimitPromise = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> pendingList = tasks.slice(<span class="number">0</span>, limit)</span><br><span class="line">  <span class="keyword">let</span> flag = limit;</span><br><span class="line">  <span class="comment">// 递归调用promise实现异步的链式调用</span></span><br><span class="line">  <span class="keyword">const</span> stepPromise = <span class="function"><span class="params">id</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(flag &lt; tasks.length) &#123;</span><br><span class="line">      <span class="keyword">if</span>(id) &#123;<span class="keyword">return</span>	queryPromise(id).then(<span class="function"><span class="params">()</span> =&gt;</span> stepPromise())&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> queryPromise(tasks[flag++]).then(<span class="function"><span class="params">()</span> =&gt;</span> stepPromise())</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  pendingList.forEach(<span class="function"><span class="params">task</span> =&gt;</span> &#123;</span><br><span class="line">    stepPromise(task)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LimitPromise(taskIds,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通过async和await实现"><a href="#通过async和await实现" class="headerlink" title="通过async和await实现"></a>通过async和await实现</h3><p>【实现链接】<a href="https://jsbin.com/royal-surf-206" target="_blank" rel="noopener">https://jsbin.com/royal-surf-206</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryPromise = <span class="function">(<span class="params">taskNum</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'this Task'</span>, taskNum);</span><br><span class="line">      resolve(taskNum)</span><br><span class="line">    &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> LimitAsync = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> pendingList = tasks.slice(<span class="number">0</span>, limit)</span><br><span class="line">  <span class="keyword">let</span> flag = limit;</span><br><span class="line">  <span class="comment">// 递归调用promise实现异步的链式调用</span></span><br><span class="line">  <span class="keyword">const</span> stepAsync = <span class="keyword">async</span> (id) =&gt; &#123;</span><br><span class="line">    <span class="keyword">while</span>(flag &lt; tasks.length) &#123;</span><br><span class="line">      <span class="keyword">if</span>(id) &#123;	</span><br><span class="line">        <span class="keyword">await</span> queryPromise(id).then(<span class="function"><span class="params">()</span> =&gt;</span> stepAsync())</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(flag)</span><br><span class="line">        <span class="keyword">await</span> queryPromise(tasks[flag++]).then(<span class="function"><span class="params">()</span> =&gt;</span> stepAsync())</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  pendingList.forEach(<span class="function"><span class="params">task</span> =&gt;</span> &#123;</span><br><span class="line">    stepAsync(task)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LimitAsync(taskIds, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通过Promise-race实现"><a href="#通过Promise-race实现" class="headerlink" title="通过Promise.race实现"></a>通过Promise.race实现</h3><p>【实现链接】<a href="https://jsbin.com/summer-lake-CCC" target="_blank" rel="noopener">https://jsbin.com/summer-lake-CCC</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryPromise = <span class="function">(<span class="params">taskNum</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'this Task'</span>, taskNum);</span><br><span class="line">      resolve(taskNum)</span><br><span class="line">    &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> Limit2Promise = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> tasksCopy = [...tasks]</span><br><span class="line">  <span class="keyword">if</span> (tasksCopy.length &lt;= limit) &#123;</span><br><span class="line">      <span class="comment">// task数量小于2时直接返回Promise.all</span></span><br><span class="line">    <span class="keyword">const</span> promiseArray = tasks.map(<span class="function">(<span class="params">task</span>) =&gt;</span> queryPromise(task))</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all(promiseArray)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 转化为Promise初始数组</span></span><br><span class="line">  <span class="keyword">const</span> promiseArray = tasksCopy.splice(<span class="number">0</span>, limit).map(<span class="function"><span class="params">task</span> =&gt;</span> queryPromise(task))</span><br><span class="line">  <span class="comment">// Promise.race竞态处理最先完成的promsie，并填入新的promise在执行新的Promise.race</span></span><br><span class="line">  tasksCopy.reduce(<span class="function">(<span class="params">prevPromise, taskId</span>) =&gt;</span> prevPromise.then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Promise</span>.race(promiseArray))</span><br><span class="line">    .catch(<span class="function"><span class="params">error</span> =&gt;</span> <span class="built_in">console</span>.error(error))</span><br><span class="line">    .then(<span class="function"><span class="params">resolveId</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> pos = promiseArray.findIndex(<span class="function"><span class="params">id</span> =&gt;</span> resolveId === id)</span><br><span class="line">      promiseArray.splice(pos, <span class="number">1</span>)</span><br><span class="line">      promiseArray.push(queryPromise(taskId))</span><br><span class="line">    &#125;</span><br><span class="line">    ), <span class="built_in">Promise</span>.resolve())</span><br><span class="line">&#125;</span><br><span class="line">Limit2Promise(taskIds, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客通过一些高阶函数的实例运用加深对高阶的理解</p>
+<h3 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h3><p>下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -240,7 +236,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/05/07/%E5%B0%81%E8%A3%85%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -254,7 +250,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/07/%E5%B0%81%E8%A3%85%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">格式化日期函数</a>
+            <a href="/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">高阶函数的实现一</a>
         </h2>
 
         <div class="post-meta">
@@ -264,7 +260,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-07 21:03:40" itemprop="dateCreated datePublished" datetime="2021-05-07T21:03:40+08:00">2021-05-07</time>
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,8 +283,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="格式化日期函数"><a href="#格式化日期函数" class="headerlink" title="格式化日期函数"></a>格式化日期函数</h2><p>利用字符串高效实现封装日期格式化函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> formatDate = <span class="function">(<span class="params">date, format = <span class="string">'yyyy-MM-dd hh:mm:ss'</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;</span><br><span class="line">    yyyy: date.getFullYear(),</span><br><span class="line">    MM: date.getMonth(),</span><br><span class="line">    dd: date.getDate(),</span><br><span class="line">    hh: date.getHours(),</span><br><span class="line">    mm: date.getMinutes(),</span><br><span class="line">    ss: date.getSeconds(),</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">const</span> key <span class="keyword">in</span> config) &#123;</span><br><span class="line">    format = format.replace(key,config[key])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> format;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客主要是对高阶函数for<code>forEach()</code> ,<code>filter()</code>, <code>map()</code>,  <code>reduce</code>,进行实现并更深入的探究</p>
+<h2 id="常规实现"><a href="#常规实现" class="headerlink" title="常规实现"></a>常规实现</h2><h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach()"></a>forEach()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方法对数组的每个元素执行一次给定的函数。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Array&#125;</span> </span>array </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Function&#125;</span> <span class="variable">func</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;any&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">array, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">        action(array[i],i,array)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -307,7 +311,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -321,7 +325,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/14/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">一个简易的redux实现</a>
+            <a href="/2022/07/25/%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80/" class="post-title-link" itemprop="url">零宽断言</a>
         </h2>
 
         <div class="post-meta">
@@ -331,847 +335,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-11-14 20:30:34" itemprop="dateCreated datePublished" datetime="2020-11-14T20:30:34+08:00">2020-11-14</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Redux 的目标是创建一个状态管理库，来提供最简化 API</p>
-<h2 id="redux的核心概念"><a href="#redux的核心概念" class="headerlink" title="redux的核心概念"></a>redux的核心概念</h2><p>redux的核心容器是state，它相当于存放信息的盒子，<br>但是你不能直接改变盒子里的东西要想更新 state 中的数据，你需要发起一个 action。Action 就是一个普通 JavaScript 对象用来描述发生了什么<br>强制使用 action 来描述所有变化带来的好处是可以清晰地知道应用中到底发生了什么。如果一些东西改变了，就可以知道为什么变。action 就像是描述发生了什么的指示器。最终，为了把 action 和 state 串起来，开发一些函数，这就是 reducer。<br>所以reducer相当于对于action的解释<br>Reducer 只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
-<p>state有下面几个方法：<br>提供 getState() 方法获取 state；<br>提供 dispatch(action) 方法更新 state；<br>通过 subscribe(listener) 注册监听器;<br>通过 subscribe(listener) 返回的函数注销监听器。</p>
-<h2 id="简易的redux的实现"><a href="#简易的redux的实现" class="headerlink" title="简易的redux的实现"></a>简易的redux的实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(reducer, initState) &#123;</span><br><span class="line">        <span class="comment">// 创建一个reducer需要传入reducer和初始化的state</span></span><br><span class="line">        <span class="keyword">this</span>.reducer = reducer</span><br><span class="line">        <span class="keyword">this</span>.state = state</span><br><span class="line">        <span class="keyword">this</span>.subscribes = []</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    getState() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.reducer</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dispatch(action) &#123;</span><br><span class="line">        <span class="keyword">this</span>.state = <span class="keyword">this</span>.reducer(<span class="keyword">this</span>.state, action)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> f <span class="keyword">of</span> <span class="keyword">this</span>.subscribes) &#123;</span><br><span class="line">            f()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> action</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    subscribe(f) &#123;</span><br><span class="line">        <span class="keyword">this</span>.subscribes.push(f)</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unsubscribe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.subscribes = <span class="keyword">this</span>.subscribes.filter(<span class="function"><span class="params">it</span> =&gt;</span> it !== f)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>用上面的class简易的实现一个todo的store</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">var</span> actions = &#123;</span><br><span class="line">    setEditingIdx(state, action) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            editingIdx: action.index,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    addTodo(state, action) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            todos: [</span><br><span class="line">                ...state.todos,</span><br><span class="line">                &#123;</span><br><span class="line">                    content: action.todoText,</span><br><span class="line">                    completed: <span class="literal">false</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    deleteTodo(state, action) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...state,</span><br><span class="line">            todos: todos.filter(<span class="function">(<span class="params">it, idx</span>) =&gt;</span> idx != action.index )</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">todoReducer</span>(<span class="params">state, action <span class="regexp">/**&#123;type: 'addTodo', type: 'deleteTodo&#125; */</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> f = actions[action.type]</span><br><span class="line">    <span class="keyword">if</span>(f) &#123;</span><br><span class="line">        <span class="keyword">return</span> f(state ,action)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> state</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 最后创建初始化仓库</span></span><br><span class="line">store  = <span class="keyword">new</span> Store(todoReducer, &#123;</span><br><span class="line">    editingIdx: <span class="number">-1</span>,</span><br><span class="line">    category: <span class="string">'all'</span>,</span><br><span class="line">    todos: [&#123;</span><br><span class="line">        content: <span class="string">'eat'</span>,</span><br><span class="line">        completed: <span class="literal">true</span>,</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        content: <span class="string">'run'</span>,</span><br><span class="line">        completed: <span class="literal">true</span>,</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        content: <span class="string">'read'</span>,</span><br><span class="line">        completed: <span class="literal">false</span>,</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        content: <span class="string">'sleep'</span>,</span><br><span class="line">        completed: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/12/%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/12/%E5%90%84%E7%A7%8D%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">各种排序算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-12 19:13:50" itemprop="dateCreated datePublished" datetime="2020-11-12T19:13:50+08:00">2020-11-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><pre><code>对之前学习的各种排序的方法做一个简单的小结</code></pre><h2 id="分类和实现"><a href="#分类和实现" class="headerlink" title="分类和实现"></a>分类和实现</h2><pre><code>常见的排序方法和实现，常见的排序算法有冒泡排序、选择排序、并归排序、快排
-首先随机生成一组十个数据</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = []</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">10</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">    ary.push(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">100</span>))</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 得到</span></span><br><span class="line">ary = [<span class="number">25</span>, <span class="number">61</span>, <span class="number">11</span>, <span class="number">21</span>, <span class="number">51</span>, <span class="number">55</span>, <span class="number">32</span>, <span class="number">50</span>, <span class="number">42</span>, <span class="number">16</span>]</span><br></pre></td></tr></table></figure>
-<pre><code>后面构建的算法函数都会对这个数组进行处理</code></pre><h3 id="冒泡排序及其优化的方法"><a href="#冒泡排序及其优化的方法" class="headerlink" title="冒泡排序及其优化的方法"></a>冒泡排序及其优化的方法</h3><pre><code>冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。
-实现步骤
-1从开始比较相邻的两个数 、如果第二个比第一个大就交换它们
-2这样最后一个数就是最大的、在从头开始将第二大的数找出并排列
-3重复执行直到排序完成</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> len = ary.length</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len ; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span> ; j &lt; len - <span class="number">1</span> - i ; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(ary[j] &gt; ary[i + <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">let</span> temp = ary[j+<span class="number">1</span>]</span><br><span class="line">                ary[j+<span class="number">1</span>] = ary[j]</span><br><span class="line">                ary[j] = temp</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ary</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 这样的效率并不高<br> 通过设置标志位可以提高效率</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bubbleSort2</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = ary.length</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> done = <span class="literal">false</span>; done = !done; len--) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ary[i] &gt; ary[i + <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">var</span> temp = ary[i];</span><br><span class="line">                ary[i] = ary[i + <span class="number">1</span>];</span><br><span class="line">                ary[i + <span class="number">1</span>] = temp;</span><br><span class="line">                done = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ary</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>算法分析<br>    最佳情况： T(n) = O(n)<br>    最差情况： T(n) = O(n2)</p>
-<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><pre><code>表现最稳定的排序算法之一无论什么数据进去都是O(n²)的时间复杂度
-这是一种简单直观的排序算法。它的工作原理：首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕
-
-实现步骤
-1.设置一个空数组将其分成一个有序区和无序区
-2.从无序区找到最小的数据将其放在第一个位置
-3.将无序区的第一数字放置到有序区的最后一个位置
-4.重复n-1次</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = ary.length</span><br><span class="line">    <span class="keyword">let</span> min, temp</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        min = i</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = i+<span class="number">1</span>; j &lt; len; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(ary[j] &lt; ary[min]) &#123;</span><br><span class="line">                min = j</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        temp = ary[i]</span><br><span class="line">        ary[i] = ary[min]</span><br><span class="line">        ary[min] = temp</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ary</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>算法分析<br>    最佳情况： T(n) = O(n2)<br>    最差情况： T(n) = O(n2)</p>
-<h3 id="并归排序"><a href="#并归排序" class="headerlink" title="并归排序"></a>并归排序</h3><pre><code>和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是O(n log n）的时间复杂度。代价是需要额外的内存空间
-归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法
-将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并。
-实现步骤
-1.把长度为n的输入序列分成两个长度为n/2的子序列
-2.对这两个子序列分别采用归并排序
-3.将两个排序好的子序列合并成一个最终的排序序列</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 自上而下递归</span></span><br><span class="line">    <span class="keyword">let</span> len = ary.length</span><br><span class="line">    <span class="keyword">if</span>(len &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> ary</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 取中间值</span></span><br><span class="line">    <span class="keyword">let</span> middle = <span class="built_in">Math</span>.floor(len / <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">let</span> left = ary.slice(<span class="number">0</span>, middle)</span><br><span class="line">    <span class="keyword">let</span> right = ary.slice(middle)</span><br><span class="line">    <span class="keyword">return</span> merge(mergeSort(left), mergeSort(right))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left, right</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = []</span><br><span class="line">    <span class="keyword">while</span> (left.length &amp;&amp; right.length) &#123;</span><br><span class="line">        <span class="keyword">if</span>(left[<span class="number">0</span>] &lt;= right[<span class="number">0</span>]) &#123;</span><br><span class="line">            result.push(left.shift())</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result.push(right.shift())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (left.length) &#123;</span><br><span class="line">        result.push(left.shift())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (right.length) &#123;</span><br><span class="line">        result.push(right.shift())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>算法分析<br>最佳情况：T(n) = O(nlog2 n)<br>最坏情况：T(n) = O(nlog2 n)</p>
-<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，则可分别对这两部分记录继续进行排序，以达到整个序列有序。<br>使用分治法来把一个串（list）分为两个子串（sub-lists）</p>
-<p>实现步骤<br>1.从数列中挑出一个元素，称为 “基准”<br>2.重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面<br>3.递归地把小于基准值元素的子数列和大于基准值元素的子数列排序</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ary.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> ary</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 设置基准</span></span><br><span class="line">    <span class="keyword">let</span> pivotIndex = <span class="built_in">Math</span>.floor(ary.length / <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">let</span> pivot = ary.splice(pivotIndex, <span class="number">1</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">let</span> left = []</span><br><span class="line">    <span class="keyword">let</span> right = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ary.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(ary[i] &lt; pivot) &#123;</span><br><span class="line">            left.push(ary[i])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right.push(ary[i])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> quickSort(left).concat([pivot], quickSort(right))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/29/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">实现一个静态服务器文件夹</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-29 17:35:46" itemprop="dateCreated datePublished" datetime="2020-09-29T17:35:46+08:00">2020-09-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="如和实现一个显示文件夹列表的静态服务器"><a href="#如和实现一个显示文件夹列表的静态服务器" class="headerlink" title="如和实现一个显示文件夹列表的静态服务器"></a>如和实现一个显示文件夹列表的静态服务器</h2><h4 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br></pre></td></tr></table></figure>
-<p>设定端口 与 确定当前位置</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PORT = <span class="number">8081</span></span><br><span class="line">dirPath = path.resolve(<span class="string">'./'</span>)</span><br></pre></td></tr></table></figure>
-
-<h4 id="创建服务器"><a href="#创建服务器" class="headerlink" title="创建服务器"></a>创建服务器</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 输出请求的路径</span></span><br><span class="line">    <span class="keyword">let</span> url = <span class="built_in">decodeURIComponent</span>(req.url)</span><br><span class="line">    <span class="comment">// 建立目标路径</span></span><br><span class="line">    <span class="keyword">let</span> targetPath = path.join(dirPath, url)</span><br><span class="line">    fs.stat(targetPath, (err, stat) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            res.write(<span class="number">404</span>)</span><br><span class="line">            res.end(<span class="string">'conect error'</span>)</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 判断文件类型</span></span><br><span class="line">            <span class="comment">// 如果该路径是文件</span></span><br><span class="line">            <span class="keyword">if</span>(stat.isFile()) &#123;</span><br><span class="line">                fs.createReadStream(target).pipe(res)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stat.isDirectory()) &#123;</span><br><span class="line">            <span class="comment">// 如果是文件夹的话 ，先判断是否有默认文件index.html</span></span><br><span class="line">            <span class="keyword">let</span> indexPath = path.join(targetPath, index.html)</span><br><span class="line">            fs.stat(indexPath, (err, stat) =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span>(err) &#123;</span><br><span class="line">                    <span class="comment">// 如果不是文件夹请求的</span></span><br><span class="line">                    <span class="keyword">if</span>(!req.url.endsWith(<span class="string">'/'</span>)) &#123;</span><br><span class="line">                        <span class="comment">// 将响应头重定向并以此地址再发一次请求</span></span><br><span class="line">                        res.writeHead(<span class="number">302</span>, &#123;</span><br><span class="line">                            <span class="string">'Location'</span> :req.url + <span class="string">'/'</span></span><br><span class="line">                        &#125;)</span><br><span class="line">                        <span class="keyword">return</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 将文件夹中的东西以页面的形式展示出来</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="comment">// 展示方法：utf8编码的页面</span></span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    <span class="comment">// 读取文件夹目录</span></span><br><span class="line">                    fs.readdir(targetPath, &#123;<span class="attr">withFileTypes</span>: <span class="literal">true</span>&#125;, (err, entries) =&gt; &#123;</span><br><span class="line">                        <span class="keyword">var</span> pageHtml = renderIndexPage(entries, targetPath,req.url)</span><br><span class="line">                        res.write(pageHtml)</span><br><span class="line">                        res.end()</span><br><span class="line"></span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     <span class="comment">// 将index.html的内容以流的形式展现</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    fs.createReadStream(indexPath).pipe(res)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="创建模板引擎"><a href="#创建模板引擎" class="headerlink" title="创建模板引擎"></a>创建模板引擎</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pageTp1 = <span class="string">`</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html lang="en"&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;Document&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt; Index of &lt;%= url %&gt;&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;table&gt;</span></span><br><span class="line"><span class="string">        &lt;tbody&gt;</span></span><br><span class="line"><span class="string">            &lt;% entries.forEach((entry, idx) =&gt; &#123;</span></span><br><span class="line"><span class="string">                var slash = entry.isDirectory() ? '/' : ''</span></span><br><span class="line"><span class="string">            %&gt;</span></span><br><span class="line"><span class="string">                &lt;tr&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;%= filesize(50000) %&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;a href="&lt;%= entry.name %&gt;&lt;%= slash %&gt;"&gt;&lt;%= entry.name %&gt;&lt;%= slash %&gt;&lt;/a&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                &lt;/tr&gt;</span></span><br><span class="line"><span class="string">            &lt;% &#125;) %&gt;</span></span><br><span class="line"><span class="string">        &lt;/tbody&gt;</span></span><br><span class="line"><span class="string">    &lt;/table&gt;</span></span><br><span class="line"><span class="string">    &lt;footer&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Node.js <span class="subst">$&#123;process.version&#125;</span> My Nubility Server Running&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/footer&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="keyword">var</span> compiledTp1 = _.template(pageTp1)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建模板字符串调用函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderIndexPage</span>(<span class="params">entries, parentDir, url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> filesize = <span class="built_in">require</span>(<span class="string">'filesize'</span>)</span><br><span class="line">    <span class="keyword">return</span> compiledTp1(&#123;entries, parentDir, url, filesize&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="监听端口"><a href="#监听端口" class="headerlink" title="监听端口"></a>监听端口</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.listen(PORT, <span class="string">'127.0.0.1'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'listen on the Port '</span>, PORT)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/29/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/29/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/" class="post-title-link" itemprop="url">NodeJS核心模块回顾</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-29 12:40:49" itemprop="dateCreated datePublished" datetime="2020-09-29T12:40:49+08:00">2020-09-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="nodejs核心模块回顾"><a href="#nodejs核心模块回顾" class="headerlink" title="nodejs核心模块回顾"></a>nodejs核心模块回顾</h2><h3 id="http"><a href="#http" class="headerlink" title="http"></a>http</h3><pre><code>提供http服务器功能</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 客户端</span></span><br><span class="line">    <span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>) <span class="comment">//引入模块</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个请求</span></span><br><span class="line">    <span class="keyword">let</span> request = http.request(</span><br><span class="line">        &#123;</span><br><span class="line">            protocol: <span class="string">'http:'</span>,     <span class="comment">// 请求的协议</span></span><br><span class="line">            host: <span class="string">'777.tang233.top'</span>,   <span class="comment">// 请求的host</span></span><br><span class="line">            port: <span class="number">80</span>,              <span class="comment">// 端口</span></span><br><span class="line">            method: <span class="string">'GET'</span>,         <span class="comment">// GET请求</span></span><br><span class="line">            timeout: <span class="number">2000</span>,         <span class="comment">// 超时时间</span></span><br><span class="line">            path: <span class="string">'/'</span>              <span class="comment">// 请求路径</span></span><br><span class="line">        &#125;,</span><br><span class="line">        res =&gt; &#123; <span class="comment">// 连接成功后，接收到后台服务器返回的响应，回调函数就会被调用一次。</span></span><br><span class="line">            res.on(<span class="string">'data'</span>, data =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data.toString(<span class="string">'utf8'</span>)); <span class="comment">// 打印返回的数据。</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">// 设置请求头部</span></span><br><span class="line">    request.setHeader(<span class="string">'Cache-Control'</span>, <span class="string">'max-age=0'</span>);</span><br><span class="line">    <span class="comment">// 真正的发送请求</span></span><br><span class="line">    request.end();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">let</span> server = <span class="keyword">new</span> http.Server();</span><br><span class="line">server.on(<span class="string">'request'</span>, (req, res) =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(req.url);</span><br><span class="line"><span class="comment">//设置应答头信息</span></span><br><span class="line">res.writeHead(<span class="number">200</span>, &#123; <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span> &#125;);</span><br><span class="line">res.write(<span class="string">'hello we are family&lt;br&gt;'</span>);</span><br><span class="line">res.end(<span class="string">'server already end\n'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//显示了三次这也证明了TCP的三次握手</span></span><br><span class="line">server.on(<span class="string">'connection'</span>, () =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'握手'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'close'</span>, () =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server will close'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//关闭服务为了触发close事件</span></span><br><span class="line">server.close();</span><br><span class="line">server.listen(<span class="number">8080</span>);</span><br><span class="line"><span class="comment">// 另一种</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain'</span>&#125;)</span><br><span class="line">    res.write(<span class="string">"hi, from aicoder.com"</span>);</span><br><span class="line">    res.end();</span><br><span class="line"></span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="url"><a href="#url" class="headerlink" title="url"></a>url</h3><pre><code>用于解析和生成URL
-url.resolve(from, to) 第一个参数是基准url，其余url是根据基准url生成对应的位置
-`url.resolve(&apos;/one/two/three&apos;, &apos;four&apos;)`</code></pre><h3 id="fs"><a href="#fs" class="headerlink" title="fs"></a>fs</h3><pre><code>与文件系统交互</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 异步读取文件</span></span><br><span class="line">fs.readFile(<span class="string">'./image.png'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, buffer</span>) =&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err</span><br><span class="line">    <span class="keyword">var</span> text = buffer.toString()</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 同步读取文件</span></span><br><span class="line"><span class="keyword">var</span> text = fs.readFileSync(fileName, <span class="string">'utf8'</span>);</span><br><span class="line"><span class="comment">// 异步写入文件</span></span><br><span class="line">fs.writeFile(<span class="string">'message.txt'</span>, <span class="string">'hello world'</span>, (err) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Its saved'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 同步写入文件</span></span><br><span class="line">fs.writeFileSync(fileName, str, <span class="string">'utf8'</span>);</span><br><span class="line"><span class="comment">// 新建目录</span></span><br><span class="line">fs.mkdir(<span class="string">'./helloDir'</span>,<span class="number">0777</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取文件或文件夹的具体信息</span></span><br><span class="line">fs.stat(<span class="string">'/etc/filename'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, stats</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(stats.ifFile()) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'%s is filename'</span> , file)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(stats.isDirectory) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"%s is a directory"</span>, file)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="path-处理文件路径"><a href="#path-处理文件路径" class="headerlink" title="path 处理文件路径"></a>path 处理文件路径</h3><pre><code>path 的各种方法
-path.join()
-作用是连接路径 `path.join(mydir, &apos;foo&apos;)` 返回`mydir/foo`
-
-path.resolve() 将相对路径转化为绝对路径
-`path.resolve(&apos;foo/bar&apos;, &apos;/tmp/file/&apos;, &apos;..&apos;, &apos;a/../subfile&apos;)`
-path.relative 接受两个参数，这两个参数都应该是绝对路径。该方法返回第二个路径相对于第一个路径的那个相对路径。
-`path.relative(&apos;/data/orandea/test/aaa&apos;, &apos;/data/orandea/impl/bbb&apos;)` 返回 `../../impl/bbb`
-path.parse() 返回路径各部分的信息。</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFilePath = <span class="string">'/someDir/someFile.json'</span>;</span><br><span class="line">path.parse(myFilePath).base</span><br><span class="line"><span class="comment">// "someFile.json"</span></span><br><span class="line">path.parse(myFilePath).name</span><br><span class="line"><span class="comment">// "someFile"</span></span><br><span class="line">path.parse(myFilePath).ext</span><br><span class="line"><span class="comment">// ".json"</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/28/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/28/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">异步初识</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-28 19:22:06" itemprop="dateCreated datePublished" datetime="2020-09-28T19:22:06+08:00">2020-09-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="异步使用的四种方式"><a href="#异步使用的四种方式" class="headerlink" title="异步使用的四种方式"></a>异步使用的四种方式</h2><h4 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h4><pre><code>f2在f1执行一秒后执行</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    setTimeOut(<span class="function"><span class="params">()</span>=&gt;</span> &#123;</span><br><span class="line">        callback()</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">f1(f2)</span><br></pre></td></tr></table></figure>
-
-<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><pre><code>利用事件使a在触发事件后再执行b
-`f1.on(&apos;done&apos;,f2)`</code></pre><h4 id="promise-事件"><a href="#promise-事件" class="headerlink" title="promise 事件"></a>promise 事件</h4><p>每一个异步任务返回一个promise对象，有一个then方法允许指定回调函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(!err) &#123;</span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                resolve()</span><br><span class="line">            &#125;, <span class="number">0</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            reject()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">f1().then(<span class="function"><span class="params">()</span> =&gt;</span> f2()).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err))</span><br></pre></td></tr></table></figure>
-
-<h3 id="async-function"><a href="#async-function" class="headerlink" title="async function"></a>async function</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            resolve()</span><br><span class="line">        &#125;, <span class="number">2000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncCall</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo =  <span class="built_in">Date</span>.now()</span><br><span class="line">    <span class="keyword">await</span> bar()</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">Date</span>.now() - foo)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="使用异步函数完成循序执行和并行执行"><a href="#使用异步函数完成循序执行和并行执行" class="headerlink" title="使用异步函数完成循序执行和并行执行"></a>使用异步函数完成循序执行和并行执行</h4><p>并行执行parallel</p>
-<p>首先定义一组tasks函数,tasks全部执行完后再执行cb回调</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parallel</span>(<span class="params">tasks,cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(task <span class="keyword">of</span> tasks) &#123;</span><br><span class="line">        task(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            count++</span><br><span class="line">            <span class="keyword">if</span>(tasks.length == count) &#123;</span><br><span class="line">                cb()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>串行执行serise</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serise</span>(<span class="params">tasks, cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">startOneTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(count &lt; tasks.length) &#123;</span><br><span class="line">            task[i++](<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                startOneTask()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cb()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>并行限制执行parallelLimit</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">parallelLimit</span>(<span class="params">tasks, limit, cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> limitCount = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(limitCount &lt; tasks.length) &#123;</span><br><span class="line">            tasks[i++](<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                one()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cb()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; limit; j++) &#123;</span><br><span class="line">        one()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/25/dom%E5%9B%9E%E9%A1%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/25/dom%E5%9B%9E%E9%A1%BE/" class="post-title-link" itemprop="url">DOM速记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-25 14:35:37" itemprop="dateCreated datePublished" datetime="2020-09-25T14:35:37+08:00">2020-09-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="DOM回顾"><a href="#DOM回顾" class="headerlink" title="DOM回顾"></a>DOM回顾</h2><h4 id="DOM是什么"><a href="#DOM是什么" class="headerlink" title="DOM是什么"></a>DOM是什么</h4><pre><code>文档对象模型 (DOM) 将 web 页面与到脚本或编程语言连接起来。通常是指  JavaScript，但将 HTML、SVG 或 XML 文档建模为对象并不是 JavaScript 语言的一部分。DOM模型用一个逻辑树来表示一个文档，树的每个分支的终点都是一个节点(node)，每个节点都包含着对象(objects)。DOM的方法(methods)让你可以用特定方式操作这个树，用这些方法你可以改变文档的结构、样式或者内容。节点可以关联上事件处理器，一旦某一事件被触发了，那些事件处理器就会被执行。</code></pre><p>通俗点讲 讲html文件想象成嵌套的盒子，每个盒子对应一个对象，我们可以和盒子交互，找出其中包含的盒子与文本。<br>这种浏览器文档可以套用树状结构模型<br>每个节点可以用chilren和parent和它的父级节点与子集节点连接起来，并且他没有任何的回环<br>根节点：document.documentElement<br>nodeType 属性 ：常规值为1，文本节点为3， 注释为8</p>
-<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><p>chilren 子节点 类数组对象有length属性没有slice,forEach等方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from($<span class="number">0.</span>chilren) <span class="comment">// 将类数组转化为数组后可使用数组的方法</span></span><br></pre></td></tr></table></figure>
-
-<p>firstChild<br>lastChild<br>previousSibling<br>nextSibling<br>parentNode 父节点</p>
-<h4 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h4><p>配合css选择器更方便</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementsByTagName(<span class="string">'a'</span>)[<span class="number">0</span>] <span class="comment">// 根据标签名查找第一个a标签</span></span><br><span class="line"><span class="built_in">document</span>.getElementsById(<span class="string">'avtive'</span>) <span class="comment">//找寻特定id的节点</span></span><br><span class="line"><span class="built_in">document</span>.getElementsByClassName(<span class="string">'avtive'</span>) <span class="comment">//找寻特定class的节点</span></span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">''</span>) <span class="comment">//类似css选择器的选择方法,查询选择器</span></span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">''</span>)  <span class="comment">// 返回的对象不是动态变更的，修改文档时其内容不会修改</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="修改文档"><a href="#修改文档" class="headerlink" title="修改文档"></a>修改文档</h4><p>removeChild 移除子节点<br>appendChild 从末尾增加子节点<br>insertBefore(A, B) 将第一个参数表示的节点插入到第二个参数表示的节点的前面<br>replaceChild(A, B) 用A替换B<br>document.createTextNode(‘xxx’) 创建文本节点<br>document.createElement(‘xxx’) 创建xxx类型的某一个节点</p>
-<p>写一个elt完成文档结构的创建</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">elt</span>(<span class="params">tagName,attrs,...children</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> node = <span class="built_in">document</span>.createElement(tagName)</span><br><span class="line">    <span class="keyword">if</span>(attrs) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> attrs) &#123;</span><br><span class="line">            <span class="keyword">var</span> val = attrs[key]</span><br><span class="line">            node.setAttribute(key, val)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> child <span class="keyword">of</span> children) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> child === <span class="string">'string'</span>) &#123;</span><br><span class="line">            node.appendChild(<span class="built_in">document</span>.createTextNode(child))</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            node.appChild(child)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h4><p>方法：getAttribute() setAttribute<br>为自己创建的属性以data-开头<br>textContent从节点获取文本</p>
-<p>class的属性名为className<br>offsetWidth/Height 元素的起始位置<br>clientWidth/Height 元素的内部尺寸<br>全局变量：pageXOffset pageYOffset</p>
-<h4 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h4><p>将字符串传入属性用以修改样式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">element.style.color = <span class="string">'red'</span></span><br><span class="line"><span class="comment">// 属性中带有破折号的将破折号移除并将破折号后的首字母大写</span></span><br><span class="line"><span class="comment">// 如 style.fontFamily</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="页面刷新与动画"><a href="#页面刷新与动画" class="headerlink" title="页面刷新与动画"></a>页面刷新与动画</h4><p>旋转的太阳</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        body &#123;</span><br><span class="line">         padding-top: 200px;</span><br><span class="line">         text-align: center;</span><br><span class="line">        font-size: 0;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.sun</span> &#123;</span></span><br><span class="line">            position: relative;</span><br><span class="line">            display: inline-block;</span><br><span class="line">            background-color: gold;</span><br><span class="line">            border-radius: 9999px;</span><br><span class="line">            border: orange 3px solid;</span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            text-align: center;</span><br><span class="line">            line-height: 100px;</span><br><span class="line">            font-size: 0;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.earth</span> &#123;</span></span><br><span class="line">            position: relative;</span><br><span class="line">            display: inline-block;</span><br><span class="line">            background-color: aqua;</span><br><span class="line">            border-radius: 9999px;</span><br><span class="line">            width: 20px;</span><br><span class="line">            height: 20px;</span><br><span class="line">            border: 2px solid blue;</span><br><span class="line">            vertical-align: middle;</span><br><span class="line">            text-align: center;</span><br><span class="line">            line-height: 20px;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.moon</span> &#123;</span></span><br><span class="line">            position: relative;</span><br><span class="line">            display: inline-block;</span><br><span class="line">            background-color: silver;</span><br><span class="line">            border-radius: 9999px;</span><br><span class="line">            width: 5px;</span><br><span class="line">            height: 5px;</span><br><span class="line">            border: 1px solid white;</span><br><span class="line">            vertical-align: middle;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sun"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"earth"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"moon"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sun = <span class="built_in">document</span>.qurySelector(<span class="string">'.sun'</span>))</span><br><span class="line"><span class="keyword">var</span> earth = <span class="built_in">document</span>.qurySelector(<span class="string">'.earth'</span>))</span><br><span class="line"><span class="keyword">var</span> moon = <span class="built_in">document</span>.qurySelector(<span class="string">'.moon'</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> lastTime = <span class="literal">null</span></span><br><span class="line"><span class="keyword">var</span> angle = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">requestAnimationFrame(<span class="function"><span class="keyword">function</span> <span class="title">ant</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(lastTime) &#123;</span><br><span class="line">        angle += (time - lastTime) * <span class="number">0.01</span></span><br><span class="line">    &#125;</span><br><span class="line">    sun.style.top = <span class="built_in">Math</span>.sin(angle * <span class="number">0.3</span>) * <span class="number">100</span> + <span class="string">'px'</span></span><br><span class="line">        sun.style.left = <span class="built_in">Math</span>.cos(angle * <span class="number">0.3</span>) * <span class="number">100</span> + <span class="string">'px'</span></span><br><span class="line"></span><br><span class="line">        earth.style.top = <span class="built_in">Math</span>.sin(angle) * <span class="number">150</span> + <span class="string">'px'</span></span><br><span class="line">        earth.style.left = <span class="built_in">Math</span>.cos(angle) * <span class="number">150</span> + <span class="string">'px'</span></span><br><span class="line"></span><br><span class="line">        moon.style.top = <span class="built_in">Math</span>.sin(angle * <span class="number">5</span>) * <span class="number">30</span> + <span class="string">'px'</span></span><br><span class="line">        moon.style.left = <span class="built_in">Math</span>.cos(angle * <span class="number">5</span>) * <span class="number">30</span> + <span class="string">'px'</span></span><br><span class="line">        requestAnimationFrame(ani)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/bom%E9%80%9F%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/24/bom%E9%80%9F%E8%AE%B0/" class="post-title-link" itemprop="url">bom速记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-24 18:50:57" itemprop="dateCreated datePublished" datetime="2020-09-24T18:50:57+08:00">2020-09-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h1><ul>
-<li><p>什么是BOM？</p>
-<ul>
-<li>Browser Object Model</li>
-</ul>
-</li>
-<li><p>DOM一般指document上提供的相关 API</p>
-<ul>
-<li>API Application Programming Interface 应用编程接口<ul>
-<li>以函数，类，方法，属性等体现出来</li>
-</ul>
-</li>
-<li>GUI Graphic User Interface 图形用户界面<ul>
-<li>以画面和键鼠操作的形式体现</li>
-</ul>
-</li>
-<li>CLI 命令行接口 Command Line Interface<ul>
-<li>以命令的输入与输出为体现</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>BOM一般来说泛指那些浏览器里提供的除JS内置API以外</p>
-<ul>
-<li>与DOM操作无关的API</li>
-</ul>
-</li>
-<li><p>原则上这是一个非官方的叫法，并没有相关的文档</p>
-</li>
-<li><p><a href="https://stackoverflow.com/questions/4416317/what-is-the-dom-and-bom-in-javascript" target="_blank" rel="noopener">https://stackoverflow.com/questions/4416317/what-is-the-dom-and-bom-in-javascript</a></p>
-</li>
-<li><p>如</p>
-<ul>
-<li>alert/prompt/confirm</li>
-<li>Worker</li>
-<li>Blob Binary Large Object blob</li>
-</ul>
-</li>
-<li><p>完善的 BOM API 一般认为是以下这些浏览器提供的对象</p>
-<ul>
-<li>screen</li>
-<li>history</li>
-<li>location</li>
-<li>navigator</li>
-<li>window</li>
-</ul>
-</li>
-<li><p>这几个对象可以分别为我们提供与页面和浏览器相关的各种信息</p>
-<ul>
-<li><p>screen</p>
-<ul>
-<li>width/height 操作系统像素</li>
-<li>availHeight/Width</li>
-<li>color/pixelDepth = 24<ul>
-<li>色深，说白了即色彩的多样性，现代开发中基本没啥用</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>location</p>
-<ul>
-<li><p>host 域名：端口-带端口号</p>
-</li>
-<li><p>hostname 域名-不带端口号</p>
-</li>
-<li><p>hash URL#后面一部分</p>
-<ul>
-<li>window.on hashchange</li>
-<li>另外 hash 的内容是不会主动被浏览器发往服务器的<ul>
-<li>即请求 <a href="http://example.com/a.html#abc" target="_blank" rel="noopener">http://example.com/a.html#abc</a></li>
-<li>在网络层面，相当于请求<a href="http://example.com/a.html" target="_blank" rel="noopener">http://example.com/a.html</a></li>
-<li>浏览器发送的第一行内容是 GET /a.html HTTP/1.1</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>port 端口</p>
-</li>
-<li><p>protocol 协议 http:</p>
-</li>
-<li><p>origin 源/域，即如果两个页面的location.origin不同，则被认为是不同的域的</p>
-<ul>
-<li>‘<a href="http://example.com:8080&#39;">http://example.com:8080&#39;</a></li>
-<li><a href="http://www.baidu.com/a.html" target="_blank" rel="noopener">http://www.baidu.com/a.html</a></li>
-<li><a href="http://www.baidu.com:8080/b.html" target="_blank" rel="noopener">http://www.baidu.com:8080/b.html</a></li>
-</ul>
-</li>
-<li><p>href 地址栏里的完整URL，包含hash</p>
-</li>
-<li><p>search 第一个?后面#前面的内容，即query string部分，也叫查询字符串query string</p>
-<ul>
-<li><a href="http://example.com/a/b/c.html?foo=bar&amp;c=d#abcdef?iekjdsf" target="_blank" rel="noopener">http://example.com/a/b/c.html?foo=bar&amp;c=d#abcdef?iekjdsf</a></li>
-</ul>
-</li>
-<li><p>reload() 刷新页面</p>
-</li>
-<li><p>location.assign(url) &lt;=&gt; location.href = url &lt;=&gt; location = url</p>
-</li>
-<li><p>replace(url) 用url替换当面页面地址，且不把跳转记录保存在浏览器的前进后退按钮中</p>
-</li>
-<li><p>同时，上面列的所有属性几乎都是可写的，更改它们会导致浏览器做出相应的操作（一般来说是重新加载或刷新页面）</p>
-<ul>
-<li>更改hash不会让页面刷新，但会触发window.onhashchange事件，可以在这个事件的handler里做相应的操作（如刷新，或请求ajax）（一般用来做前端路由）<ul>
-<li>在老浏览器里，可以用setInterval，每隔比如说50ms检测一次location.hash的值，如果发现变化了，就主动调用window.onhashchange()函数<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lastHash = location.hash;</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lastHash != location.hash) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'hash has changed'</span>)</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.onhashchange === <span class="string">'function'</span>)&#123;</span><br><span class="line">          <span class="built_in">window</span>.onhashchange()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//window.onhashchange || window.onhashchange()</span></span><br><span class="line">        lastHash = location.hash</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="number">50</span>)</span><br></pre></td></tr></table></figure></li>
-<li>如果hash对应于页面某元素的id或name的值，页面也会跳转到那个元素的位置。</li>
-<li>:target 选择器，选中的是id的值为hash内容的元素</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>location对象本身也是可以被赋值的，与给href属性赋值是一样的效果</p>
-</li>
-<li><p>同时，a标签上也几乎有与location对象一一对应的属性</p>
-<ul>
-<li>同样是可读写的</li>
-<li>可以使用这个特性来实现url的解析</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>history</p>
-<ul>
-<li>length</li>
-<li>pushState(state, pageTitle, url)<ul>
-<li>然后通过 ajax 来请求数据并更新页面内容的</li>
-<li>通过window.onpopstate在浏览器后退时，把页面改回对应原来URL的内容<ul>
-<li>history其实是一个栈</li>
-<li>在按前进后退时会在栈中来回游走</li>
-</ul>
-</li>
-<li>现代浏览器中，可以用这个方法实现URL的改变但页面不刷新</li>
-<li>以此实现 pjax =&gt; pushState + ajax</li>
-</ul>
-</li>
-<li>replaceState(参数同上)</li>
-<li>go(number)</li>
-<li>back()/forward()<ul>
-<li>等同于按前进后退按钮，会触发popstate事件</li>
-<li>back()相当于go(-1)，forward()相当于go(1)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>navigator</p>
-<ul>
-<li>onLine，是否在线，H5属性</li>
-<li>userAgent 用户代理字符串<ul>
-<li>有很多与浏览器本身有关的信息，一般也用于通过JS判断浏览器的版本，厂商，操作系统等信息</li>
-<li>有些浏览器可以强行修改这个字符串</li>
-<li>会在发送http请求时放进User-Agent首部里<ul>
-<li>服务器同样可以根据这个头来判断请求是来自手机还是PC，以此返回不同的页面内容<ul>
-<li>HTTP 响应头里有一个首部：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 removed temper</span><br><span class="line">Location: http:&#x2F;&#x2F;m.mi.com</span><br></pre></td></tr></table></figure></li>
-<li>注意此跟media query响应式不同，响应式是页面相同，但在不同的屏幕上显示不同的样式</li>
-<li>而服务器根据这个内容返回不同的页面，是指针对不同的页面，吐出的html源代码都不同</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>还有很多其它的属性，但基本不用，各位可以自行在控制台中查看</p>
-</li>
-</ul>
-</li>
-<li><p>window</p>
-<ul>
-<li><p>name</p>
-<ul>
-<li>总是字符串</li>
-<li>不随页面的导航而清空（除非页面里的js主动更改）</li>
-<li>可以实现跨域</li>
-</ul>
-</li>
-<li><p>opener</p>
-<ul>
-<li>可以使用这个特性实现跨页面的颜色选择器</li>
-<li>蠕虫</li>
-</ul>
-</li>
-<li><p>open</p>
-<ul>
-<li><p>打开一个新窗口</p>
-</li>
-<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open</a></p>
-<ul>
-<li><pre><code class="js">javascript:<span class="built_in">window</span>.open(
-<span class="string">'https://wx.qq.com/?lang=zh_CN'</span>,
-<span class="string">''</span>,
-<span class="string">'left=200,top=100,width=800,height=666,toolbar=yes,modal=yes'</span>)
-
-<span class="built_in">window</span>.open(url, title, {
-  menubar: <span class="literal">true</span>,
-  addressbar: <span class="literal">false</span>,
-  toolbar: <span class="literal">false</span>,
-  top: <span class="number">200</span>,
-  left: <span class="number">300</span>,
-  width: <span class="number">500</span>,
-})</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>parent</p>
-<ul>
-<li>父窗体（frame）</li>
-</ul>
-</li>
-<li><p>top</p>
-<ul>
-<li>顶层窗体（frame）</li>
-</ul>
-</li>
-<li><p>screenX/Y</p>
-<ul>
-<li>窗口左上角距离屏幕左上角的距离</li>
-</ul>
-</li>
-<li><p>pageX/YOffset</p>
-</li>
-<li><p>scrollX/Y</p>
-</li>
-<li><p>scrollBy/To</p>
-</li>
-<li><p>status</p>
-<ul>
-<li>以前浏览器还有状态栏时，显示在状态栏上的文字</li>
-</ul>
-</li>
-<li><p>window.document.title</p>
-<ul>
-<li>设置网页的标题</li>
-</ul>
-</li>
-<li><p>atob/btoa()</p>
-<ul>
-<li>base64编解码</li>
-</ul>
-</li>
-<li><p>blur/focus()</p>
-<ul>
-<li>让窗口获取或者失去焦点</li>
-<li>on blur/focus<ul>
-<li>不少考试系统</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>window.getComputedStyle(node, [pseudoElementSelector])</p>
-<ul>
-<li>window.getComputedStyle(document.body)</li>
-<li>window.getComputedStyle(document.body, ‘before’)</li>
-</ul>
-</li>
-<li><p>stop()停止加载页面</p>
-</li>
-<li><ul>
-<li>相关文档请自行查询MDN</li>
-</ul>
-</li>
-<li><p>mdn</p>
-<ul>
-<li>history</li>
-<li>screen</li>
-<li>location</li>
-<li>navigator</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/24/%E6%AD%A3%E5%88%99%E9%80%9F%E8%AE%B0/" class="post-title-link" itemprop="url">正则速记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-24 17:26:51" itemprop="dateCreated datePublished" datetime="2020-09-24T17:26:51+08:00">2020-09-24</time>
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1194,51 +358,590 @@ path.parse() 返回路径各部分的信息。</code></pre><figure class="highli
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="正则速记"><a href="#正则速记" class="headerlink" title="正则速记"></a>正则速记</h2><h3 id="正则的创建"><a href="#正则的创建" class="headerlink" title="正则的创建"></a>正则的创建</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re1 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"abc"</span>)</span><br><span class="line"><span class="keyword">var</span> re2 = <span class="regexp">/abc/</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="正则的方法"><a href="#正则的方法" class="headerlink" title="正则的方法"></a>正则的方法</h3><h4 id="匹配测试"><a href="#匹配测试" class="headerlink" title="匹配测试"></a>匹配测试</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> exp1 = <span class="string">"abcde"</span></span><br><span class="line">/abc/.test(exp1)</span><br><span class="line">re2.test(<span class="string">"acbde"</span>)</span><br></pre></td></tr></table></figure>
-<p>匹配字符集</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配到[]中的任意一部分</span></span><br><span class="line">/[<span class="number">0123456789</span>]/.test(<span class="string">"in 1996"</span>)</span><br><span class="line"><span class="comment">// 用-替代一个范围</span></span><br><span class="line">[<span class="number">0</span><span class="number">-9</span>].test(<span class="string">"in 1996"</span>)</span><br></pre></td></tr></table></figure>
-<p>其他快捷写法<br>\d 任意数字<br>\w 任意字母或数字符号<br>\s 任意空白符号<br>\D 非数字<br>\W 非字母或数字<br>\S 非空白符号</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配一个日期格式 如 "2020-09-01 15:30"</span></span><br><span class="line">datetime = <span class="regexp">/\d\d\d\d-\d\d-\d\d \d\d:\d\d/</span></span><br><span class="line">datetime.test(<span class="string">"2020-09-01 15:30"</span>)</span><br></pre></td></tr></table></figure>
-<p>模式重复</p>
-<ul>
-<li>：该元素至少重复一次</li>
-</ul>
-<ul>
-<li>：存在或不存在都行，多少次都行<br>？：存在0次或1次<br>元素后面加 {4} 表示指定出现4次<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对日期匹配进行优化</span></span><br><span class="line">datetime = <span class="regexp">/\d&#123;4&#125;-\d&#123;1,2&#125;-\d&#123;1,2&#125; \d&#123;1,2|&#125;:\d&#123;1,2&#125;</span></span><br><span class="line"><span class="regexp">datetime.test("2020-09-01 15:30")</span></span><br></pre></td></tr></table></figure>
-
+          <h1 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h1><h1 id><a href="#" class="headerlink" title></a></h1><h3 id="零宽断言的几种形式"><a href="#零宽断言的几种形式" class="headerlink" title="零宽断言的几种形式"></a>零宽断言的几种形式</h3><ul>
+<li><p><code>/^xxx$/</code>从开始到结尾<code>/^foo/.test(&quot;kfoo&quot;)``/foo$/.test(&quot;foobar&quot;)</code></p>
+</li>
+<li><p><code>/\bxxx\b/</code>左右为空的断言</p>
+</li>
+<li><p><code>/(?=foo)</code>某个位置的右边紧跟foo，正预测先行断言<code>/fo.(?=bar)/.exec(&quot;kkforsfsfoebar&quot;)</code></p>
+</li>
+<li><p><code>/(?!foo)</code>某个位置的右边不紧跟foo，负预测先行断言<code>/fo.(?!bar)/.exec(&quot;kkforsfsfoebar&quot;)</code></p>
+</li>
+<li><p><code>/(?&lt;=bar</code>某个位置的左边紧跟bar， 正回顾后发断言<code>/(?&lt;=bar)fo./.exec(&quot;kkbarforsfsfoebar&quot;)</code></p>
+</li>
+<li><p><code>/(?&lt;!bar)</code>某个位置的左边不紧跟bar， 负回顾后发断言<code>/(?&lt;!bar)fo./.exec(&quot;kkbarforsfsfoebar&quot;)</code></p>
 </li>
 </ul>
-<p>子表达式分组<br>使用()进行分组</p>
-<h4 id="执行exec"><a href="#执行exec" class="headerlink" title="执行exec"></a>执行exec</h4><p>无法匹配时返回null，否则返回匹配一个表示字符串信息的对象<br>返回的对象包含index属性 =&gt; 字符串成功匹配的起始位置<br>其首元素是模式匹配成功的字符串<br>exec的核心作用是提取</p>
-<p>字符边界<br>^ 以xxx开头<br>$ 以xxx结尾<br>nums = /^d+$/ 表示匹配全是数字的字符串<br>\b 单词边界</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/\bcat\b/.test(<span class="string">'aaacatbbb'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="用正则表达式判断有效的密码"><a href="#用正则表达式判断有效的密码" class="headerlink" title="用正则表达式判断有效的密码"></a>用正则表达式判断有效的密码</h2><p>要求：</p>
+<ul>
+<li>6 - 10位字符</li>
+<li>必须要有字母</li>
+<li>必须要有数字</li>
+</ul>
+<p>函数功能实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validPass</span>(<span class="params">password</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(</span><br><span class="line">		/^\w&#123;<span class="number">3</span>,<span class="number">20</span>&#125;$/.test(password) &amp;&amp;</span><br><span class="line">		/\d/.test(password) &amp;&amp;</span><br><span class="line">		/[a-zA-Z]/.test(password)</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'VALID'</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'INVALID'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>管道符号任选匹配</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/\b(cow|pig|chicken)s?\b/.test(<span class="string">'pigs'</span>)</span><br></pre></td></tr></table></figure>
-
-<h4 id="replace-方法"><a href="#replace-方法" class="headerlink" title="replace 方法"></a>replace 方法</h4><p>字符串的replace方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"papa"</span>.replace(<span class="string">'p'</span>,<span class="string">'m'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>加入正则后的replace方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"papa"</span>.replace(<span class="regexp">/pa/</span>, <span class="string">"ma"</span>)</span><br><span class="line"><span class="comment">// 全部替换</span></span><br><span class="line"><span class="string">"papa"</span>.replace(<span class="regexp">/pa/g</span>, <span class="string">"ma"</span>)</span><br></pre></td></tr></table></figure>
-
-<p>使用元组配合替换</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 交换两个人的名字,并替换掉逗号</span></span><br><span class="line"><span class="string">" AAA,li BBB,wang "</span>.replace(<span class="regexp">/(\w+),(\w+)/g</span>, <span class="string">"$2 $1"</span>)</span><br></pre></td></tr></table></figure>
-
-<h4 id="search-方法"><a href="#search-方法" class="headerlink" title="search 方法"></a>search 方法</h4><p>返回首先匹配表达式的索引</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"  word"</span>.search(<span class="regexp">/\S/</span>)</span><br></pre></td></tr></table></figure>
+<p>另一种实现方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validPass</span>(<span class="params">password</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(</span><br><span class="line">		/^(?=.*\d)(?=.*[a-zA-Z])&#123;<span class="number">3</span>,<span class="number">10</span>&#125;$/.test(password)</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'VALID'</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'INVALID'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 
 
+<h2 id="零宽断言扩展"><a href="#零宽断言扩展" class="headerlink" title="零宽断言扩展"></a>零宽断言扩展</h2><p>匹配若干个字符右边是foo</p>
+<p><code>/(?=.*foo)/.exec()</code></p>
+<p>匹配若干个字符右边不是foo</p>
+<p><code>/(?!=.*foo)/.exec()</code></p>
+<p>匹配若干个字符左边是foo</p>
+<p><code>/(?!=foo.*)/.exec()</code></p>
+<p><code>^,$,\b</code>的改写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^   (?&lt;!.) 左边没有任何东西</span><br><span class="line">$   (?!.)  右边没有任何东西</span><br><span class="line">&#x2F;b  (?&#x3D;\W)(?&lt;&#x3D;\w)|(?&#x3D;\W)(?&lt;&#x3D;&#x2F;w)  一边是字母一边不是</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">闭合浮动的多种方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客的主要目的是探讨如何完成闭合浮动</p>
+<h2 id="闭合浮动"><a href="#闭合浮动" class="headerlink" title="闭合浮动"></a>闭合浮动</h2><p>  本来块元素是不会主动包住其内部的浮动元素的。<br>  所以需要块元素的高度扩展以包裹其内部的浮动元素</p>
+<p>完成闭合浮动和核心是触发包含块的BFC</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E9%97%AD%E5%90%88%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">行框的判断与基线的对齐方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​    这篇博客主要要解决的是行框，行内框，行高，行间距等之间的关系，另一部分是关于基线的判断与vertical-align的使用方式</p>
+<h2 id="行内框与行框"><a href="#行内框与行框" class="headerlink" title="行内框与行框"></a>行内框与行框</h2><p>先说几个基本的定义： </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E8%A1%8C%E6%A1%86%E7%9A%84%E5%88%A4%E6%96%AD%E5%92%8C%E5%9F%BA%E7%BA%BF%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/" class="post-title-link" itemprop="url">节流与防抖</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过使用js重新实现节流函数和防抖函数，加深对这两个概念的理解</p>
+<h3 id="定义和应用场景"><a href="#定义和应用场景" class="headerlink" title="定义和应用场景"></a>定义和应用场景</h3><p>节流和防抖的实质是一种节约资源的行为</p>
+<p>函数节流throttle: 指定时间间隔内只会执行一次任务</p>
+<p>​        如使用长轮询时使用_.throttle可以有效的定时从服务器对客户端发送改变的数据。从而节约资源</p>
+<p>函数防抖debound: 任务频繁触发的情况下，只有任务触发的间隔超过指定间隔的时候，任务才会执行</p>
+<p>​        网站为了提高用户体验，不会再输入框失去焦点的时候再去判断用户名是否被占用，而是在输入的时候就在判断这个用户名是否已被注册</p>
+<h3 id="两个函数的实现"><a href="#两个函数的实现" class="headerlink" title="两个函数的实现"></a>两个函数的实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, delay = <span class="number">1000</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timer</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(!timer) &#123;</span><br><span class="line">        timer = <span class="literal">true</span></span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            func.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">            timer = <span class="literal">null</span></span><br><span class="line">          &#125;,delay)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">func, delay = <span class="number">1000</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timer</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(timer) &#123;</span><br><span class="line">        clearTimeout(timer)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        func.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">        timer = <span class="literal">null</span></span><br><span class="line">      &#125;,delay)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// 通过闭包保存一个标记来保存 setTimeout 返回的值，每当用户输入的时候把前一个 setTimeout clear 掉，</span></span><br><span class="line"><span class="comment">//创建一个新的 setTimeout，这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行f调用</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>通过引入lodash可以很简单的使用节流和防抖函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i lodash</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line">_.throttle(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to throttle.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to throttle invocations to.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=true] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br><span class="line"></span><br><span class="line">_.debounce(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to debounce.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to delay.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=false] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.maxWait] (number): The maximum time func is allowed to be delayed before it's invoked.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br></pre></td></tr></table></figure>
 
 
 
 
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">纯css实现轮播图思路</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文探讨的是如何在纯css环境中完成轮播图的编写</p>
+<h2 id="第一种方案"><a href="#第一种方案" class="headerlink" title="第一种方案"></a>第一种方案</h2><p>将轮播图排成一排然后通过动画效果实现轮播</p>
+<p>HTML部分：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/" class="post-title-link" itemprop="url">级联菜单纯CSS实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客主要完成级联菜单的设计思路和具体实现</p>
+<h2 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h2><p>级联菜单的结构为树状结构/层级结构<br>除第一层以外，内部的每一层都是定位的，摆放到正确的位置即可</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E7%BA%A7%E8%81%94%E8%8F%9C%E5%8D%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/" class="post-title-link" itemprop="url">浮动的规则</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客依照《CSS权威指南》进行对浮动规则的深刻理解</p>
+<h2 id="浮动的规则"><a href="#浮动的规则" class="headerlink" title="浮动的规则"></a>浮动的规则</h2><ul>
+<li>浮动元素的左右外边界不能超过包含块的左右内边界</li>
+</ul>
+<p>那么能否通过负margin实现伪超越边界呢？</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">水平垂直居中方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这次博客是对垂直水平居中方案的一个总结</p>
+<h2 id="行内元素的垂直水平居中"><a href="#行内元素的垂直水平居中" class="headerlink" title="行内元素的垂直水平居中"></a>行内元素的垂直水平居中</h2><ul>
+<li>第一种</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是中心位置吗<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>父元素字号清零、line-height等于自身身高、text-align设为center</p>
+<p>子元素字号回复、vertical-align设置为middle</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

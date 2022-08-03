@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言这篇博客通过一些高阶函数的实例运用加深对高阶的理解 原始数据下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高阶函数的实现二">
+<meta property="og:url" content="http://yoursite.com/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/index.html">
+<meta property="og:site_name" content="tang的博客">
+<meta property="og:description" content="前言这篇博客通过一些高阶函数的实例运用加深对高阶的理解 原始数据下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-25T12:21:26.278Z">
+<meta property="article:modified_time" content="2022-07-25T12:21:26.278Z">
+<meta property="article:author" content="Tangtc233">
+<meta property="article:tag" content="实现">
+<meta property="article:tag" content="函数">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>高阶函数的实现二 | tang的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tang的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tang233</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          高阶函数的实现二
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这篇博客通过一些高阶函数的实例运用加深对高阶的理解</p>
+<h3 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h3><p>下面的数据是一个家族的族谱，包括了姓名， 性别， 出生年份， 死亡年份， 父亲姓名，母亲姓名</p>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">var</span> ANCESTRY_FILE = <span class="built_in">JSON</span>.stringify([</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Carolus Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1832</span>, <span class="string">"died"</span>: <span class="number">1905</span>, <span class="string">"father"</span>: <span class="string">"Carel Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria van Brussel"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Emma de Milliano"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1876</span>, <span class="string">"died"</span>: <span class="number">1956</span>, <span class="string">"father"</span>: <span class="string">"Petrus de Milliano"</span>, <span class="string">"mother"</span>: <span class="string">"Sophia van Damme"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria de Rycke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1683</span>, <span class="string">"died"</span>: <span class="number">1724</span>, <span class="string">"father"</span>: <span class="string">"Frederik de Rycke"</span>, <span class="string">"mother"</span>: <span class="string">"Laurentia van Vlaenderen"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1714</span>, <span class="string">"died"</span>: <span class="number">1748</span>, <span class="string">"father"</span>: <span class="string">"Jacobus van Brussel"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna van Rooten"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Philibert Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1907</span>, <span class="string">"died"</span>: <span class="number">1997</span>, <span class="string">"father"</span>: <span class="string">"Emile Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Emma de Milliano"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan Frans van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1761</span>, <span class="string">"died"</span>: <span class="number">1833</span>, <span class="string">"father"</span>: <span class="string">"Jacobus Bernardus van Brussel"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pauwels van Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1535</span>, <span class="string">"died"</span>: <span class="number">1582</span>, <span class="string">"father"</span>: <span class="string">"N. van Haverbeke"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Clara Aernoudts"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1918</span>, <span class="string">"died"</span>: <span class="number">2012</span>, <span class="string">"father"</span>: <span class="string">"Henry Aernoudts"</span>, <span class="string">"mother"</span>: <span class="string">"Sidonie Coene"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Emile Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1877</span>, <span class="string">"died"</span>: <span class="number">1968</span>, <span class="string">"father"</span>: <span class="string">"Carolus Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria Sturm"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lieven de Causmaecker"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1696</span>, <span class="string">"died"</span>: <span class="number">1724</span>, <span class="string">"father"</span>: <span class="string">"Carel de Causmaecker"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna Claes"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1602</span>, <span class="string">"died"</span>: <span class="number">1642</span>, <span class="string">"father"</span>: <span class="string">"Lieven van Haverbeke"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Livina Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1692</span>, <span class="string">"died"</span>: <span class="number">1743</span>, <span class="string">"father"</span>: <span class="string">"Daniel Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna de Pape"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter Bernard Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1695</span>, <span class="string">"died"</span>: <span class="number">1762</span>, <span class="string">"father"</span>: <span class="string">"Willem Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella Wauters"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lieven van Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1570</span>, <span class="string">"died"</span>: <span class="number">1636</span>, <span class="string">"father"</span>: <span class="string">"Pauwels van Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Lievijne Jans"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Joanna de Causmaecker"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1762</span>, <span class="string">"died"</span>: <span class="number">1807</span>, <span class="string">"father"</span>: <span class="string">"Bernardus de Causmaecker"</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Willem Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1668</span>, <span class="string">"died"</span>: <span class="number">1731</span>, <span class="string">"father"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Hercke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter Antone Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1753</span>, <span class="string">"died"</span>: <span class="number">1798</span>, <span class="string">"father"</span>: <span class="string">"Jan Francies Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella de Decker"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1801</span>, <span class="string">"died"</span>: <span class="number">1834</span>, <span class="string">"father"</span>: <span class="string">"Jan Frans van Brussel"</span>, <span class="string">"mother"</span>: <span class="string">"Joanna de Causmaecker"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Angela Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1728</span>, <span class="string">"died"</span>: <span class="number">1734</span>, <span class="string">"father"</span>: <span class="string">"Pieter Bernard Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Livina de Vrieze"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Elisabeth Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1711</span>, <span class="string">"died"</span>: <span class="number">1754</span>, <span class="string">"father"</span>: <span class="string">"Jan Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria de Rycke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lievijne Jans"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1542</span>, <span class="string">"died"</span>: <span class="number">1582</span>, <span class="string">"father"</span>:<span class="literal">null</span>, <span class="string">"mother"</span>:<span class="literal">null</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Bernardus de Causmaecker"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1721</span>, <span class="string">"died"</span>: <span class="number">1789</span>, <span class="string">"father"</span>: <span class="string">"Lieven de Causmaecker"</span>, <span class="string">"mother"</span>: <span class="string">"Livina Haverbeke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jacoba Lammens"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1699</span>, <span class="string">"died"</span>: <span class="number">1740</span>, <span class="string">"father"</span>: <span class="string">"Lieven Lammens"</span>, <span class="string">"mother"</span>: <span class="string">"Livina de Vrieze"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Pieter de Decker"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1705</span>, <span class="string">"died"</span>: <span class="number">1780</span>, <span class="string">"father"</span>: <span class="string">"Joos de Decker"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella van de Steene"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Joanna de Pape"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1654</span>, <span class="string">"died"</span>: <span class="number">1723</span>, <span class="string">"father"</span>: <span class="string">"Vincent de Pape"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella Wauters"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Daniel Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1652</span>, <span class="string">"died"</span>: <span class="number">1723</span>, <span class="string">"father"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Hercke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1631</span>, <span class="string">"died"</span>: <span class="number">1676</span>, <span class="string">"father"</span>: <span class="string">"Pieter Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Anna van Hecke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Martina de Pape"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1666</span>, <span class="string">"died"</span>: <span class="number">1727</span>, <span class="string">"father"</span>: <span class="string">"Vincent de Pape"</span>, <span class="string">"mother"</span>: <span class="string">"Petronella Wauters"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan Francies Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1725</span>, <span class="string">"died"</span>: <span class="number">1779</span>, <span class="string">"father"</span>: <span class="string">"Pieter Bernard Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Livina de Vrieze"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1905</span>, <span class="string">"died"</span>: <span class="number">1997</span>, <span class="string">"father"</span>: <span class="string">"Emile Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Emma de Milliano"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Petronella de Decker"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1731</span>, <span class="string">"died"</span>: <span class="number">1781</span>, <span class="string">"father"</span>: <span class="string">"Pieter de Decker"</span>, <span class="string">"mother"</span>: <span class="string">"Livina Haverbeke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Livina Sierens"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1761</span>, <span class="string">"died"</span>: <span class="number">1826</span>, <span class="string">"father"</span>: <span class="string">"Jan Sierens"</span>, <span class="string">"mother"</span>: <span class="string">"Maria van Waes"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Laurentia Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1710</span>, <span class="string">"died"</span>: <span class="number">1786</span>, <span class="string">"father"</span>: <span class="string">"Jan Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Maria de Rycke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Carel Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1796</span>, <span class="string">"died"</span>: <span class="number">1837</span>, <span class="string">"father"</span>: <span class="string">"Pieter Antone Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Livina Sierens"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Elisabeth Hercke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1632</span>, <span class="string">"died"</span>: <span class="number">1674</span>, <span class="string">"father"</span>: <span class="string">"Willem Hercke"</span>, <span class="string">"mother"</span>: <span class="string">"Margriet de Brabander"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jan Haverbeke"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1671</span>, <span class="string">"died"</span>: <span class="number">1731</span>, <span class="string">"father"</span>: <span class="string">"Lieven Haverbeke"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Hercke"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Anna van Hecke"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1607</span>, <span class="string">"died"</span>: <span class="number">1670</span>, <span class="string">"father"</span>: <span class="string">"Paschasius van Hecke"</span>, <span class="string">"mother"</span>: <span class="string">"Martijntken Beelaert"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Maria Sturm"</span>, <span class="string">"sex"</span>: <span class="string">"f"</span>, <span class="string">"born"</span>: <span class="number">1835</span>, <span class="string">"died"</span>: <span class="number">1917</span>, <span class="string">"father"</span>: <span class="string">"Charles Sturm"</span>, <span class="string">"mother"</span>: <span class="string">"Seraphina Spelier"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">"name"</span>: <span class="string">"Jacobus Bernardus van Brussel"</span>, <span class="string">"sex"</span>: <span class="string">"m"</span>, <span class="string">"born"</span>: <span class="number">1736</span>, <span class="string">"died"</span>: <span class="number">1809</span>, <span class="string">"father"</span>: <span class="string">"Jan van Brussel"</span>, <span class="string">"mother"</span>: <span class="string">"Elisabeth Haverbeke"</span>&#125;</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = <span class="built_in">JSON</span>.parse(ANCESTRY_FILE)</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用1-获取其中男性或女性的信息"><a href="#运用1-获取其中男性或女性的信息" class="headerlink" title="运用1 获取其中男性或女性的信息"></a>运用1 获取其中男性或女性的信息</h3><p>利用<code>filter()</code>过滤我们需要的信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">filter(data, <span class="function"><span class="keyword">function</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(p.sex == <span class="string">"m"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面的函数是前一篇博客完成的<code>filter()</code>函数效果与下面的函数一致</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data.filter(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(p.sex == <span class="string">"m"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>那么如何获取男性女性的姓名集合呢？ 通过<code>filter()</code>, <code>map()</code>的链式调用可以实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data.filter(<span class="function"><span class="params">p</span> =&gt;</span> &#123;<span class="keyword">if</span>(p.sex == <span class="string">"m"</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;&#125;).map(<span class="function"><span class="params">p</span> =&gt;</span> p.name)</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用二-实现男性女性年龄平均值的计算"><a href="#运用二-实现男性女性年龄平均值的计算" class="headerlink" title="运用二 实现男性女性年龄平均值的计算"></a>运用二 实现男性女性年龄平均值的计算</h3><p>将函数进行模块化封装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构建一个函数实现平均值的计算</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">average</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 平均值是总量除以数量, 使用reduce完成总量的累计</span></span><br><span class="line">            <span class="keyword">return</span> ary.reduce(<span class="function">(<span class="params">sum , item</span>) =&gt;</span> &#123;<span class="keyword">return</span> (sum += item), sum&#125;) / ary.length</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 构建年龄的计算</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">age</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span>  p.died - p.born</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 判断是否为女性</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">male</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> p.sex == <span class="string">"m"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否为男性</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">female</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> p.sex ==<span class="string">"f"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 求女性的平均年龄</span></span><br><span class="line">        average(data.filter(male).map(age))</span><br><span class="line">        <span class="comment">// 求男性的平均年龄</span></span><br><span class="line">        average(data.filter(female).map(age))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将人物资料与人物名字之间构成集合</span></span><br><span class="line">        <span class="keyword">var</span> byname = data.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;byname[p.name] = p&#125;)</span><br><span class="line">        <span class="comment">// 使用reduce重写这个集合</span></span><br><span class="line">        <span class="keyword">var</span> byname2 =  data.reduce(<span class="function">(<span class="params">obj, item</span>) =&gt;</span> &#123;</span><br><span class="line">            byname2[item.name] = item</span><br><span class="line">            <span class="keyword">return</span> byname2</span><br><span class="line">        &#125;, &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用三-利用高阶函数完成数据分组"><a href="#运用三-利用高阶函数完成数据分组" class="headerlink" title="运用三 利用高阶函数完成数据分组"></a>运用三 利用高阶函数完成数据分组</h3><h4 id="keyBy"><a href="#keyBy" class="headerlink" title="keyBy()"></a>keyBy()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// keyby 的实质是以对象的属性作为关键字建立映射</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">keyby</span>(<span class="params">ary, key</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">            ary.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;result[p[key]] = p&#125;)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy()"></a>groupBy()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 利用关键字property作为分组依据对数组元素进行分组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">groupby1</span>(<span class="params">ary, property</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">            ary.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> key = p[property]</span><br><span class="line">                <span class="keyword">if</span>(!(key <span class="keyword">in</span> result)) &#123;</span><br><span class="line">                    result[key] = []</span><br><span class="line">                &#125;</span><br><span class="line">                    result[key].push(p)</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 利用函数的返回值作为分组依据对数组元素进行分组</span><br><span class="line">        function groupby2(ary, f) &#123;</span><br><span class="line">            var result &#x3D; &#123;&#125;</span><br><span class="line">            ary.forEach(p &#x3D;&gt; &#123;</span><br><span class="line">                var key &#x3D; f(p)</span><br><span class="line">                if(!(key in result)) &#123;</span><br><span class="line">                    result[key] &#x3D; []</span><br><span class="line">                &#125;</span><br><span class="line">                    result[key].push(p)</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">            return result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//再次优化</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">groupby3</span>(<span class="params">ary, by</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> result = &#123;&#125;</span><br><span class="line">            ary.forEach(<span class="function"><span class="params">p</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> f = by</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">typeof</span>(by) === <span class="string">"string"</span>) &#123;</span><br><span class="line">                   f = <span class="function"><span class="params">item</span> =&gt;</span> item[by]</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">var</span> key = f(p)</span><br><span class="line">                <span class="keyword">if</span>(!(key <span class="keyword">in</span> result)) &#123;</span><br><span class="line">                    result[key] = []</span><br><span class="line">                &#125;</span><br><span class="line">                    result[key].push(p)</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运用四-计算每个世纪人们的平均寿命"><a href="#运用四-计算每个世纪人们的平均寿命" class="headerlink" title="运用四 计算每个世纪人们的平均寿命"></a>运用四 计算每个世纪人们的平均寿命</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算每个世纪人的寿命平均值</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getAge</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> p.died - p.born</span><br><span class="line">        &#125; <span class="comment">// 得到每个人的寿命</span></span><br><span class="line">        <span class="comment">// 另一种求数组平均值的方法</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getAverage</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> ary.reduce(<span class="function">(<span class="params">sum, item, idx, ary</span>) =&gt;</span> (sum *= idx,sum += item, sum / (idx + <span class="number">1</span>)), <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getCentury</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(p.died &lt; <span class="number">1600</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"16th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(p.died &lt; <span class="number">1700</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"17th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(p.died &lt; <span class="number">1800</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"18th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(p.died &lt; <span class="number">1900</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"19th"</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"20th"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="comment">// 得到人属于哪个时期</span></span><br><span class="line">        <span class="keyword">var</span> group = groupby3(data, getCentury) <span class="comment">// 将数据以世纪分组</span></span><br><span class="line">        <span class="keyword">var</span> averageResult = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span>(obj <span class="keyword">in</span> group) &#123;</span><br><span class="line">            averageResult[obj] = getAverage(group[obj].map(getAge))</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%9E%E7%8E%B0/" rel="tag"># 实现</a>
+              <a href="/tags/%E5%87%BD%E6%95%B0/" rel="tag"># 函数</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="prev" title="高阶函数的实现一">
+      <i class="fa fa-chevron-left"></i> 高阶函数的实现一
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原始数据"><span class="nav-number">1.0.1.</span> <span class="nav-text">原始数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运用1-获取其中男性或女性的信息"><span class="nav-number">1.0.2.</span> <span class="nav-text">运用1 获取其中男性或女性的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运用二-实现男性女性年龄平均值的计算"><span class="nav-number">1.0.3.</span> <span class="nav-text">运用二 实现男性女性年龄平均值的计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运用三-利用高阶函数完成数据分组"><span class="nav-number">1.0.4.</span> <span class="nav-text">运用三 利用高阶函数完成数据分组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#keyBy"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">keyBy()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#groupBy"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">groupBy()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运用四-计算每个世纪人们的平均寿命"><span class="nav-number">1.0.5.</span> <span class="nav-text">运用四 计算每个世纪人们的平均寿命</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tangtc233</p>
+  <div class="site-description" itemprop="description">tangtc233的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tangtc233</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

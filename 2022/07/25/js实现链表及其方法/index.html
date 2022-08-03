@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="js 实现链表及其方法前言通过js我们可以实现链表的搭建及其一些方法从而加深对链表的理解 实现  一个简单的链表,直接创建时应该从最后一项开始创建，到头结点，下面的例子中Node1就是头结点，Node1形成了一个链式结构，这就是链表 123456789101112var Node3 &#x3D; &amp;#123;    val : &#39;c&#39;,&#x2F;&#x2F; 数据域    next : null &#x2F;&#x2F; 指针域&amp;#125;va">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现链表及其方法">
+<meta property="og:url" content="http://yoursite.com/2022/07/25/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="tang的博客">
+<meta property="og:description" content="js 实现链表及其方法前言通过js我们可以实现链表的搭建及其一些方法从而加深对链表的理解 实现  一个简单的链表,直接创建时应该从最后一项开始创建，到头结点，下面的例子中Node1就是头结点，Node1形成了一个链式结构，这就是链表 123456789101112var Node3 &#x3D; &amp;#123;    val : &#39;c&#39;,&#x2F;&#x2F; 数据域    next : null &#x2F;&#x2F; 指针域&amp;#125;va">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-25T12:21:26.140Z">
+<meta property="article:modified_time" content="2022-07-25T12:21:26.140Z">
+<meta property="article:author" content="Tangtc233">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="链表">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/07/25/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>实现链表及其方法 | tang的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tang的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tang233</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/js%E5%AE%9E%E7%8E%B0%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          实现链表及其方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="js-实现链表及其方法"><a href="#js-实现链表及其方法" class="headerlink" title="js 实现链表及其方法"></a>js 实现链表及其方法</h2><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>通过js我们可以实现链表的搭建及其一些方法从而加深对链表的理解</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>  一个简单的链表,直接创建时应该从最后一项开始创建，到头结点，下面的例子中<code>Node1</code>就是头结点，<code>Node1</code>形成了一个链式结构，这就是链表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Node3 = &#123;</span><br><span class="line">    val : <span class="string">'c'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : <span class="literal">null</span> <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> Node2 = &#123;</span><br><span class="line">    val : <span class="string">'b'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : Node3 <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> Node1 = &#123;</span><br><span class="line">    val : <span class="string">'a'</span>,<span class="comment">// 数据域</span></span><br><span class="line">    next : Node2 <span class="comment">// 指针域</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="由数组转化为链表函数的实现"><a href="#由数组转化为链表函数的实现" class="headerlink" title="由数组转化为链表函数的实现"></a>由数组转化为链表函数的实现</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">arrayToList1</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">if</span> (ary.length == <span class="number">0</span>) &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">var</span> node = &#123;&#125;</span><br><span class="line">          node.val = ary.shift() <span class="comment">//每创建一个节点，将数组元素从头部取出</span></span><br><span class="line">          node.next = arrayToList1(ary)</span><br><span class="line">          <span class="keyword">return</span> node</span><br><span class="line">      &#125;</span><br><span class="line"><span class="keyword">var</span> nodeA = arrayToListl([<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id><a href="#" class="headerlink" title></a></h4><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>从末尾插入链表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertListlast</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (node.next == <span class="literal">null</span>) &#123;</span><br><span class="line">                node.next = &#123;</span><br><span class="line">                    val : num,</span><br><span class="line">                    next : <span class="literal">null</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> insertListlast(node.next, num)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从开始插入链表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertListfrist</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> N = node</span><br><span class="line">            node = &#123;</span><br><span class="line">                val : num,</span><br><span class="line">                next : N</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断元素是否在链表内</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInlist</span>(<span class="params">node, value</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">var</span> n = node</span><br><span class="line">           <span class="keyword">while</span>(n != <span class="literal">null</span> &amp;&amp; n.val != value) &#123;</span><br><span class="line">               n = n.next</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (n == <span class="literal">null</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>将多项函数整合后即可实现一个链表class</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.node = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 初始化链表</span></span><br><span class="line">    init(array) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">arrayToList1</span>(<span class="params">ary</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (ary.length == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">var</span> node = &#123;&#125;</span><br><span class="line">            node.val = ary.shift()</span><br><span class="line">            node.next = arrayToList1(ary)</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = arrayToList1(array)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从头部插入链表</span></span><br><span class="line">    insertHead(num) &#123;</span><br><span class="line">        <span class="keyword">var</span> n = <span class="keyword">this</span>.node</span><br><span class="line">        <span class="keyword">var</span> newNode = &#123;</span><br><span class="line">            val : num,</span><br><span class="line">            next : n</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = newNode</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从尾部插入链表</span></span><br><span class="line">    insertEnd(num) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">insertListlast</span>(<span class="params">node, num</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (node.next == <span class="literal">null</span>) &#123;</span><br><span class="line">                node.next = &#123;</span><br><span class="line">                    val : num,</span><br><span class="line">                    next : <span class="literal">null</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> insertListlast(node.next, num)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.node = insertListlast(<span class="keyword">this</span>.node, num)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 判断元素是否在链表内</span></span><br><span class="line">    has() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> tempNode = <span class="keyword">this</span>.node</span><br><span class="line">            <span class="keyword">while</span>(tempNode != <span class="literal">null</span> &amp;&amp; tempNode.val != value) &#123;</span><br><span class="line">                tempNode = tempNode.next</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (tempNode == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag"># 链表</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/25/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/" rel="prev" title="异步初识">
+      <i class="fa fa-chevron-left"></i> 异步初识
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/25/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/" rel="next" title="重写数组方法">
+      重写数组方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#js-实现链表及其方法"><span class="nav-number">1.</span> <span class="nav-text">js 实现链表及其方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.0.1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.1.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#由数组转化为链表函数的实现"><span class="nav-number">1.1.1.</span> <span class="nav-text">由数组转化为链表函数的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#"><span class="nav-number">1.1.2.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">1.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tangtc233</p>
+  <div class="site-description" itemprop="description">tangtc233的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tangtc233</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
