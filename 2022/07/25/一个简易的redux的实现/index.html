@@ -212,6 +212,8 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Redux 的目标是创建一个状态管理库，来提供最简化 API</p>
 <h2 id="redux的核心概念"><a href="#redux的核心概念" class="headerlink" title="redux的核心概念"></a>redux的核心概念</h2><p>redux的核心容器是state，它相当于存放信息的盒子，<br>但是你不能直接改变盒子里的东西要想更新 state 中的数据，你需要发起一个 action。Action 就是一个普通 JavaScript 对象用来描述发生了什么<br>强制使用 action 来描述所有变化带来的好处是可以清晰地知道应用中到底发生了什么。如果一些东西改变了，就可以知道为什么变。action 就像是描述发生了什么的指示器。最终，为了把 action 和 state 串起来，开发一些函数，这就是 reducer。<br>所以reducer相当于对于action的解释<br>Reducer 只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
 <p>state有下面几个方法：<br>提供 getState() 方法获取 state；<br>提供 dispatch(action) 方法更新 state；<br>通过 subscribe(listener) 注册监听器;<br>通过 subscribe(listener) 返回的函数注销监听器。</p>
+<a id="more"></a>
+
 <h2 id="简易的redux的实现"><a href="#简易的redux的实现" class="headerlink" title="简易的redux的实现"></a>简易的redux的实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(reducer, initState) &#123;</span><br><span class="line">        <span class="comment">// 创建一个reducer需要传入reducer和初始化的state</span></span><br><span class="line">        <span class="keyword">this</span>.reducer = reducer</span><br><span class="line">        <span class="keyword">this</span>.state = state</span><br><span class="line">        <span class="keyword">this</span>.subscribes = []</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    getState() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.reducer</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dispatch(action) &#123;</span><br><span class="line">        <span class="keyword">this</span>.state = <span class="keyword">this</span>.reducer(<span class="keyword">this</span>.state, action)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> f <span class="keyword">of</span> <span class="keyword">this</span>.subscribes) &#123;</span><br><span class="line">            f()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> action</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    subscribe(f) &#123;</span><br><span class="line">        <span class="keyword">this</span>.subscribes.push(f)</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unsubscribe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.subscribes = <span class="keyword">this</span>.subscribes.filter(<span class="function"><span class="params">it</span> =&gt;</span> it !== f)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>用上面的class简易的实现一个todo的store</p>
@@ -314,14 +316,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

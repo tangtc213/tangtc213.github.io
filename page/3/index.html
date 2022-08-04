@@ -161,6 +161,166 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">一个简易的redux实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Redux 的目标是创建一个状态管理库，来提供最简化 API</p>
+<h2 id="redux的核心概念"><a href="#redux的核心概念" class="headerlink" title="redux的核心概念"></a>redux的核心概念</h2><p>redux的核心容器是state，它相当于存放信息的盒子，<br>但是你不能直接改变盒子里的东西要想更新 state 中的数据，你需要发起一个 action。Action 就是一个普通 JavaScript 对象用来描述发生了什么<br>强制使用 action 来描述所有变化带来的好处是可以清晰地知道应用中到底发生了什么。如果一些东西改变了，就可以知道为什么变。action 就像是描述发生了什么的指示器。最终，为了把 action 和 state 串起来，开发一些函数，这就是 reducer。<br>所以reducer相当于对于action的解释<br>Reducer 只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
+<p>state有下面几个方法：<br>提供 getState() 方法获取 state；<br>提供 dispatch(action) 方法更新 state；<br>通过 subscribe(listener) 注册监听器;<br>通过 subscribe(listener) 返回的函数注销监听器。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/" class="post-title-link" itemprop="url">NodeJS核心模块回顾</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="nodejs核心模块回顾"><a href="#nodejs核心模块回顾" class="headerlink" title="nodejs核心模块回顾"></a>nodejs核心模块回顾</h2><h3 id="http"><a href="#http" class="headerlink" title="http"></a>http</h3><pre><code>提供http服务器功能</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 客户端</span></span><br><span class="line">    <span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>) <span class="comment">//引入模块</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个请求</span></span><br><span class="line">    <span class="keyword">let</span> request = http.request(</span><br><span class="line">        &#123;</span><br><span class="line">            protocol: <span class="string">'http:'</span>,     <span class="comment">// 请求的协议</span></span><br><span class="line">            host: <span class="string">'777.tang233.top'</span>,   <span class="comment">// 请求的host</span></span><br><span class="line">            port: <span class="number">80</span>,              <span class="comment">// 端口</span></span><br><span class="line">            method: <span class="string">'GET'</span>,         <span class="comment">// GET请求</span></span><br><span class="line">            timeout: <span class="number">2000</span>,         <span class="comment">// 超时时间</span></span><br><span class="line">            path: <span class="string">'/'</span>              <span class="comment">// 请求路径</span></span><br><span class="line">        &#125;,</span><br><span class="line">        res =&gt; &#123; <span class="comment">// 连接成功后，接收到后台服务器返回的响应，回调函数就会被调用一次。</span></span><br><span class="line">            res.on(<span class="string">'data'</span>, data =&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data.toString(<span class="string">'utf8'</span>)); <span class="comment">// 打印返回的数据。</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">// 设置请求头部</span></span><br><span class="line">    request.setHeader(<span class="string">'Cache-Control'</span>, <span class="string">'max-age=0'</span>);</span><br><span class="line">    <span class="comment">// 真正的发送请求</span></span><br><span class="line">    request.end();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">let</span> server = <span class="keyword">new</span> http.Server();</span><br><span class="line">server.on(<span class="string">'request'</span>, (req, res) =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(req.url);</span><br><span class="line"><span class="comment">//设置应答头信息</span></span><br><span class="line">res.writeHead(<span class="number">200</span>, &#123; <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span> &#125;);</span><br><span class="line">res.write(<span class="string">'hello we are family&lt;br&gt;'</span>);</span><br><span class="line">res.end(<span class="string">'server already end\n'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//显示了三次这也证明了TCP的三次握手</span></span><br><span class="line">server.on(<span class="string">'connection'</span>, () =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'握手'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.on(<span class="string">'close'</span>, () =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server will close'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//关闭服务为了触发close事件</span></span><br><span class="line">server.close();</span><br><span class="line">server.listen(<span class="number">8080</span>);</span><br><span class="line"><span class="comment">// 另一种</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain'</span>&#125;)</span><br><span class="line">    res.write(<span class="string">"hi, from aicoder.com"</span>);</span><br><span class="line">    res.end();</span><br><span class="line"></span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="url"><a href="#url" class="headerlink" title="url"></a>url</h3><pre><code>用于解析和生成URL
+url.resolve(from, to) 第一个参数是基准url，其余url是根据基准url生成对应的位置
+`url.resolve(&apos;/one/two/three&apos;, &apos;four&apos;)`</code></pre><h3 id="fs"><a href="#fs" class="headerlink" title="fs"></a>fs</h3><pre><code>与文件系统交互</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 异步读取文件</span></span><br><span class="line">fs.readFile(<span class="string">'./image.png'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, buffer</span>) =&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err</span><br><span class="line">    <span class="keyword">var</span> text = buffer.toString()</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 同步读取文件</span></span><br><span class="line"><span class="keyword">var</span> text = fs.readFileSync(fileName, <span class="string">'utf8'</span>);</span><br><span class="line"><span class="comment">// 异步写入文件</span></span><br><span class="line">fs.writeFile(<span class="string">'message.txt'</span>, <span class="string">'hello world'</span>, (err) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Its saved'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 同步写入文件</span></span><br><span class="line">fs.writeFileSync(fileName, str, <span class="string">'utf8'</span>);</span><br><span class="line"><span class="comment">// 新建目录</span></span><br><span class="line">fs.mkdir(<span class="string">'./helloDir'</span>,<span class="number">0777</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取文件或文件夹的具体信息</span></span><br><span class="line">fs.stat(<span class="string">'/etc/filename'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, stats</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(stats.ifFile()) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'%s is filename'</span> , file)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(stats.isDirectory) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"%s is a directory"</span>, file)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="path-处理文件路径"><a href="#path-处理文件路径" class="headerlink" title="path 处理文件路径"></a>path 处理文件路径</h3><pre><code>path 的各种方法
+path.join()
+作用是连接路径 `path.join(mydir, &apos;foo&apos;)` 返回`mydir/foo`
+
+path.resolve() 将相对路径转化为绝对路径
+`path.resolve(&apos;foo/bar&apos;, &apos;/tmp/file/&apos;, &apos;..&apos;, &apos;a/../subfile&apos;)`
+path.relative 接受两个参数，这两个参数都应该是绝对路径。该方法返回第二个路径相对于第一个路径的那个相对路径。
+`path.relative(&apos;/data/orandea/test/aaa&apos;, &apos;/data/orandea/impl/bbb&apos;)` 返回 `../../impl/bbb`
+path.parse() 返回路径各部分的信息。</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFilePath = <span class="string">'/someDir/someFile.json'</span>;</span><br><span class="line">path.parse(myFilePath).base</span><br><span class="line"><span class="comment">// "someFile.json"</span></span><br><span class="line">path.parse(myFilePath).name</span><br><span class="line"><span class="comment">// "someFile"</span></span><br><span class="line">path.parse(myFilePath).ext</span><br><span class="line"><span class="comment">// ".json"</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/js%E9%87%8D%E5%86%99%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -412,21 +572,15 @@
           <h2 id="异步使用的四种方式"><a href="#异步使用的四种方式" class="headerlink" title="异步使用的四种方式"></a>异步使用的四种方式</h2><h4 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h4><pre><code>f2在f1执行一秒后执行</code></pre><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    setTimeOut(<span class="function"><span class="params">()</span>=&gt;</span> &#123;</span><br><span class="line">        callback()</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">f1(f2)</span><br></pre></td></tr></table></figure>
 
 <h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><pre><code>利用事件使a在触发事件后再执行b
-`f1.on(&apos;done&apos;,f2)`</code></pre><h4 id="promise-事件"><a href="#promise-事件" class="headerlink" title="promise 事件"></a>promise 事件</h4><p>每一个异步任务返回一个promise对象，有一个then方法允许指定回调函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(!err) &#123;</span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                resolve()</span><br><span class="line">            &#125;, <span class="number">0</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            reject()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">f1().then(<span class="function"><span class="params">()</span> =&gt;</span> f2()).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err))</span><br></pre></td></tr></table></figure>
-
-<h3 id="async-function"><a href="#async-function" class="headerlink" title="async function"></a>async function</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            resolve()</span><br><span class="line">        &#125;, <span class="number">2000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncCall</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo =  <span class="built_in">Date</span>.now()</span><br><span class="line">    <span class="keyword">await</span> bar()</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">Date</span>.now() - foo)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="使用异步函数完成循序执行和并行执行"><a href="#使用异步函数完成循序执行和并行执行" class="headerlink" title="使用异步函数完成循序执行和并行执行"></a>使用异步函数完成循序执行和并行执行</h4><p>并行执行parallel</p>
-<p>首先定义一组tasks函数,tasks全部执行完后再执行cb回调</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parallel</span>(<span class="params">tasks,cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(task <span class="keyword">of</span> tasks) &#123;</span><br><span class="line">        task(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            count++</span><br><span class="line">            <span class="keyword">if</span>(tasks.length == count) &#123;</span><br><span class="line">                cb()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>串行执行serise</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serise</span>(<span class="params">tasks, cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">startOneTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(count &lt; tasks.length) &#123;</span><br><span class="line">            task[i++](<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                startOneTask()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cb()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>并行限制执行parallelLimit</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">parallelLimit</span>(<span class="params">tasks, limit, cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> limitCount = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(limitCount &lt; tasks.length) &#123;</span><br><span class="line">            tasks[i++](<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                one()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cb()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; limit; j++) &#123;</span><br><span class="line">        one()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+`f1.on(&apos;done&apos;,f2)`</code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/js%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1116,172 +1270,10 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">apply、call和bind的实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><p>bind的实现</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myBind</span>(<span class="params">arg, f</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 返回一个新的函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 新函树的返回值是将arg绑定到第一个参数上</span></span><br><span class="line">        <span class="keyword">return</span> f(arg, ...args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>bind实例</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> arg <span class="keyword">of</span> <span class="built_in">arguments</span>) &#123;</span><br><span class="line">         sum += arg</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> funcB1 = myBind(<span class="number">10</span>, func1)</span><br><span class="line"><span class="built_in">console</span>.log(funcB1(<span class="number">3</span>, <span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-
-<h2 id="apply与call"><a href="#apply与call" class="headerlink" title="apply与call"></a>apply与call</h2><h4 id="apply与call的共同点和区别"><a href="#apply与call的共同点和区别" class="headerlink" title="apply与call的共同点和区别"></a>apply与call的共同点和区别</h4><p><em>apply 和 call的共同点和区别</em></p>
-<p><em>apply和call 都是接受一个函数体内this的指向和要传递的参数来返回结果</em></p>
-<p><em>pply第二个参数是一个带下标的集合</em></p>
-<p><em>call 从第二个参数开始每个参数一次传入函数</em></p>
-<p>call的实现</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// call的实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">obj,...args</span>) </span>&#123;</span><br><span class="line">    obj._fn_ = <span class="keyword">this</span></span><br><span class="line">    obj._fn_(...args)</span><br><span class="line">    <span class="keyword">delete</span> obj._fn_</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> test = &#123;</span><br><span class="line">    name: <span class="string">'test'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'obj'</span>,</span><br><span class="line">    f : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name, ...arguments)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.f()</span><br><span class="line">obj.fn.myCall(test, <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">obj.fn.call(test, <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apply的实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params">obj, arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> args = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span> ; i&lt;arr.length; i++)&#123;</span><br><span class="line">        args.push( arr[i] );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.myCall(obj, ...args);</span><br><span class="line">&#125;</span><br><span class="line">obj.fn.myApply(test, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/21/%E9%99%90%E5%88%B6%E6%89%A7%E8%A1%8C%E6%95%B0%E9%87%8F%E7%9A%84%E5%BC%82%E6%AD%A5%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/21/%E9%99%90%E5%88%B6%E6%89%A7%E8%A1%8C%E6%95%B0%E9%87%8F%E7%9A%84%E5%BC%82%E6%AD%A5%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">限制执行数量的异步实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-21 21:29:29" itemprop="dateCreated datePublished" datetime="2022-02-21T21:29:29+08:00">2022-02-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="限制执行数量的异步实现"><a href="#限制执行数量的异步实现" class="headerlink" title="限制执行数量的异步实现"></a>限制执行数量的异步实现</h1><h3 id="一个需求"><a href="#一个需求" class="headerlink" title="一个需求"></a>一个需求</h3><p>我们需要在获取一系列数据，但是每次只能执行两个函数用来获取数据这该如何实现呢</p>
-<h3 id="通过回调的实现"><a href="#通过回调的实现" class="headerlink" title="通过回调的实现"></a>通过回调的实现</h3><p>【实现链接】<a href="https://jsbin.com/calm-credit-BE7" target="_blank" rel="noopener">https://jsbin.com/calm-credit-BE7</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 异步获取信息函数</span></span><br><span class="line"><span class="keyword">const</span> query = <span class="function">(<span class="params">taskNum, cb</span>) =&gt;</span> &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"this task"</span>, taskNum)</span><br><span class="line">    cb &amp;&amp; cb()</span><br><span class="line">  &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cbLimit = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> pendingList = tasks.slice(<span class="number">0</span>, limit)</span><br><span class="line">  <span class="keyword">let</span> flag = limit</span><br><span class="line">  <span class="comment">// 执行函数</span></span><br><span class="line">  <span class="keyword">const</span> step = <span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(flag &lt; tasks.length) &#123;</span><br><span class="line">    <span class="comment">// 初次执行传入id</span></span><br><span class="line">      <span class="keyword">if</span>(id) &#123;</span><br><span class="line">        query(id, () =&gt; step())</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        query(taskIds[flag++], () =&gt; step())</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  pendingList.forEach(<span class="function"><span class="params">task</span> =&gt;</span> &#123;</span><br><span class="line">    step(task)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">cbLimit(taskIds, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通过promise的实现"><a href="#通过promise的实现" class="headerlink" title="通过promise的实现"></a>通过promise的实现</h3><p>【实现链接】<a href="https://jsbin.com/frosty-frost-0ED" target="_blank" rel="noopener">https://jsbin.com/frosty-frost-0ED</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryPromise = <span class="function">(<span class="params">taskNum</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'this Task'</span>, taskNum);</span><br><span class="line">      resolve(taskNum)</span><br><span class="line">    &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> LimitPromise = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> pendingList = tasks.slice(<span class="number">0</span>, limit)</span><br><span class="line">  <span class="keyword">let</span> flag = limit;</span><br><span class="line">  <span class="comment">// 递归调用promise实现异步的链式调用</span></span><br><span class="line">  <span class="keyword">const</span> stepPromise = <span class="function"><span class="params">id</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(flag &lt; tasks.length) &#123;</span><br><span class="line">      <span class="keyword">if</span>(id) &#123;<span class="keyword">return</span>	queryPromise(id).then(<span class="function"><span class="params">()</span> =&gt;</span> stepPromise())&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> queryPromise(tasks[flag++]).then(<span class="function"><span class="params">()</span> =&gt;</span> stepPromise())</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  pendingList.forEach(<span class="function"><span class="params">task</span> =&gt;</span> &#123;</span><br><span class="line">    stepPromise(task)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LimitPromise(taskIds,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通过async和await实现"><a href="#通过async和await实现" class="headerlink" title="通过async和await实现"></a>通过async和await实现</h3><p>【实现链接】<a href="https://jsbin.com/royal-surf-206" target="_blank" rel="noopener">https://jsbin.com/royal-surf-206</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryPromise = <span class="function">(<span class="params">taskNum</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'this Task'</span>, taskNum);</span><br><span class="line">      resolve(taskNum)</span><br><span class="line">    &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> LimitAsync = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> pendingList = tasks.slice(<span class="number">0</span>, limit)</span><br><span class="line">  <span class="keyword">let</span> flag = limit;</span><br><span class="line">  <span class="comment">// 递归调用promise实现异步的链式调用</span></span><br><span class="line">  <span class="keyword">const</span> stepAsync = <span class="keyword">async</span> (id) =&gt; &#123;</span><br><span class="line">    <span class="keyword">while</span>(flag &lt; tasks.length) &#123;</span><br><span class="line">      <span class="keyword">if</span>(id) &#123;	</span><br><span class="line">        <span class="keyword">await</span> queryPromise(id).then(<span class="function"><span class="params">()</span> =&gt;</span> stepAsync())</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(flag)</span><br><span class="line">        <span class="keyword">await</span> queryPromise(tasks[flag++]).then(<span class="function"><span class="params">()</span> =&gt;</span> stepAsync())</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  pendingList.forEach(<span class="function"><span class="params">task</span> =&gt;</span> &#123;</span><br><span class="line">    stepAsync(task)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LimitAsync(taskIds, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通过Promise-race实现"><a href="#通过Promise-race实现" class="headerlink" title="通过Promise.race实现"></a>通过Promise.race实现</h3><p>【实现链接】<a href="https://jsbin.com/summer-lake-CCC" target="_blank" rel="noopener">https://jsbin.com/summer-lake-CCC</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> taskIds = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">14</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryPromise = <span class="function">(<span class="params">taskNum</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'this Task'</span>, taskNum);</span><br><span class="line">      resolve(taskNum)</span><br><span class="line">    &#125;, taskNum * <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> Limit2Promise = <span class="function">(<span class="params">tasks, limit</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> tasksCopy = [...tasks]</span><br><span class="line">  <span class="keyword">if</span> (tasksCopy.length &lt;= limit) &#123;</span><br><span class="line">      <span class="comment">// task数量小于2时直接返回Promise.all</span></span><br><span class="line">    <span class="keyword">const</span> promiseArray = tasks.map(<span class="function">(<span class="params">task</span>) =&gt;</span> queryPromise(task))</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all(promiseArray)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 转化为Promise初始数组</span></span><br><span class="line">  <span class="keyword">const</span> promiseArray = tasksCopy.splice(<span class="number">0</span>, limit).map(<span class="function"><span class="params">task</span> =&gt;</span> queryPromise(task))</span><br><span class="line">  <span class="comment">// Promise.race竞态处理最先完成的promsie，并填入新的promise在执行新的Promise.race</span></span><br><span class="line">  tasksCopy.reduce(<span class="function">(<span class="params">prevPromise, taskId</span>) =&gt;</span> prevPromise.then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Promise</span>.race(promiseArray))</span><br><span class="line">    .catch(<span class="function"><span class="params">error</span> =&gt;</span> <span class="built_in">console</span>.error(error))</span><br><span class="line">    .then(<span class="function"><span class="params">resolveId</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> pos = promiseArray.findIndex(<span class="function"><span class="params">id</span> =&gt;</span> resolveId === id)</span><br><span class="line">      promiseArray.splice(pos, <span class="number">1</span>)</span><br><span class="line">      promiseArray.push(queryPromise(taskId))</span><br><span class="line">    &#125;</span><br><span class="line">    ), <span class="built_in">Promise</span>.resolve())</span><br><span class="line">&#125;</span><br><span class="line">Limit2Promise(taskIds, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1347,14 +1339,14 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

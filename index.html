@@ -161,6 +161,226 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/04/temp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/04/temp/" class="post-title-link" itemprop="url">temp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-04 08:22:16" itemprop="dateCreated datePublished" datetime="2022-08-04T08:22:16+08:00">2022-08-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          class Node {
+    constructor(data) {
+        this.data = data
+        this.prev = null
+        this.next = null
+    }
+}
+
+class DoubleLinkedList {
+    constructor() {
+        this.head = null
+        this.tail = null
+        this.length = 0
+    }
+    // 向尾部添加一个节点
+    append(value) {
+        let currNode = new Node(value)
+        if(!this.head) {
+            this.head = currNode
+            this.tail = currNode
+        } else {
+            this.tail.next = currNode
+            currNode.prev = this.tail
+            this.tail = currNode
+        }
+        this.length++
+
+    } 
+    insert(pos, value) {
+        if(pos < 0 || pos > this.length) {
+            return false
+        }
+        let currNode = new Node(value)
+        if(pos === 0) {
+            if(!this.head){
+                this.head = currNode   
+            } else {
+                this.head.prev = currNode
+                currNode.prev = this.head
+                this.head = currNode
+            }
+        } else if(pos === this.length) {
+            this.append(value)
+        } else {
+            let targetIndex = 0
+            let root = this.head
+            let preVode = null
+            while(targetIndex++ < pos) {
+                preVode = root
+                root = root.next
+            }
+            preVode.next = currNode
+            currNode.prev = preVode
+            root.prev = currNode
+            currNode.next = root
+        }
+        this.length++
+        return true
+    }
+    removeAt(pos) {
+        if(pos < 0 || pos > this.length) {
+            return false
+        }
+        let root = this.head
+        if(pos === 0) {
+            if(this.length === 1) {
+                this.head = null
+                this.tail = null
+            } else {
+                this.head.next.prev = null
+                this.head = this.head.next
+            }
+        } else if (pos === this.length -1){
+            root = this.tail
+            this.tail.prev.next = null
+            this.tail = this.tail.prev
+        } else {
+            let targetIndex = 0
+            let preVode = null
+            while(targetIndex++ < pos) {
+                preVode = root
+                root = root.next
+            }
+            preVode.next = root.next
+            root.next.prev = preVode
+        }
+        this.length--
+        return root
+    }
+}
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%93%BE%E8%A1%A8%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%93%BE%E8%A1%A8%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">数据结构链表复习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-04 08:11:00" itemprop="dateCreated datePublished" datetime="2022-08-04T08:11:00+08:00">2022-08-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><h3 id="双向链表特点"><a href="#双向链表特点" class="headerlink" title="双向链表特点"></a>双向链表特点</h3><p>双向链表不同于链表，每个节点都有pre和next两个属性，链表有头节点和尾节点，头节点和尾节点都可以访问链表中的任何一个节点，本篇文章会构建一个基本的双向链表，并有向尾部添加新节点，插入节点，查询节点和删除节点的方法</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%93%BE%E8%A1%A8%E5%A4%8D%E4%B9%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E4%B8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -620,16 +840,14 @@
 <p>​        如使用长轮询时使用_.throttle可以有效的定时从服务器对客户端发送改变的数据。从而节约资源</p>
 <p>函数防抖debound: 任务频繁触发的情况下，只有任务触发的间隔超过指定间隔的时候，任务才会执行</p>
 <p>​        网站为了提高用户体验，不会再输入框失去焦点的时候再去判断用户名是否被占用，而是在输入的时候就在判断这个用户名是否已被注册</p>
-<h3 id="两个函数的实现"><a href="#两个函数的实现" class="headerlink" title="两个函数的实现"></a>两个函数的实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, delay = <span class="number">1000</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timer</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(!timer) &#123;</span><br><span class="line">        timer = <span class="literal">true</span></span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            func.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">            timer = <span class="literal">null</span></span><br><span class="line">          &#125;,delay)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">func, delay = <span class="number">1000</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timer</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(timer) &#123;</span><br><span class="line">        clearTimeout(timer)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        func.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">        timer = <span class="literal">null</span></span><br><span class="line">      &#125;,delay)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// 通过闭包保存一个标记来保存 setTimeout 返回的值，每当用户输入的时候把前一个 setTimeout clear 掉，</span></span><br><span class="line"><span class="comment">//创建一个新的 setTimeout，这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行f调用</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>通过引入lodash可以很简单的使用节流和防抖函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i lodash</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line">_.throttle(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to throttle.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to throttle invocations to.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=true] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br><span class="line"></span><br><span class="line">_.debounce(func, [wait=<span class="number">0</span>], [options=&#123;&#125;])</span><br><span class="line"><span class="comment">// Arguments</span></span><br><span class="line"><span class="comment">// func (Function): The function to debounce.</span></span><br><span class="line"><span class="comment">// [wait=0] (number): The number of milliseconds to delay.</span></span><br><span class="line"><span class="comment">// [options=&#123;&#125;] (Object): The options object.</span></span><br><span class="line"><span class="comment">// [options.leading=false] (boolean): Specify invoking on the leading edge of the timeout.</span></span><br><span class="line"><span class="comment">// [options.maxWait] (number): The maximum time func is allowed to be delayed before it's invoked.</span></span><br><span class="line"><span class="comment">// [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.</span></span><br></pre></td></tr></table></figure>
-
-
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/25/%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -797,169 +1015,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/" class="post-title-link" itemprop="url">浮动的规则</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇博客依照《CSS权威指南》进行对浮动规则的深刻理解</p>
-<h2 id="浮动的规则"><a href="#浮动的规则" class="headerlink" title="浮动的规则"></a>浮动的规则</h2><ul>
-<li>浮动元素的左右外边界不能超过包含块的左右内边界</li>
-</ul>
-<p>那么能否通过负margin实现伪超越边界呢？</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/25/%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%A7%84%E5%88%99/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">水平垂直居中方案</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这次博客是对垂直水平居中方案的一个总结</p>
-<h2 id="行内元素的垂直水平居中"><a href="#行内元素的垂直水平居中" class="headerlink" title="行内元素的垂直水平居中"></a>行内元素的垂直水平居中</h2><ul>
-<li>第一种</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是中心位置吗<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>父元素字号清零、line-height等于自身身高、text-align设为center</p>
-<p>子元素字号回复、vertical-align设置为middle</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/25/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%A1%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1025,14 +1084,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
