@@ -161,82 +161,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">一个简易的redux实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Redux 的目标是创建一个状态管理库，来提供最简化 API</p>
-<h2 id="redux的核心概念"><a href="#redux的核心概念" class="headerlink" title="redux的核心概念"></a>redux的核心概念</h2><p>redux的核心容器是state，它相当于存放信息的盒子，<br>但是你不能直接改变盒子里的东西要想更新 state 中的数据，你需要发起一个 action。Action 就是一个普通 JavaScript 对象用来描述发生了什么<br>强制使用 action 来描述所有变化带来的好处是可以清晰地知道应用中到底发生了什么。如果一些东西改变了，就可以知道为什么变。action 就像是描述发生了什么的指示器。最终，为了把 action 和 state 串起来，开发一些函数，这就是 reducer。<br>所以reducer相当于对于action的解释<br>Reducer 只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
-<p>state有下面几个方法：<br>提供 getState() 方法获取 state；<br>提供 dispatch(action) 方法更新 state；<br>通过 subscribe(listener) 注册监听器;<br>通过 subscribe(listener) 返回的函数注销监听器。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/25/%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84redux%E7%9A%84%E5%AE%9E%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/nodejs%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%9B%9E%E9%A1%BE%E2%80%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1270,6 +1194,89 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/applycallbind%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">apply、call和bind的实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><p>bind的实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myBind</span>(<span class="params">arg, f</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 返回一个新的函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 新函树的返回值是将arg绑定到第一个参数上</span></span><br><span class="line">        <span class="keyword">return</span> f(arg, ...args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>bind实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> arg <span class="keyword">of</span> <span class="built_in">arguments</span>) &#123;</span><br><span class="line">         sum += arg</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> funcB1 = myBind(<span class="number">10</span>, func1)</span><br><span class="line"><span class="built_in">console</span>.log(funcB1(<span class="number">3</span>, <span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="apply与call"><a href="#apply与call" class="headerlink" title="apply与call"></a>apply与call</h2><h4 id="apply与call的共同点和区别"><a href="#apply与call的共同点和区别" class="headerlink" title="apply与call的共同点和区别"></a>apply与call的共同点和区别</h4><p><em>apply 和 call的共同点和区别</em></p>
+<p><em>apply和call 都是接受一个函数体内this的指向和要传递的参数来返回结果</em></p>
+<p><em>pply第二个参数是一个带下标的集合</em></p>
+<p><em>call 从第二个参数开始每个参数一次传入函数</em></p>
+<p>call的实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// call的实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">obj,...args</span>) </span>&#123;</span><br><span class="line">    obj._fn_ = <span class="keyword">this</span></span><br><span class="line">    obj._fn_(...args)</span><br><span class="line">    <span class="keyword">delete</span> obj._fn_</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> test = &#123;</span><br><span class="line">    name: <span class="string">'test'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">'obj'</span>,</span><br><span class="line">    f : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name, ...arguments)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.f()</span><br><span class="line">obj.fn.myCall(test, <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">obj.fn.call(test, <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apply的实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params">obj, arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> args = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span> ; i&lt;arr.length; i++)&#123;</span><br><span class="line">        args.push( arr[i] );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.myCall(obj, ...args);</span><br><span class="line">&#125;</span><br><span class="line">obj.fn.myApply(test, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1339,7 +1346,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
