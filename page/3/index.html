@@ -161,6 +161,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/%E4%BD%BF%E7%94%A8nodejs%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">实现一个静态服务器文件夹</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NodeJS/" itemprop="url" rel="index"><span itemprop="name">NodeJS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="如和实现一个显示文件夹列表的静态服务器"><a href="#如和实现一个显示文件夹列表的静态服务器" class="headerlink" title="如和实现一个显示文件夹列表的静态服务器"></a>如和实现一个显示文件夹列表的静态服务器</h2><h4 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br></pre></td></tr></table></figure>
+<p>设定端口 与 确定当前位置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PORT = <span class="number">8081</span></span><br><span class="line">dirPath = path.resolve(<span class="string">'./'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建服务器"><a href="#创建服务器" class="headerlink" title="创建服务器"></a>创建服务器</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 输出请求的路径</span></span><br><span class="line">    <span class="keyword">let</span> url = <span class="built_in">decodeURIComponent</span>(req.url)</span><br><span class="line">    <span class="comment">// 建立目标路径</span></span><br><span class="line">    <span class="keyword">let</span> targetPath = path.join(dirPath, url)</span><br><span class="line">    fs.stat(targetPath, (err, stat) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            res.write(<span class="number">404</span>)</span><br><span class="line">            res.end(<span class="string">'conect error'</span>)</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 判断文件类型</span></span><br><span class="line">            <span class="comment">// 如果该路径是文件</span></span><br><span class="line">            <span class="keyword">if</span>(stat.isFile()) &#123;</span><br><span class="line">                fs.createReadStream(target).pipe(res)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (stat.isDirectory()) &#123;</span><br><span class="line">            <span class="comment">// 如果是文件夹的话 ，先判断是否有默认文件index.html</span></span><br><span class="line">            <span class="keyword">let</span> indexPath = path.join(targetPath, index.html)</span><br><span class="line">            fs.stat(indexPath, (err, stat) =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span>(err) &#123;</span><br><span class="line">                    <span class="comment">// 如果不是文件夹请求的</span></span><br><span class="line">                    <span class="keyword">if</span>(!req.url.endsWith(<span class="string">'/'</span>)) &#123;</span><br><span class="line">                        <span class="comment">// 将响应头重定向并以此地址再发一次请求</span></span><br><span class="line">                        res.writeHead(<span class="number">302</span>, &#123;</span><br><span class="line">                            <span class="string">'Location'</span> :req.url + <span class="string">'/'</span></span><br><span class="line">                        &#125;)</span><br><span class="line">                        <span class="keyword">return</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 将文件夹中的东西以页面的形式展示出来</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="comment">// 展示方法：utf8编码的页面</span></span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    <span class="comment">// 读取文件夹目录</span></span><br><span class="line">                    fs.readdir(targetPath, &#123;<span class="attr">withFileTypes</span>: <span class="literal">true</span>&#125;, (err, entries) =&gt; &#123;</span><br><span class="line">                        <span class="keyword">var</span> pageHtml = renderIndexPage(entries, targetPath,req.url)</span><br><span class="line">                        res.write(pageHtml)</span><br><span class="line">                        res.end()</span><br><span class="line"></span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     <span class="comment">// 将index.html的内容以流的形式展现</span></span><br><span class="line">                    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">                        <span class="string">'Content-Type'</span> :<span class="string">'text/html; charset=UTF-8'</span></span><br><span class="line">                    &#125;)</span><br><span class="line">                    fs.createReadStream(indexPath).pipe(res)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建模板引擎"><a href="#创建模板引擎" class="headerlink" title="创建模板引擎"></a>创建模板引擎</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pageTp1 = <span class="string">`</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html lang="en"&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;Document&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt; Index of &lt;%= url %&gt;&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;table&gt;</span></span><br><span class="line"><span class="string">        &lt;tbody&gt;</span></span><br><span class="line"><span class="string">            &lt;% entries.forEach((entry, idx) =&gt; &#123;</span></span><br><span class="line"><span class="string">                var slash = entry.isDirectory() ? '/' : ''</span></span><br><span class="line"><span class="string">            %&gt;</span></span><br><span class="line"><span class="string">                &lt;tr&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;%= filesize(50000) %&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;td&gt;&lt;a href="&lt;%= entry.name %&gt;&lt;%= slash %&gt;"&gt;&lt;%= entry.name %&gt;&lt;%= slash %&gt;&lt;/a&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                &lt;/tr&gt;</span></span><br><span class="line"><span class="string">            &lt;% &#125;) %&gt;</span></span><br><span class="line"><span class="string">        &lt;/tbody&gt;</span></span><br><span class="line"><span class="string">    &lt;/table&gt;</span></span><br><span class="line"><span class="string">    &lt;footer&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Node.js <span class="subst">$&#123;process.version&#125;</span> My Nubility Server Running&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/footer&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="keyword">var</span> compiledTp1 = _.template(pageTp1)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建模板字符串调用函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderIndexPage</span>(<span class="params">entries, parentDir, url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> filesize = <span class="built_in">require</span>(<span class="string">'filesize'</span>)</span><br><span class="line">    <span class="keyword">return</span> compiledTp1(&#123;entries, parentDir, url, filesize&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="监听端口"><a href="#监听端口" class="headerlink" title="监听端口"></a>监听端口</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.listen(PORT, <span class="string">'127.0.0.1'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'listen on the Port '</span>, PORT)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E4%BC%AA%E5%85%83%E7%B4%A0content%E7%9A%84%E5%86%85%E5%AE%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -930,82 +1005,6 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/css%E8%AE%A1%E6%95%B0%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/css%E8%AE%A1%E6%95%B0%E5%99%A8/" class="post-title-link" itemprop="url">CSS计数器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本博客主要是为了理解和运用css计数器</p>
-<h2 id="css计数器的概念及定义"><a href="#css计数器的概念及定义" class="headerlink" title="css计数器的概念及定义"></a>css计数器的概念及定义</h2><p>本质上CSS计数器是由CSS维护的变量，这些变量可能根据CSS规则增加以跟踪使用次数。这允许你根据文档位置来调整内容表现</p>
-<p>计数器的值通过使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/counter-reset" target="_blank" rel="noopener"><code>counter-reset</code></a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/counter-increment" target="_blank" rel="noopener"><code>counter-increment</code></a> 操作，在 <code>content</code> 上应用 <code>counter()</code> 或 <code>counters()</code>函数来显示在页面上</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/25/css%E8%AE%A1%E6%95%B0%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1075,7 +1074,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1088,7 +1087,7 @@ ri是r的child（子节点）ri之间互称兄弟，r是父节点
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

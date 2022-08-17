@@ -161,6 +161,73 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/17/%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tangtc233">
+      <meta itemprop="description" content="tangtc233的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tang的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/17/%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">图数据结构复习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-17 08:50:39" itemprop="dateCreated datePublished" datetime="2022-08-17T08:50:39+08:00">2022-08-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="图结构的js实现"><a href="#图结构的js实现" class="headerlink" title="图结构的js实现"></a>图结构的js实现</h1><h3 id="图的特点"><a href="#图的特点" class="headerlink" title="图的特点"></a>图的特点</h3><p>图的数据结构包含一个有限（可能是可变的）的集合作为节点集合，以及一个无序对（对应无向图）或有序对（对应有向图）的集合作为边（有向图中也称作弧）的集合。节点可以是图结构的一部分，也可以是用整数下标或引用表示的外部实体。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Gragh</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.adjList = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    addVertex(vertex) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.adjList.has(vertex)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.adjList.set(vertex, [])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="string">"the vertex has exited"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    addEdge(vertex, node) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.adjList.has(vertex)) &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.adjList.has(node)) &#123;</span><br><span class="line">                <span class="keyword">let</span> arr = <span class="keyword">this</span>.adjList.get(vertex)</span><br><span class="line">                <span class="keyword">if</span>(!arr.includes(node)) &#123;</span><br><span class="line">                    arr.push(node)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="string">`gragh not has node <span class="subst">$&#123;node&#125;</span>`</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="string">`gragh not has vertex <span class="subst">$&#123;vertex&#125;</span>`</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    print() &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> [key,value] <span class="keyword">of</span> <span class="keyword">this</span>.adjList) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"key"</span>, key, <span class="string">"value"</span>, value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建浏览图节点的副本</span></span><br><span class="line">    createVisitedObj() &#123;</span><br><span class="line">        <span class="keyword">let</span> map = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">of</span> <span class="keyword">this</span>.adjList.keys()) &#123;</span><br><span class="line">            map[key] = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 广度优先遍历</span></span><br><span class="line">    bfs(initNode) &#123;</span><br><span class="line">        <span class="keyword">let</span> visited = <span class="keyword">this</span>.createVisitedObj()</span><br><span class="line">        <span class="keyword">let</span> queue = [initNode]</span><br><span class="line">        visited[initNode] = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">while</span>(queue.length) &#123;</span><br><span class="line">            <span class="keyword">let</span> current = queue.shift()</span><br><span class="line">            <span class="keyword">let</span> arr = <span class="keyword">this</span>.adjList.get(current)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> ele <span class="keyword">of</span> arr) &#123;</span><br><span class="line">                <span class="keyword">if</span>(!visited[ele]) &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">"now vertex"</span>, ele)</span><br><span class="line">                    visited[ele] = <span class="literal">true</span></span><br><span class="line">                    queue.push(ele)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 深度优先遍历</span></span><br><span class="line">    dfs(initNode) &#123;</span><br><span class="line">        <span class="keyword">let</span> visited = <span class="keyword">this</span>.createVisitedObj()</span><br><span class="line">        <span class="keyword">this</span>.dfsHelper(initNode, visited)</span><br><span class="line">    &#125;</span><br><span class="line">    dfsHelper = <span class="function">(<span class="params">node, visited</span>) =&gt;</span> &#123;</span><br><span class="line">        visited[node] = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">let</span> arr = <span class="keyword">this</span>.adjList.get(node)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> ele <span class="keyword">of</span> arr) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visited[ele]) &#123;</span><br><span class="line">                <span class="keyword">this</span>.dfsHelper(ele, visited)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/12/%E5%AD%97%E5%85%B8%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -228,7 +295,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/05/%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/10/%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -242,7 +309,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/05/%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">搜索二叉树数据结构复习</a>
+            <a href="/2022/08/10/%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">搜索二叉树数据结构复习</a>
         </h2>
 
         <div class="post-meta">
@@ -252,7 +319,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-08-05 08:50:39" itemprop="dateCreated datePublished" datetime="2022-08-05T08:50:39+08:00">2022-08-05</time>
+              <time title="创建时间：2022-08-10 08:50:39" itemprop="dateCreated datePublished" datetime="2022-08-10T08:50:39+08:00">2022-08-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,7 +345,7 @@
           <h1 id="搜索二叉树"><a href="#搜索二叉树" class="headerlink" title="搜索二叉树"></a>搜索二叉树</h1><h3 id="搜索二叉树的特点"><a href="#搜索二叉树的特点" class="headerlink" title="搜索二叉树的特点"></a>搜索二叉树的特点</h3><p>搜索二叉树的节点所有的左子树的值都小于该节点，右子树的值都大于该节点。其他的特点和普通二叉树一致</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/08/05/%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/#more" rel="contents">
+              <a class="btn" href="/2022/08/10/%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -857,83 +924,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/25/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Tangtc233">
-      <meta itemprop="description" content="tangtc233的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tang的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/25/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">纯css实现轮播图思路</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-25 20:21:26" itemprop="dateCreated datePublished" datetime="2022-07-25T20:21:26+08:00">2022-07-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文探讨的是如何在纯css环境中完成轮播图的编写</p>
-<h2 id="第一种方案"><a href="#第一种方案" class="headerlink" title="第一种方案"></a>第一种方案</h2><p>将轮播图排成一排然后通过动画效果实现轮播</p>
-<p>HTML部分：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"xxx.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/25/%E7%BA%AFcss%E5%AE%8C%E6%88%90%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E6%80%9D%E8%B7%AF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1003,7 +993,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1016,7 +1006,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
