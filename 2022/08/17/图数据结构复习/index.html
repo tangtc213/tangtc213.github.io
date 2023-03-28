@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="图结构的js实现图的特点图的数据结构包含一个有限（可能是可变的）的集合作为节点集合，以及一个无序对（对应无向图）或有序对（对应有向图）的集合作为边（有向图中也称作弧）的集合。节点可以是图结构的一部分，也可以是用整数下标或引用表示的外部实体。 实现12345678910111213141516171819202122232425262728293031323334353637383940414243">
+  <meta name="description" content="图结构的js实现图的特点图的数据结构包含一个有限（可能是可变的）的集合作为节点集合，以及一个无序对（对应无向图）或有序对（对应有向图）的集合作为边（有向图中也称作弧）的集合。节点可以是图结构的一部分，也可以是用整数下标或引用表示的外部实体。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图数据结构复习">
 <meta property="og:url" content="http://yoursite.com/2022/08/17/%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/index.html">
 <meta property="og:site_name" content="tang的博客">
-<meta property="og:description" content="图结构的js实现图的特点图的数据结构包含一个有限（可能是可变的）的集合作为节点集合，以及一个无序对（对应无向图）或有序对（对应有向图）的集合作为边（有向图中也称作弧）的集合。节点可以是图结构的一部分，也可以是用整数下标或引用表示的外部实体。 实现12345678910111213141516171819202122232425262728293031323334353637383940414243">
+<meta property="og:description" content="图结构的js实现图的特点图的数据结构包含一个有限（可能是可变的）的集合作为节点集合，以及一个无序对（对应无向图）或有序对（对应有向图）的集合作为边（有向图中也称作弧）的集合。节点可以是图结构的一部分，也可以是用整数下标或引用表示的外部实体。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-17T00:50:39.000Z">
 <meta property="article:modified_time" content="2022-08-17T00:50:39.000Z">
@@ -210,6 +210,8 @@
 
       
         <h1 id="图结构的js实现"><a href="#图结构的js实现" class="headerlink" title="图结构的js实现"></a>图结构的js实现</h1><h3 id="图的特点"><a href="#图的特点" class="headerlink" title="图的特点"></a>图的特点</h3><p>图的数据结构包含一个有限（可能是可变的）的集合作为节点集合，以及一个无序对（对应无向图）或有序对（对应有向图）的集合作为边（有向图中也称作弧）的集合。节点可以是图结构的一部分，也可以是用整数下标或引用表示的外部实体。</p>
+<a id="more"></a>
+
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Gragh</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.adjList = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    addVertex(vertex) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.adjList.has(vertex)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.adjList.set(vertex, [])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="string">"the vertex has exited"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    addEdge(vertex, node) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.adjList.has(vertex)) &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.adjList.has(node)) &#123;</span><br><span class="line">                <span class="keyword">let</span> arr = <span class="keyword">this</span>.adjList.get(vertex)</span><br><span class="line">                <span class="keyword">if</span>(!arr.includes(node)) &#123;</span><br><span class="line">                    arr.push(node)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="string">`gragh not has node <span class="subst">$&#123;node&#125;</span>`</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="string">`gragh not has vertex <span class="subst">$&#123;vertex&#125;</span>`</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    print() &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> [key,value] <span class="keyword">of</span> <span class="keyword">this</span>.adjList) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"key"</span>, key, <span class="string">"value"</span>, value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建浏览图节点的副本</span></span><br><span class="line">    createVisitedObj() &#123;</span><br><span class="line">        <span class="keyword">let</span> map = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">of</span> <span class="keyword">this</span>.adjList.keys()) &#123;</span><br><span class="line">            map[key] = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 广度优先遍历</span></span><br><span class="line">    bfs(initNode) &#123;</span><br><span class="line">        <span class="keyword">let</span> visited = <span class="keyword">this</span>.createVisitedObj()</span><br><span class="line">        <span class="keyword">let</span> queue = [initNode]</span><br><span class="line">        visited[initNode] = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">while</span>(queue.length) &#123;</span><br><span class="line">            <span class="keyword">let</span> current = queue.shift()</span><br><span class="line">            <span class="keyword">let</span> arr = <span class="keyword">this</span>.adjList.get(current)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> ele <span class="keyword">of</span> arr) &#123;</span><br><span class="line">                <span class="keyword">if</span>(!visited[ele]) &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">"now vertex"</span>, ele)</span><br><span class="line">                    visited[ele] = <span class="literal">true</span></span><br><span class="line">                    queue.push(ele)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 深度优先遍历</span></span><br><span class="line">    dfs(initNode) &#123;</span><br><span class="line">        <span class="keyword">let</span> visited = <span class="keyword">this</span>.createVisitedObj()</span><br><span class="line">        <span class="keyword">this</span>.dfsHelper(initNode, visited)</span><br><span class="line">    &#125;</span><br><span class="line">    dfsHelper = <span class="function">(<span class="params">node, visited</span>) =&gt;</span> &#123;</span><br><span class="line">        visited[node] = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">let</span> arr = <span class="keyword">this</span>.adjList.get(node)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> ele <span class="keyword">of</span> arr) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visited[ele]) &#123;</span><br><span class="line">                <span class="keyword">this</span>.dfsHelper(ele, visited)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -232,7 +234,10 @@
     <a href="/2022/08/12/%E5%AD%97%E5%85%B8%E6%A0%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" rel="prev" title="字典树数据结构复习">
       <i class="fa fa-chevron-left"></i> 字典树数据结构复习
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/28/%E7%B1%BB%E5%9E%8B%E4%BD%93%E6%93%8D%E5%81%9A%E9%A2%98%E6%80%9D%E8%B7%AF%E6%80%BB%E7%BB%93/" rel="next" title="类型体操做题思路总结">
+      类型体操做题思路总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -305,20 +310,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -345,7 +350,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
